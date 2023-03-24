@@ -1,0 +1,22 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Lat</th>
+        <th scope="col">Long</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let bugapoint of bugapoints">
+        <td>{{ bugapoint.id }}</td>
+        <td>{{ bugapoint.title }}</td>
+        <td>{{ bugapoint.latitude }}</td>
+        <td>{{ bugapoint.longitude }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

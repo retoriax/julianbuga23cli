@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+// @ts-ignore
 import { UserServiceService } from './user-service.service';
 
 describe('UserServiceService', () => {

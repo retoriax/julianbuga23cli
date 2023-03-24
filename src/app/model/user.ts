@@ -1,5 +1,8 @@
 export class User {
   id: string;
-  name: string;
-  email: string;
+  firstname: string;
+  lastname: string;
+  birthdate: Date;
+  emailadress: string;
+  discriminator: string;
 }
