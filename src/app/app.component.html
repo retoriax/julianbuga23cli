@@ -1,26 +1,19 @@
 <router-outlet></router-outlet>
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card bg-dark my-5">
-        <div class="card-body">
-          <ul class="text-center list-inline py-3">
-            <li class="list-inline-item">
-              <a routerLink="/users" class="btn btn-info">List Users</a>
-            </li>
-            <li class="list-inline-item">
-              <a routerLink="/adduser" class="btn btn-info">Add User</a>
-            </li>
-            <li class="list-inline-item">
-              <a routerLink="/bugapoints" class="btn btn-info">Bugapoints</a>
-            </li>
-            <li class="list-inline-item">
-              <a routerLink="/map" class="btn btn-info">Map</a>
-            </li>
-          </ul>
-        </div>
-      </div>
 
-    </div>
-  </div>
-</div>
+<nav class="toolbar">
+  <ul class="menu">
+    <button class="menu-item">
+      <a routerLink="/users" class="menu-item-info">List Users</a>
+    </button>
+    <button class="menu-item">
+      <a routerLink="/adduser" class="menu-item-info">Add User</a>
+    </button>
+    <button class="menu-item">
+      <a routerLink="/bugapoints" class="menu-item-info">Bugapoints</a>
+    </button>
+    <button class="menu-item">
+      <a routerLink="/map" class="menu-item-info">Map</a>
+    </button>
+  </ul>
+</nav>
+

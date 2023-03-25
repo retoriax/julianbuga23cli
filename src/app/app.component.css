@@ -1,0 +1,29 @@
+.toolbar {
+  height: 50px; /* set the height of the toolbar */
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* set the height of the menu to 100% of the toolbar */
+  margin: 0;
+  padding: 0;
+}
+
+.menu-item {
+  border: 2px solid;
+  background-color: lightgray;
+  height: 100%; /* set the height of the button to 100% of the toolbar */
+  margin: 0;
+  padding: 0 10px;
+}
+
+.menu-item-info {
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  height: 100%; /* set the height of the link to 100% of the toolbar */
+  display: flex;
+  align-items: center;
+}
