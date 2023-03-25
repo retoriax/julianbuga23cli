@@ -9,6 +9,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { UserService } from './service/user-service.service';
 import { BugapointListComponent } from './bugapoint-list/bugapoint-list.component';
 import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.componen
     UserFormComponent,
     BugapointListComponent,
     BugapointFormComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
