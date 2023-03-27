@@ -20,6 +20,9 @@ export class BugapointServiceService {
   public save(bugapoint: Bugapoint) {
     return this.http.post<Bugapoint>(this.bugapointURL, bugapoint);
   }
+  getData(): Observable<any>  {
+    return this.http.get(this.bugapointURL);
+  }
 
 
 

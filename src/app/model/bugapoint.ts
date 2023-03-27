@@ -1,7 +1,7 @@
 export class Bugapoint {
   id: string;
   title: string;
-  longitude: string;
+  longitude: number;
   latitude : number
 
 }
