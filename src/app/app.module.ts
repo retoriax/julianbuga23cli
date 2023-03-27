@@ -10,6 +10,8 @@ import { UserService } from './service/user-service.service';
 import { BugapointListComponent } from './bugapoint-list/bugapoint-list.component';
 import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.component';
 import { MapComponent } from './map/map.component';
+import { IonicModule } from '@ionic/angular';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,14 @@ import { MapComponent } from './map/map.component';
     BugapointListComponent,
     BugapointFormComponent,
     MapComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    IonicModule.forRoot()
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
