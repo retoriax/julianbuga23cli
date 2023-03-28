@@ -35,7 +35,7 @@ export class MapComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
     L.marker([longitude, latitude]).addTo(this.map)
-      .bindPopup('<b>Entrance 1</b><br />').openPopup().addTo(this.map);
+      .bindPopup('<b>Haupteingang Luisenpark</b><br />').openPopup().addTo(this.map);
   }
 }
 
