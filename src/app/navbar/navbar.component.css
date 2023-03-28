@@ -1,23 +1,23 @@
 .navigation {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 100vw;
   height: 60px;
   background: rgba(227, 227, 227, 0.86);
   display: flex;
   justify-content: center;
-  align-items: center;
   border-radius: 10px;
 }
 
 .navigation ul {
+  padding-left: 0;
   display: flex;
-  width: calc(100%);
+  width: 100vw;
 }
 .navigation ul li {
   list-style: none;
   position: relative;
-  width: 70px;
+  width: calc(100vw/5);
   height: 60px;
   z-index: 2;
 }
@@ -99,17 +99,17 @@
 }
 
 .navigation ul li:nth-child(1).active ~ .indicator {
-  transform: translateX(calc(70px * 0));
+  transform: translateX(calc((100vw/5) * 0 + 100vw/5/2 - 35px));
 }
 .navigation ul li:nth-child(2).active ~ .indicator {
-  transform: translateX(calc(70px * 1));
+  transform: translateX(calc((100vw/5) * 1 + 100vw/5/2 - 35px));
 }
 .navigation ul li:nth-child(3).active ~ .indicator {
-  transform: translateX(calc(70px * 2));
+  transform: translateX(calc((100vw/5) * 2 + 100vw/5/2 - 35px));
 }
 .navigation ul li:nth-child(4).active ~ .indicator {
-  transform: translateX(calc(70px * 3));
+  transform: translateX(calc((100vw/5) * 3 + 100vw/5/2 - 35px));
 }
 .navigation ul li:nth-child(5).active ~ .indicator {
-  transform: translateX(calc(70px * 4));
+  transform: translateX(calc((100vw/5) * 4 + 100vw/5/2 - 35px));
 }
