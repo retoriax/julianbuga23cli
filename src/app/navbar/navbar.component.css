@@ -37,7 +37,7 @@
   display: block;
   line-height: 65px;
   font-size: 1.5em;
-  transition: 0.5s;
+  transition: 0.8s;
   color: #222327;
 }
 
@@ -55,7 +55,7 @@
   font-weight: 400;
   font-size: 0.75em;
   letter-spacing: 0.05em;
-  transition: 0.5s;
+  transition: 0.8s;
   opacity: 0;
   transform: translateY(15px);
 }
