@@ -1,13 +1,13 @@
 <div class="navigation">
   <ul>
-    <li class="list">
-      <a href="#">
+    <li class="list active">
+      <a routerLink="/bugapoints">
         <span class ="icon"><ion-icon name="analytics-outline"></ion-icon></span>
         <span class ="text">Routing</span>
       </a>
     </li>
     <li class="list">
-      <a href="#">
+      <a routerLink="/users">
         <span class ="icon"><ion-icon name="bicycle-outline"></ion-icon></span>
         <span class ="text">Bicycle</span>
       </a>
@@ -19,12 +19,12 @@
       </a>
     </li>
     <li class="list">
-      <a href="#">
+      <a>
         <span class ="icon"><ion-icon name="bus-outline"></ion-icon></span>
         <span class ="text">Bus</span>
       </a>
     </li>
-    <li class="list active">
+    <li class="list">
       <a routerLink="/adduser" class="menu-item-info">
         <span class ="icon"><ion-icon name="help-outline"></ion-icon></span>
         <span class ="text">Help</span>
@@ -33,13 +33,3 @@
     <div class="indicator"></div>
   </ul>
 </div>
-<script>
-  const list = document.querySelectorAll('.list');
-  function activeLink(){
-    list.forEach((item) =>
-      item.classList.remove("active"));
-    this.classList.add("active")
-  }
-  list.forEach((item) =>
-    item.addEventListener('click', activeLink))
-</script>
