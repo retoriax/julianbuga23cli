@@ -15,6 +15,10 @@ export class MapComponent implements OnInit {
   constructor(private bugapointservice: BugapointServiceService) {
   }
   ngOnInit() {
+
+    /**
+     * Map init at given position and zoom level.
+     */
     this.map = L.map('map').setView([49.4793, 8.49589], 15);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -22,6 +26,10 @@ export class MapComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
 
+
+    /**
+     * Get bugapoints and put them on the map
+     */
     this.bugapointservice.getData().subscribe((data: any) => {
         this.bugapoints = data;
         for (const bugapoint of this.bugapoints) {
@@ -38,6 +46,15 @@ export class MapComponent implements OnInit {
         }).addTo(this.map);
       });
   }
+
+
+  /**
+   * Method to add a simple marker to the map.
+   *
+   * @param latitude Latitude
+   * @param longitude Longitude
+   * @param title Title
+   */
   showMarker(latitude: number, longitude: number, title: string) {
     L.marker([longitude, latitude]).addTo(this.map)
       .bindPopup(title).openPopup().addTo(this.map);
