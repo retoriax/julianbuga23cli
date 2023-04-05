@@ -12,6 +12,7 @@ import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.componen
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
+import { MapUiComponent } from './map-ui/map-ui.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BugapointFormComponent,
     MapComponent,
     NavbarComponent,
+    MapUiComponent,
   ],
   imports: [
     BrowserModule,
