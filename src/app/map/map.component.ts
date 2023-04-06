@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {Bugapoint} from "../model/bugapoint";
 import {BugapointServiceService} from "../service/bugapoint-service.service";
@@ -13,7 +13,7 @@ export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
 
-  constructor(private bugapointservice: BugapointServiceService) {
+  constructor(private mapFilter: MapFilterComponent) {
   }
   ngOnInit() {
 
@@ -32,8 +32,8 @@ export class MapComponent implements OnInit {
      * Get bugapoints and put them on the map
      */
 
-    this.bugapointservice.getData().subscribe((data: any) => {
-      this.bugapoints = data;
+    this.mapFilter.currentBugapoints.subscribe(bugapoints => {
+      this.bugapoints = bugapoints;
       this.updateMarkers();
     })
 

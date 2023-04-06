@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Bugapoint} from "../model/bugapoint";
 import {BugapointServiceService} from "../service/bugapoint-service.service";
 import {FormControl} from '@angular/forms';
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Component({
   selector: 'app-map-filter',
@@ -16,9 +17,12 @@ export class MapFilterComponent implements OnInit{
   discriminators = new FormControl('');
 
   filteredBugapoints: Bugapoint[];
-  discriminatorSet = new Set();
 
-  @Output() filteredBugapointsChanged = new EventEmitter<Bugapoint[]>();
+  discriminatorSet = new Set();
+  private filteredBugapointsBehaviorSubject = new BehaviorSubject(<Bugapoint[]>([]));
+  currentBugapoints = this.filteredBugapointsBehaviorSubject.asObservable();
+
+
   constructor(private bugapointservice: BugapointServiceService) {
   }
 
@@ -34,7 +38,13 @@ export class MapFilterComponent implements OnInit{
 
     this.discriminators.valueChanges.subscribe(() => {
       this.filterBugapoints();
+      console.log(this.filteredBugapoints);
     });
+    this.filteredBugapointsBehaviorSubject.next(this.filteredBugapoints)
+  }
+
+  changeCurrentBugapoints(bugapoints: Bugapoint[]) {
+    this.filteredBugapointsBehaviorSubject.next(bugapoints);
   }
 
   filterBugapoints() {
@@ -47,6 +57,7 @@ export class MapFilterComponent implements OnInit{
     this.filteredBugapoints = this.bugapoints.filter((bugapoint) =>
       selectedDiscriminators.includes(bugapoint.discriminator)
     );
-    this.filteredBugapointsChanged.emit(this.filteredBugapoints);
+    this.changeCurrentBugapoints(this.filteredBugapoints);
   }
+
 }
