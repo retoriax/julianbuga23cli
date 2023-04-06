@@ -20,10 +20,15 @@
   transform: translate(-50%, -40%); /* center the element */
 }
 
+#check {
+  display: none;
+}
+
 
 .filter-list {
   position: absolute;
   top: 0;
+  right: 0;
   width: 200px;
   height: 100vh;
   background: white;
@@ -37,7 +42,7 @@
   width: 100%;
 }
 
-#check:checked ~ .filter-button {
+#check:checked ~ .filter-list {
   transform: translateX(100px);
 }
 
