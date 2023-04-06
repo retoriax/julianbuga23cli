@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import * as L from 'leaflet';
 import {Bugapoint} from "../model/bugapoint";
 import {BugapointServiceService} from "../service/bugapoint-service.service";
+import {MapFilterComponent} from "../map-filter/map-filter.component";
 
 @Component({
   selector: 'app-map',
@@ -30,21 +31,12 @@ export class MapComponent implements OnInit {
     /**
      * Get bugapoints and put them on the map
      */
+
     this.bugapointservice.getData().subscribe((data: any) => {
-        this.bugapoints = data;
-        for (const bugapoint of this.bugapoints) {
-          this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title);
-        }
-      },
-      (error: any) => {
-        console.error('An error occurred:', error);
-        this.map = L.map('map').setView([49.4793, 8.49589], 15);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          minZoom:10,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(this.map);
-      });
+      this.bugapoints = data;
+      this.updateMarkers();
+    })
+
   }
 
 
@@ -58,5 +50,22 @@ export class MapComponent implements OnInit {
   showMarker(latitude: number, longitude: number, title: string) {
     L.marker([longitude, latitude]).addTo(this.map)
       .bindPopup(title).openPopup().addTo(this.map);
+  }
+
+  /**
+   *   Method to update the markers on the map
+   */
+  updateMarkers() {
+    // Remove all existing markers from the map
+    this.map.eachLayer((layer: any) => {
+      if (layer instanceof L.Marker) {
+        this.map.removeLayer(layer);
+      }
+    });
+
+    // Add new markers to the map based on the bugapoints data
+    for (const bugapoint of this.bugapoints) {
+      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title);
+    }
   }
 }
