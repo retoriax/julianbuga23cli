@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {Bugapoint} from "../model/bugapoint";
 import {BugapointServiceService} from "../service/bugapoint-service.service";
 import {FormControl} from '@angular/forms';
@@ -17,6 +17,8 @@ export class MapFilterComponent implements OnInit{
 
   filteredBugapoints: Bugapoint[];
   discriminatorSet = new Set();
+
+  @Output() filteredBugapointsChanged = new EventEmitter<Bugapoint[]>();
   constructor(private bugapointservice: BugapointServiceService) {
   }
 
@@ -45,5 +47,6 @@ export class MapFilterComponent implements OnInit{
     this.filteredBugapoints = this.bugapoints.filter((bugapoint) =>
       selectedDiscriminators.includes(bugapoint.discriminator)
     );
+    this.filteredBugapointsChanged.emit(this.filteredBugapoints);
   }
 }

@@ -1,5 +1,10 @@
-<div class="background">
   <div class="filter-list">
+    <div class="filter-button">
+      <input type="checkbox" id="check">
+      <label for="check" class="checkbtn">
+        <ion-icon name="filter-outline"></ion-icon>
+      </label>
+    </div>
     <mat-form-field appearance="fill">
       <mat-label>Punkte</mat-label>
       <mat-select [formControl]="discriminators" multiple>
@@ -8,11 +13,5 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="filter-button">
-    <input type="checkbox" id="check">
-    <label for="check" class="checkbtn">
-      <ion-icon name="filter-outline"></ion-icon>
-    </label>
-  </div>
-</div>
+
 
