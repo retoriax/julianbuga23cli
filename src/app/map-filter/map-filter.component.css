@@ -43,6 +43,6 @@
 }
 
 #check:checked ~ .filter-list {
-  transform: translateX(100px);
+  right: 0;
 }
 

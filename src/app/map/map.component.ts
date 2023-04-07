@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {Bugapoint} from "../model/bugapoint";
-import {BugapointServiceService} from "../service/bugapoint-service.service";
-import {MapFilterComponent} from "../map-filter/map-filter.component";
 
 @Component({
   selector: 'app-map',
@@ -13,8 +11,7 @@ export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
 
-  constructor(private mapFilter: MapFilterComponent) {
-  }
+  constructor() {}
   ngOnInit() {
 
     /**
@@ -26,17 +23,11 @@ export class MapComponent implements OnInit {
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
+  }
 
-
-    /**
-     * Get bugapoints and put them on the map
-     */
-
-    this.mapFilter.currentBugapoints.subscribe(bugapoints => {
-      this.bugapoints = bugapoints;
-      this.updateMarkers();
-    })
-
+  onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
+    this.bugapoints = filteredBugapoints;
+    this.updateMarkers();
   }
 
 
@@ -48,8 +39,7 @@ export class MapComponent implements OnInit {
    * @param title Title
    */
   showMarker(latitude: number, longitude: number, title: string) {
-    L.marker([longitude, latitude]).addTo(this.map)
-      .bindPopup(title).openPopup().addTo(this.map);
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).openPopup().addTo(this.map)
   }
 
   /**
@@ -62,7 +52,6 @@ export class MapComponent implements OnInit {
         this.map.removeLayer(layer);
       }
     });
-
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
       this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title);

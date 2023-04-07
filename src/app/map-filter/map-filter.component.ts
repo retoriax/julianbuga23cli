@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import {Bugapoint} from "../model/bugapoint";
 import {BugapointServiceService} from "../service/bugapoint-service.service";
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, Observable} from "rxjs";
 
 @Component({
   selector: 'app-map-filter',
@@ -11,21 +10,17 @@ import {BehaviorSubject, Observable} from "rxjs";
 })
 
 
-
 export class MapFilterComponent implements OnInit{
+  @Output() filteredBugapointsChange = new EventEmitter<Bugapoint[]>();
   bugapoints: Bugapoint[];
   discriminators = new FormControl('');
 
-  filteredBugapoints: Bugapoint[];
+  filteredBugapoints: Bugapoint[] = [];
 
   discriminatorSet = new Set();
-  private filteredBugapointsBehaviorSubject = new BehaviorSubject(<Bugapoint[]>([]));
-  currentBugapoints = this.filteredBugapointsBehaviorSubject.asObservable();
 
 
-  constructor(private bugapointservice: BugapointServiceService) {
-  }
-
+  constructor(private bugapointservice: BugapointServiceService) {}
 
   ngOnInit() {
     this.bugapointservice.getData().subscribe((data: any) => {
@@ -38,26 +33,17 @@ export class MapFilterComponent implements OnInit{
 
     this.discriminators.valueChanges.subscribe(() => {
       this.filterBugapoints();
-      console.log(this.filteredBugapoints);
     });
-    this.filteredBugapointsBehaviorSubject.next(this.filteredBugapoints)
-  }
-
-  changeCurrentBugapoints(bugapoints: Bugapoint[]) {
-    this.filteredBugapointsBehaviorSubject.next(bugapoints);
   }
 
   filterBugapoints() {
     const selectedDiscriminators = this.discriminators.value!;
     if (selectedDiscriminators.length === 0) {
       this.filteredBugapoints = this.bugapoints;
-      return;
+    } else {
+      this.filteredBugapoints = this.bugapoints.filter((bugapoint) =>
+        selectedDiscriminators.includes(bugapoint.discriminator));
     }
-
-    this.filteredBugapoints = this.bugapoints.filter((bugapoint) =>
-      selectedDiscriminators.includes(bugapoint.discriminator)
-    );
-    this.changeCurrentBugapoints(this.filteredBugapoints);
+    this.filteredBugapointsChange.emit(this.filteredBugapoints);
   }
-
 }
