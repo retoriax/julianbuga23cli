@@ -17,7 +17,7 @@ export class MapComponent implements OnInit {
     /**
      * Map init at given position and zoom level.
      */
-    this.map = L.map('map').setView([49.4793, 8.49589], 15);
+    this.map = L.map('map').setView([49.495, 8.5], 15);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       minZoom:10,
@@ -39,7 +39,7 @@ export class MapComponent implements OnInit {
    * @param title Title
    */
   showMarker(latitude: number, longitude: number, title: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).openPopup().addTo(this.map)
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map)
   }
 
   /**
