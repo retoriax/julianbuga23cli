@@ -19,10 +19,20 @@ export class MapFilterComponent implements OnInit{
 
   discriminatorSet = new Set();
 
-
   constructor(private bugapointservice: BugapointServiceService) {}
 
   ngOnInit() {
+    const checkbox = document.getElementById('check') as HTMLInputElement;
+    const filterList = document.querySelector('.filter-list') as HTMLElement;
+
+    checkbox.addEventListener('change', (event) => {
+      if ((event.target as HTMLInputElement).checked) {
+        filterList.classList.add('shown');
+      } else {
+        filterList.classList.remove('shown');
+      }
+    });
+
     this.bugapointservice.getData().subscribe((data: any) => {
       this.bugapoints = data;
       for (const bugapoint of this.bugapoints) {
@@ -46,4 +56,6 @@ export class MapFilterComponent implements OnInit{
     }
     this.filteredBugapointsChange.emit(this.filteredBugapoints);
   }
+
+
 }

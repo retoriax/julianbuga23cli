@@ -28,10 +28,10 @@
 .filter-list {
   position: absolute;
   top: 0;
-  right: 0;
+  right: -100%;
   width: 200px;
   height: 100vh;
-  background: white;
+  background: rgba(227, 227, 227, 1);
   transition: 0.5s;
   text-align: center;
 }
@@ -42,7 +42,7 @@
   width: 100%;
 }
 
-#check:checked ~ .filter-list {
-  right: 0;
+.shown {
+  right:0;
 }
 

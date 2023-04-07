@@ -12,7 +12,6 @@ import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.componen
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MapUiComponent } from './map-ui/map-ui.component';
 import { MapFilterComponent } from './map-filter/map-filter.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
@@ -28,7 +27,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     BugapointFormComponent,
     MapComponent,
     NavbarComponent,
-    MapUiComponent,
     MapFilterComponent,
   ],
   imports: [
