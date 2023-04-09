@@ -17,6 +17,11 @@ import { RoutePlannerComponent } from './route-planner/route-planner.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { BugapointAutocorrectFieldComponent } from './bugapoint-autocorrect-field/bugapoint-autocorrect-field.component';
+import { BugapointDragAndDropComponent } from './bugapoint-drag-and-drop/bugapoint-drag-and-drop.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -30,6 +35,7 @@ import { BugapointAutocorrectFieldComponent } from './bugapoint-autocorrect-fiel
     RoutePlannerComponent,
     BugapointAutocorrectFieldComponent,
     BugapointAutocorrectFieldComponent,
+    BugapointDragAndDropComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,11 @@ import { BugapointAutocorrectFieldComponent } from './bugapoint-autocorrect-fiel
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DragDropModule,
+    MatButtonModule,
+    MatIconModule,
+    ScrollingModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

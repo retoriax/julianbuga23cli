@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+//import {map, startWith} from 'rxjs/operators';
+import {BugapointServiceService} from "../service/bugapoint-service.service";
+import {Bugapoint} from "../model/bugapoint";
 
 @Component({
   selector: 'app-bugapoint-autocorrect-field',
@@ -10,18 +12,26 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class BugapointAutocorrectFieldComponent implements OnInit{
   myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredBugapoints: Observable<string[]>;
+  bugapoints: Bugapoint[];
+  filteredBugapoints: Observable<Bugapoint[]>;
+  constructor(private bugapointservice: BugapointServiceService) {
+  }
 
   ngOnInit() {
-    this.filteredBugapoints = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
+    this.bugapointservice.findAll().subscribe((data: Bugapoint[]) => {
+      this.bugapoints = data;});
+      /**
+       this.filteredBugapoints = this.myControl.valueChanges.pipe(
+       startWith(''),
+       map(value => this._filter(value || '')),
+       );
+       */
   }
-
-  private _filter(value: string): string[] {
+/**
+  private _filter(value: string): Bugapoint[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+
+    return this.bugapoints.filter(bugapoint => bugapoint.title.toLowerCase().includes(filterValue));
   }
+ */
 }
