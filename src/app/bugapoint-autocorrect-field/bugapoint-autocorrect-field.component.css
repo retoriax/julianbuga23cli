@@ -1,0 +1,16 @@
+.bugapoint-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  position: center;
+}
+
+.bugapoint-full-width {
+  width: 100%;
+}
+
+.add-button {
+  position: relative;
+  left: 80%;
+  top: -80px;
+}
