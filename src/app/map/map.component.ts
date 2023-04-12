@@ -46,11 +46,6 @@ export class MapComponent implements OnInit {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
       });
-
-    //this.showRoute(this.points);
-
-
-
   }
 
 
