@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
 
 @Component({
@@ -13,7 +14,6 @@ export class MapComponent implements OnInit {
 
   constructor() {}
   ngOnInit() {
-
     /**
      * Map init at given position and zoom level.
      */
@@ -56,5 +56,26 @@ export class MapComponent implements OnInit {
     for (const bugapoint of this.bugapoints) {
       this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title);
     }
+  }
+
+  /**
+   * Draws a route on the map between the points.
+   *
+   * @param points Points
+   */
+  showRoute(points:Bugapoint[]) {
+    const waypoints = points.map(point => {
+      return {
+        latLng: L.latLng(point.latitude, point.longitude)
+      };
+    });
+
+    L.Routing.control({
+      waypoints: waypoints,
+      router: L.Routing.osrmv1({
+        serviceUrl: 'http://localhost:5000/route/v1',
+        profile: 'foot'
+      })
+    }).addTo(this.map);
   }
 }
