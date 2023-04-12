@@ -56,7 +56,7 @@ export class MapComponent implements OnInit {
    * @param title Title
    */
   showMarker(latitude: number, longitude: number, title: string) {
-    L.marker([longitude, latitude]).addTo(this.map)
+    L.marker([latitude, longitude]).addTo(this.map)
       .bindPopup(title).openPopup().addTo(this.map);
   }
 }
