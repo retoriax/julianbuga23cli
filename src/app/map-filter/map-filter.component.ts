@@ -12,16 +12,16 @@ import {FormControl} from '@angular/forms';
 
 export class MapFilterComponent implements OnInit{
   @Output() filteredBugapointsChange = new EventEmitter<Bugapoint[]>();
-  bugapoints: Bugapoint[];
   discriminators = new FormControl('');
-
-  filteredBugapoints: Bugapoint[] = [];
 
   discriminatorSet = new Set();
 
   constructor(private bugapointservice: BugapointServiceService) {}
 
   ngOnInit() {
+    /**
+     * Css Styling
+     */
     const checkbox = document.getElementById('check') as HTMLInputElement;
     const filterList = document.querySelector('.filter-list') as HTMLElement;
 
@@ -33,29 +33,21 @@ export class MapFilterComponent implements OnInit{
       }
     });
 
-    this.bugapointservice.getData().subscribe((data: any) => {
-      this.bugapoints = data;
-      for (const bugapoint of this.bugapoints) {
-        this.discriminatorSet.add(bugapoint.discriminator);
-      }
-      this.filterBugapoints();
-    });
+    this.bugapointservice.getDiscriminators().subscribe((data: any) => {
+      console.log(data);
+      this.discriminatorSet = data;
+    })
+
+    this.bugapointservice.findAll().subscribe(allbugapoints => {
+      this.filteredBugapointsChange.emit(allbugapoints);
+    })
 
     this.discriminators.valueChanges.subscribe(() => {
-      this.filterBugapoints();
+      const selectedDiscriminators: Set<string> = new Set<string>([this.discriminators.value!]);
+      this.bugapointservice.filterBugapoints(selectedDiscriminators).subscribe(filteredBugapoints => {
+        this.filteredBugapointsChange.emit(filteredBugapoints);
+      });
     });
+
   }
-
-  filterBugapoints() {
-    const selectedDiscriminators = this.discriminators.value!;
-    if (selectedDiscriminators.length === 0) {
-      this.filteredBugapoints = this.bugapoints;
-    } else {
-      this.filteredBugapoints = this.bugapoints.filter((bugapoint) =>
-        selectedDiscriminators.includes(bugapoint.discriminator));
-    }
-    this.filteredBugapointsChange.emit(this.filteredBugapoints);
-  }
-
-
 }
