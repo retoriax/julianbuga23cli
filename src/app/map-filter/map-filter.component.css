@@ -1,0 +1,48 @@
+.filter-button {
+  position: absolute;
+  background: rgba(227, 227, 227, 0.86);
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  right: 20px;
+  top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbtn{
+  position: absolute;
+  font-size: 30px;
+  cursor: pointer;
+  top: 50%; /* move the element down by 50% of the parent height */
+  left: 50%; /* move the element right by 50% of the parent width */
+  transform: translate(-50%, -40%); /* center the element */
+}
+
+#check {
+  display: none;
+}
+
+
+.filter-list {
+  position: absolute;
+  top: 0;
+  right: -100%;
+  width: 200px;
+  height: 100vh;
+  background: rgba(227, 227, 227, 1);
+  transition: 0.5s;
+  text-align: center;
+}
+
+.filter-list mat-form-field{
+  position: relative;
+  top: 110px;
+  width: 100%;
+}
+
+.shown {
+  right:0;
+}
+
