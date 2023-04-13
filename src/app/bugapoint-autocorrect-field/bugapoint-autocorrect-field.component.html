@@ -9,7 +9,8 @@
            [matAutocomplete]="auto"
            [(ngModel)]="newElement">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let bugapoint of bugapoints" [value]="bugapoint">
+      <mat-option *ngFor="let bugapoint of filteredBugapoints| async"
+                  [value]="bugapoint">
         {{bugapoint.title}}
       </mat-option>
     </mat-autocomplete>

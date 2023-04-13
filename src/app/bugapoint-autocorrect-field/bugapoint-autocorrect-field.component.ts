@@ -12,7 +12,10 @@ import {Bugapoint} from "../model/bugapoint";
 })
 export class BugapointAutocorrectFieldComponent implements OnInit{
   myControl = new FormControl<string | Bugapoint>('');
-  bugapoints: Bugapoint[]; //= [{"id" : "1","title" : "hurensohnPunkt", "longitude":40,"latitude":40}];
+  bugapoints: Bugapoint[]; //= [{"id" : "1","title" : "hurensohnPunkt", "longitude":40,"latitude":40},
+    //{"id" : "1","title" : "fsd", "longitude":40,"latitude":40},{"id" : "1","title" : "dumm", "longitude":40,"latitude":40}];
+
+
   filteredBugapoints: Observable<Bugapoint[]>;
   newElement: Bugapoint;
 
@@ -20,9 +23,9 @@ export class BugapointAutocorrectFieldComponent implements OnInit{
  }
 
   ngOnInit() {
+
     this.bugapointservice.findAll().subscribe((data: Bugapoint[]) => {
       this.bugapoints = data;});
-
 
     this.filteredBugapoints = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -42,6 +45,7 @@ export class BugapointAutocorrectFieldComponent implements OnInit{
     return bugapoint && bugapoint.title ? bugapoint.title : '';
   }
   submit() {
+    console.log(this.filteredBugapoints);
     if (this.newElement && typeof this.newElement !== 'string') {
       let bugapoint = this.newElement;
       console.log(bugapoint);
@@ -51,3 +55,5 @@ export class BugapointAutocorrectFieldComponent implements OnInit{
     }
   }
 }
+
+
