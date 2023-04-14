@@ -17,6 +17,11 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AdminpanelMenuComponent } from './adminpanel-menu/adminpanel-menu.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -28,6 +33,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MapComponent,
     NavbarComponent,
     MapFilterComponent,
+    AdminpanelMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +46,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatIconModule,
+    MatButtonModule,
+    MatStepperModule,
+    MatListModule,
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
