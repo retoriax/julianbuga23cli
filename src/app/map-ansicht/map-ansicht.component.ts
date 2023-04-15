@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-map-ansicht',
@@ -6,6 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./map-ansicht.component.css']
 })
 export class MapAnsichtComponent {
-  showRadioButtons = false;
-}
+  @Output() ansichtOptionSelected = new EventEmitter<string>();
 
+  selectedAnsichtOption = 'free-movement';
+  showPopupFlag = false;
+
+  showPopup() {
+    this.showPopupFlag = !this.showPopupFlag;
+  }
+
+  onAnsichtOptionSelected() {
+    this.ansichtOptionSelected.emit(this.selectedAnsichtOption);
+  }
+}

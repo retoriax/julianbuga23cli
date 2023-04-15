@@ -1,23 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, OnInit } from '@angular/core';
+import * as L from 'leaflet';
 
-import { MapAnsichtComponent } from './map-ansicht.component';
+@Component({
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
+})
+export class MapComponent implements OnInit {
+  map!: L.Map;
+  selectedAnsichtOption = 'free-movement';
 
-describe('MapAnsichtComponent', () => {
-  let component: MapAnsichtComponent;
-  let fixture: ComponentFixture<MapAnsichtComponent>;
+  ngOnInit() {
+    this.initMap();
+  }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ MapAnsichtComponent ]
-    })
-    .compileComponents();
+  initMap() {
+    this.map = L.map('map', {
+      center: [49.482438, 8.463069],
+      zoom: 14
+    });
 
-    fixture = TestBed.createComponent(MapAnsichtComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 18
+    }).addTo(this.map);
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  onAnsichtOptionSelected(option: string) {
+    this.selectedAnsichtOption = option;
+    // Use the selected option to update the map
+  }
+}

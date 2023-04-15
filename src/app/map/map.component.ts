@@ -59,6 +59,27 @@ export class MapComponent implements OnInit {
   }
 
   /**
+   *-----
+   *
+   * @param selectedOption selected option on popup window
+   */
+  onAnsichtOptionSelected(selectedOption: string) {
+    switch (selectedOption) {
+      case 'Free Movement':
+        this.map.setView([49.495, 8.5], 15);
+        break;
+      case 'Luisenpark':
+        this.map.setView([49.4794, 8.4787], 16);
+        break;
+      case 'Spinellipark':
+        this.map.setView([49.4967, 8.4713], 16);
+        break;
+      default:
+        break;
+    }
+  }
+
+  /**
    * Draws a route on the map between the points.
    *
    * @param points Points

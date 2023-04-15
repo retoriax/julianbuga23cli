@@ -1,52 +1,43 @@
-.bottom-right {
+.map-ansicht {
   position: absolute;
-  bottom: calc(100% + 10px);
-  left: calc(50% - 100px);
-  z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid black;
+  bottom: 65px;
+  right: 10px;
+}
+
+.ansicht-button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.ansicht-popup {
+  position: absolute;
+  top: -100px;
+  right: 0;
+  width: 150px;
   padding: 10px;
-  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 5px;
 }
 
-.bottom-right.show {
-  display: block;
-}
-
-.bottom-right:before {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: calc(50% - 10px);
-  border-width: 10px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
-
-.bottom-right label {
+.radio-row {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
 }
 
-.bottom-right input[type="radio"] {
+.radio-row input[type="radio"] {
   margin-right: 5px;
+  transform: translateY(-3px);
+
 }
 
-:host {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 20px;
-}
-
-button {
-  position: relative;
-  z-index: 9999;
-  background-color: rgba(255, 255, 255, 0.5);
-  top: -50px;
-}
-
-button:focus + .bottom-right {
-  display: block;
+.radio-row label {
+  font-size: 14px;
 }
