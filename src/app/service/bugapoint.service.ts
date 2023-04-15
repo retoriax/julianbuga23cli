@@ -6,7 +6,7 @@ import {Bugapoint} from "../model/bugapoint";
 @Injectable({
   providedIn: 'root'
 })
-export class BugapointServiceService {
+export class BugapointService {
   private bugapointURL: string;
 
   constructor(private http: HttpClient) {

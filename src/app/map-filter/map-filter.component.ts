@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import {Bugapoint} from "../model/bugapoint";
-import {BugapointServiceService} from "../service/bugapoint-service.service";
+import {BugapointService} from "../service/bugapoint.service";
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -16,7 +16,7 @@ export class MapFilterComponent implements OnInit{
 
   discriminatorSet = new Set();
 
-  constructor(private bugapointservice: BugapointServiceService) {}
+  constructor(private bugapointservice: BugapointService) {}
 
   ngOnInit() {
     /**

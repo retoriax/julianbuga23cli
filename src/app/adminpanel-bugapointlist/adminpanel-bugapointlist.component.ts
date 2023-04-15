@@ -3,20 +3,21 @@ import {Bugapoint} from "../model/bugapoint";
 import {BugapointService} from "../service/bugapoint.service";
 
 @Component({
-  selector: 'app-bugapoint-user-list',
-  templateUrl: './bugapoint-list.component.html',
-  styleUrls: ['./bugapoint-list.component.css']
+  selector: 'app-adminpanel-bugapointlist',
+  templateUrl: './adminpanel-bugapointlist.component.html',
+  styleUrls: ['./adminpanel-bugapointlist.component.css']
 })
-export class BugapointListComponent implements OnInit {
-  map:any
-  bugapoints: Bugapoint[];
+export class AdminpanelBugapointlistComponent implements OnInit {
+
+  points: Bugapoint[];
 
   constructor(private bugapointservice: BugapointService) {
   }
-  ngOnInit() {
 
+  ngOnInit(): void {
     this.bugapointservice.findAll().subscribe((data: Bugapoint[]) => {
-      this.bugapoints = data;
+      this.points = data;
     });
   }
+
 }

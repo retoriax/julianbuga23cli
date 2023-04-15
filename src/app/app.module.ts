@@ -22,6 +22,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatListModule} from "@angular/material/list";
+import { AdminpanelBugapointsComponent } from './adminpanel-bugapoints/adminpanel-bugapoints.component';
+import { AdminpanelSubmenubarComponent } from './adminpanel-submenubar/adminpanel-submenubar.component';
+import { AdminpanelBugapointlistComponent } from './adminpanel-bugapointlist/adminpanel-bugapointlist.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -34,6 +38,9 @@ import {MatListModule} from "@angular/material/list";
     NavbarComponent,
     MapFilterComponent,
     AdminpanelMenuComponent,
+    AdminpanelBugapointsComponent,
+    AdminpanelSubmenubarComponent,
+    AdminpanelBugapointlistComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +57,7 @@ import {MatListModule} from "@angular/material/list";
     MatButtonModule,
     MatStepperModule,
     MatListModule,
+    MatExpansionModule,
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

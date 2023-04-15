@@ -1,0 +1,23 @@
+<mat-action-list>
+  <div *ngFor="let point of points">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{point.title}}
+      </mat-expansion-panel-header>
+      <mat-panel-description>
+        Placeholder for description
+      </mat-panel-description>
+      <mat-panel-description>
+        Update:
+      </mat-panel-description>
+
+      <input matInput placeholder="Latitude">
+      <input matInput placeholder="Longitude">
+
+      <br>
+
+      <button mat-raised-button class="updateButton">Update</button>
+
+    </mat-expansion-panel>
+  </div>
+</mat-action-list>
