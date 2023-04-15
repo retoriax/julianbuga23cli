@@ -1,26 +1,36 @@
-import {Component} from '@angular/core';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Component, OnInit} from '@angular/core';
+//import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Bugapoint} from "../model/bugapoint";
+import {RoutepointServiceService} from "../service/routepoint-service.service";
 
 @Component({
   selector: 'app-bugapoint-drag-and-drop',
   templateUrl: './bugapoint-drag-and-drop.component.html',
   styleUrls: ['./bugapoint-drag-and-drop.component.css']
 })
-export class BugapointDragAndDropComponent {
+export class BugapointDragAndDropComponent implements OnInit{
 
-  routeBugapoints: Bugapoint[] = [{"id" : "1","title" : "hurensohnPunkt", "longitude":40,"latitude":40}, {"id" : "2","title" : "hurensohnPunktolol", "longitude":40,"latitude":40}];
+  route: Bugapoint[] = [];
+
+  constructor(private routePointService: RoutepointServiceService) {
+  }
+  ngOnInit(): void {
+    this.getRoute();
+  }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.routeBugapoints, event.previousIndex, event.currentIndex);
+    this.routePointService.moveRoutePointInRoute(event.previousIndex, event.currentIndex)
+      .subscribe(route => this.route = route);
   }
 
   deleteElement(id: string) {
-    this.routeBugapoints = this.routeBugapoints.filter(item=>item.id!==id);
+    this.routePointService.deleteRoutePointById(id)
+      .subscribe(route => this.route = route);
   }
 
-  public addElement(bugapoint: Bugapoint){
-    this.routeBugapoints.push(bugapoint);
+  getRoute(): void {
+    this.routePointService.getRoute()
+      .subscribe(route => this.route = route);
   }
 }
 

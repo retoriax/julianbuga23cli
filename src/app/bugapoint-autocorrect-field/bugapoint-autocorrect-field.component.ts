@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {BugapointServiceService} from "../service/bugapoint-service.service";
 import {Bugapoint} from "../model/bugapoint";
+import {RoutepointServiceService} from "../service/routepoint-service.service";
 
 @Component({
   selector: 'app-bugapoint-autocorrect-field',
@@ -19,7 +20,8 @@ export class BugapointAutocorrectFieldComponent implements OnInit{
   filteredBugapoints: Observable<Bugapoint[]>;
   newElement: Bugapoint;
 
- constructor(private bugapointservice: BugapointServiceService) {
+ constructor(private bugapointservice: BugapointServiceService,
+             private routeService: RoutepointServiceService) {
  }
 
   ngOnInit() {
@@ -45,7 +47,6 @@ export class BugapointAutocorrectFieldComponent implements OnInit{
     return bugapoint && bugapoint.title ? bugapoint.title : '';
   }
   submit() {
-    console.log(this.filteredBugapoints);
     if (this.newElement && typeof this.newElement !== 'string') {
       let bugapoint = this.newElement;
       console.log(bugapoint);

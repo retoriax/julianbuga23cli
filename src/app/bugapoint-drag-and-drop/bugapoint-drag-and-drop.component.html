@@ -1,5 +1,5 @@
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <div class="example-box" *ngFor="let routeBugapoint of routeBugapoints" cdkDrag>{{routeBugapoint.title}}
+  <div class="example-box" *ngFor="let routeBugapoint of route" cdkDrag>{{routeBugapoint.title}}
     <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="deleteElement(routeBugapoint.id)">
       <mat-icon>delete</mat-icon>
     </button>
