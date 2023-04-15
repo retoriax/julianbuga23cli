@@ -17,6 +17,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MapAnsichtComponent } from './map-ansicht/map-ansicht.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MapComponent,
     NavbarComponent,
     MapFilterComponent,
+    MapAnsichtComponent,
   ],
   imports: [
     BrowserModule,

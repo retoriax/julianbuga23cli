@@ -1,0 +1,8 @@
+<div class="container">
+  <button (click)="showRadioButtons = !showRadioButtons">Ansicht</button>
+  <div *ngIf="showRadioButtons" class="bottom-right">
+    <label><input type="radio" name="options" value="option1">See all</label>
+    <label><input type="radio" name="options" value="option2">Luisenpark</label>
+    <label><input type="radio" name="options" value="option3">Spinellipark</label>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.bottom-right {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: calc(50% - 100px);
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid black;
+  padding: 10px;
+  display: none;
+}
+
+.bottom-right.show {
+  display: block;
+}
+
+.bottom-right:before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: calc(50% - 10px);
+  border-width: 10px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.bottom-right label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.bottom-right input[type="radio"] {
+  margin-right: 5px;
+}
+
+:host {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+}
+
+button {
+  position: relative;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.5);
+  top: -50px;
+}
+
+button:focus + .bottom-right {
+  display: block;
+}
