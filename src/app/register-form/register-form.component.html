@@ -1,23 +1,53 @@
-<section>
-  <div class="registration">
-    <h2>Registriere dich: </h2>
-    <div class="inputBox">
-      <input type="text" placeholder="Vorname">
-    </div>
-    <div class="inputBox">
-      <input type="text" placeholder="Nachname">
-    </div>
-    <div class="inputBox">
-      <input type="text" placeholder="Geburtstag (DD.MM.YYYY)">
-    </div>
-    <div class="inputBox">
-      <input type="text" placeholder="Email">
-    </div>
-    <div class="inputBox">
-      <input type="password" placeholder="Passwort">
-    </div>
-    <div class="inputBox">
-      <input type="submit" value="Submit" id="btn">
-    </div>
-  </div>
-</section>
+<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Dein Name</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Vorname</mat-label>
+        <input matInput placeholder="First name" [formControl]="vorname" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nachname</mat-label>
+        <input matInput placeholder="Last name" [formControl]="nachname" required>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button matStepperNext>Weiter</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Deine Email</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput [formControl]="email" placeholder="max@mustermann.de" required>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button matStepperPrevious>Zurück</button>
+        <button mat-raised-button matStepperNext>Weiter</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Dein Passwort</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Passwort</mat-label>
+        <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Verstecke Passwort'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button matStepperPrevious>Zurück</button>
+        <button mat-raised-button matStepperNext (click)="createUser()">Benutzer erstellen</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Fertig</ng-template>
+    <p>Dein Benutzer wurde erstellt!</p>
+  </mat-step>
+</mat-stepper>

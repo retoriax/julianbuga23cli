@@ -4,5 +4,6 @@ export class User {
   lastname: string;
   birthdate: Date;
   emailadress: string;
+  password: string;
   discriminator: string;
 }
