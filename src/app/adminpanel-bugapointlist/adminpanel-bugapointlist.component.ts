@@ -36,6 +36,12 @@ export class AdminpanelBugapointlistComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Fills location input fields with present user location.
+   *
+   * @param i Index to find the right input fields
+   */
   getGeoLocation(i: number) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {

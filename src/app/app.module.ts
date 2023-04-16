@@ -26,6 +26,7 @@ import { AdminpanelBugapointsComponent } from './adminpanel-bugapoints/adminpane
 import { AdminpanelSubmenubarComponent } from './adminpanel-submenubar/adminpanel-submenubar.component';
 import { AdminpanelBugapointlistComponent } from './adminpanel-bugapointlist/adminpanel-bugapointlist.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { AdminpanelNewpointexpensionpanelComponent } from './adminpanel-newpointexpensionpanel/adminpanel-newpointexpensionpanel.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     AdminpanelBugapointsComponent,
     AdminpanelSubmenubarComponent,
     AdminpanelBugapointlistComponent,
+    AdminpanelNewpointexpensionpanelComponent,
   ],
   imports: [
     BrowserModule,
