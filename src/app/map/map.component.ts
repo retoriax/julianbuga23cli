@@ -30,7 +30,6 @@ export class MapComponent implements OnInit {
     this.updateMarkers();
   }
 
-
   /**
    * Method to add a simple marker to the map.
    *
@@ -59,20 +58,22 @@ export class MapComponent implements OnInit {
   }
 
   /**
-   *-----
+   * This method is called when a new option is selected from the view options.
+   * It takes a string parameter selectedOption that represents the selected option.
+   * Based on the selected option, this method sets the view of the map to a specific location.
    *
-   * @param selectedOption selected option on popup window
+   * @param selectedOption a string representing the selected option from the view options
    */
   onAnsichtOptionSelected(selectedOption: string) {
     switch (selectedOption) {
-      case 'Free Movement':
-        this.map.setView([49.495, 8.5], 15);
+      case 'free-movement':
+        this.map.setView([49.49160597139701, 8.509922523273646], 15);
         break;
-      case 'Luisenpark':
-        this.map.setView([49.4794, 8.4787], 16);
+      case 'luisenpark':
+        this.map.setView([49.48401208167432, 8.494097324894936], 16);
         break;
-      case 'Spinellipark':
-        this.map.setView([49.4967, 8.4713], 16);
+      case 'spinellipark':
+        this.map.setView([49.49870198837971, 8.52421313903874], 16);
         break;
       default:
         break;
