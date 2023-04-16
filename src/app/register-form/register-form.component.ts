@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
-import {UserService} from "../service/user-service.service";
-import {User} from "../model/user";
+import {RegisterRequest} from "../model/registerrequest";
+import {AuthenticationService} from "../service/authentication.service";
+import {BugapointServiceService} from "../service/bugapoint-service.service";
 
 @Component({
   selector: 'app-register-form',
@@ -20,7 +21,6 @@ export class RegisterFormComponent {
   });
   isLinear = false;
   hide = true;
-  user: User;
 
   email = new FormControl('', [Validators.email]);
   vorname = new FormControl('');
@@ -35,15 +35,16 @@ export class RegisterFormComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  constructor(private _formBuilder: FormBuilder, private userService: UserService) {}
+  constructor(private _formBuilder: FormBuilder, private authService: AuthenticationService, private bugapoints: BugapointServiceService) {}
 
   createUser() {
     this.isLinear = true;
-    this.user = new User();
-    this.user.firstname = this.vorname.value!;
-    this.user.lastname = this.nachname.value!;
-    this.user.emailadress = this.email.value!;
-    this.user.password = this.password.value!;
-    this.userService.save(this.user);
+    let request = new RegisterRequest();
+    request.firstname = this.vorname.value!;
+    request.lastname = this.nachname.value!;
+    request.email = this.email.value!;
+    request.password = this.password.value!;
+    console.log(request);
+    this.authService.register(request);
   }
 }
