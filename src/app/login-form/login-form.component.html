@@ -1,18 +1,22 @@
-<section>
-  <div class="login">
-    <h2>Login</h2>
-    <div class="inputBox">
-      <input type="text" placeholder="Email">
-    </div>
-    <div class="inputBox">
-      <input type="password" placeholder="Passwort">
-    </div>
-    <div class="inputBox">
-      <input type="submit" value="Einloggen" id="btn">
-    </div>
-    <div class="group">
-      <a href="#">Passwort vergessen?</a>
-      <a href="#">Registrieren</a>
-    </div>
-  </div>
-</section>
+<form class="form">
+  <h1>Logge dich ein: </h1>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+           placeholder="example@email.com">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Bitte gib eine richtige Email ein!
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
+
