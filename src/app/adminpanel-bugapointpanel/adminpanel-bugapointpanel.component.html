@@ -1,0 +1,54 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    {{point.title}}
+  </mat-expansion-panel-header>
+
+  <mat-form-field class="inputfield">
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Enter description for this Bugapoint here" [formControl]="descriptionForm">
+      Placeholder by now.
+    </textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Admin</mat-label>
+    <input matInput placeholder="Select admin">
+    <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
+      <mat-option>
+        Test
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+
+  <form>
+    <br>
+    <mat-form-field>
+      <mat-label>Latitude</mat-label>
+      <input matInput [placeholder]="'' + point.latitude" [formControl]="latForm">
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+      <mat-label>Longitude</mat-label>
+      <input matInput [placeholder]="'' + point.longitude" [formControl]="longForm">
+    </mat-form-field>
+
+    <br>
+  </form>
+
+  <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Use my location</button>
+  <br>
+  <br>
+
+
+  <div class="buttonBar">
+    <button mat-raised-button color="primary">Update</button>
+    <button mat-raised-button color="warn">Delete</button>
+  </div>
+
+  <br>
+
+  <mat-divider></mat-divider>
+</mat-expansion-panel>

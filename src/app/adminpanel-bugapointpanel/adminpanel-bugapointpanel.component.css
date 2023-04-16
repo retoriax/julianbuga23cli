@@ -1,0 +1,11 @@
+
+.buttonBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+button {
+  margin-right: 5vw;
+}

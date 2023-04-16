@@ -1,31 +1,7 @@
+<mat-divider></mat-divider>
 <div class="bugapointlist">
-  <div *ngFor="let point of points; let i = index">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        {{point.title}}
-      </mat-expansion-panel-header>
-      <mat-panel-description>
-        Placeholder for description
-      </mat-panel-description>
-
-      <form [formGroup]="formGroup">
-        <a class="latlngDescriptor">Latitude:</a>
-        <br>
-        <input matInput [placeholder]="'' + point.latitude" [formControl]="lats[i]">
-        <br>
-
-        <a class="latlngDescriptor">Longitude:</a>
-        <br>
-        <input matInput [placeholder]="'' + point.longitude" [formControl]="longs[i]">
-        <br>
-      </form>
-
-      <button mat-raised-button class="locationButton" (click)="getGeoLocation(i)">Use my location</button>
-      <br>
-
-      <button mat-raised-button class="updateButton">Update</button>
-
-    </mat-expansion-panel>
+  <div *ngFor="let point of points">
+    <app-adminpanel-bugapointpanel [point]="point"></app-adminpanel-bugapointpanel>
   </div>
-
 </div>
+<mat-divider></mat-divider>
