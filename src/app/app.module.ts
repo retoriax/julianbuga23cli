@@ -22,6 +22,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { MapFilterComponent } from './map-filter/map-filter.component';
+import {MatSelectModule} from "@angular/material/select";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -36,12 +39,19 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     BugapointAutocorrectFieldComponent,
     BugapointAutocorrectFieldComponent,
     BugapointDragAndDropComponent,
+    MapFilterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    IonicModule.forRoot(),
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
     IonicModule.forRoot(),
     BrowserAnimationsModule,
     MatAutocompleteModule,

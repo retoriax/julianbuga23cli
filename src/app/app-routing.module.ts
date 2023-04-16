@@ -5,6 +5,7 @@ import {MapComponent} from "./map/map.component";
 import {RoutePlannerComponent} from "./route-planner/route-planner.component";
 import {BugapointListComponent} from "./bugapoint-list/bugapoint-list.component";
 
+
 const routes: Routes = [
   { path: 'bugapoint', component: BugapointListComponent },
   { path: 'adduser', component: UserFormComponent },

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Bugapoint} from "../model/bugapoint";
 import {map} from "rxjs/operators";
@@ -29,6 +29,18 @@ export class BugapointServiceService {
       .pipe(map(value => value.filter(value1 => value1.title.toLowerCase().includes(searchtitle))));
   }
 
+  public getDiscriminators(): any {
+    return this.http.get('http://localhost:8080/getDiscriminators')
+  }
+
+  public filterBugapoints(selectedDiscriminators: Set<string>): Observable<Bugapoint[]> {
+    let params = new HttpParams();
+    selectedDiscriminators.forEach(discriminator => {
+      params = params.append('discriminators', discriminator);
+    });
+
+    return this.http.get<Bugapoint[]>('http://localhost:8080/filterBugapoints', { params: params });
+  }
 
 
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
-import {BugapointServiceService} from "../service/bugapoint-service.service";
 
 @Component({
   selector: 'app-map',
@@ -12,39 +12,22 @@ export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
 
-  constructor(private bugapointservice: BugapointServiceService) {
-  }
+  constructor() {}
   ngOnInit() {
-
     /**
      * Map init at given position and zoom level.
      */
-    this.map = L.map('map').setView([49.4793, 8.49589], 15);
+    this.map = L.map('map').setView([49.495, 8.5], 15);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
+  }
 
-
-    /**
-     * Get bugapoints and put them on the map
-     */
-    this.bugapointservice.getData().subscribe((data: any) => {
-        this.bugapoints = data;
-        for (const bugapoint of this.bugapoints) {
-          this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title);
-        }
-      },
-      (error: any) => {
-        console.error('An error occurred:', error);
-        this.map = L.map('map').setView([49.4793, 8.49589], 15);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          minZoom:10,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(this.map);
-      });
+  onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
+    this.bugapoints = filteredBugapoints;
+    this.updateMarkers();
   }
 
 
@@ -56,7 +39,43 @@ export class MapComponent implements OnInit {
    * @param title Title
    */
   showMarker(latitude: number, longitude: number, title: string) {
-    L.marker([longitude, latitude]).addTo(this.map)
-      .bindPopup(title).openPopup().addTo(this.map);
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map)
+  }
+
+  /**
+   *   Method to update the markers on the map
+   */
+  updateMarkers() {
+    // Remove all existing markers from the map
+    this.map.eachLayer((layer: any) => {
+      if (layer instanceof L.Marker) {
+        this.map.removeLayer(layer);
+      }
+    });
+    // Add new markers to the map based on the bugapoints data
+    for (const bugapoint of this.bugapoints) {
+      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title);
+    }
+  }
+
+  /**
+   * Draws a route on the map between the points.
+   *
+   * @param points Points
+   */
+  showRoute(points:Bugapoint[]) {
+    const waypoints = points.map(point => {
+      return {
+        latLng: L.latLng(point.latitude, point.longitude)
+      };
+    });
+
+    L.Routing.control({
+      waypoints: waypoints,
+      router: L.Routing.osrmv1({
+        serviceUrl: 'http://localhost:5000/route/v1',
+        profile: 'foot'
+      })
+    }).addTo(this.map);
   }
 }
