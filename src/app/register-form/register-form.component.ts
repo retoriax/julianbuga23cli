@@ -35,17 +35,15 @@ export class RegisterFormComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  constructor(private _formBuilder: FormBuilder, private userService: UserService) {
-    this.user = new User();
-  }
+  constructor(private _formBuilder: FormBuilder, private userService: UserService) {}
 
   createUser() {
     this.isLinear = true;
+    this.user = new User();
     this.user.firstname = this.vorname.value!;
     this.user.lastname = this.nachname.value!;
     this.user.emailadress = this.email.value!;
     this.user.password = this.password.value!;
-    console.log(this.user);
     this.userService.save(this.user);
   }
 }
