@@ -4,5 +4,4 @@ export class User {
   lastname: string;
   birthdate: Date;
   emailadress: string;
-  discriminator: string;
 }
