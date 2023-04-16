@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-//import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {Bugapoint} from "../model/bugapoint";
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {RoutepointServiceService} from "../service/routepoint-service.service";
+import {Observable} from "rxjs";
+import {Routepoint} from "../model/routepoint";
 
 @Component({
   selector: 'app-bugapoint-drag-and-drop',
@@ -10,27 +11,20 @@ import {RoutepointServiceService} from "../service/routepoint-service.service";
 })
 export class BugapointDragAndDropComponent implements OnInit{
 
-  route: Bugapoint[] = [];
+  route: Observable<Routepoint[]>;
 
   constructor(private routePointService: RoutepointServiceService) {
   }
   ngOnInit(): void {
-    this.getRoute();
+    this.route = this.routePointService.routepointsObservable;
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    this.routePointService.moveRoutePointInRoute(event.previousIndex, event.currentIndex)
-      .subscribe(route => this.route = route);
+    this.routePointService.moveRoutePointInRoute(event.previousIndex, event.currentIndex);
   }
 
-  deleteElement(id: string) {
-    this.routePointService.deleteRoutePointById(id)
-      .subscribe(route => this.route = route);
-  }
-
-  getRoute(): void {
-    this.routePointService.getRoute()
-      .subscribe(route => this.route = route);
+  deleteElement(index: number) {
+    this.routePointService.deleteRoutePointByIndex(index);
   }
 }
 

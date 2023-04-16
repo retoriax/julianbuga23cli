@@ -7,7 +7,8 @@
            matInput
            [formControl]="myControl"
            [matAutocomplete]="auto"
-           [(ngModel)]="newElement">
+           [(ngModel)]="newElement"
+            #filter>
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let bugapoint of filteredBugapoints| async"
                   [value]="bugapoint">
