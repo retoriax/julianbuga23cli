@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../model/user';
 import { Observable } from 'rxjs';
+import {Bugapoint} from "../model/bugapoint";
 
 @Injectable()
 export class UserService {
@@ -18,5 +19,9 @@ export class UserService {
 
   public save(user: User) {
     return this.http.post<User>(this.usersUrl, user);
+  }
+
+  public getAdminOfBugapoint(point: Bugapoint) {
+    return this.http.post<User>(this.usersUrl + '/adminOfBugapoint', point);
   }
 }

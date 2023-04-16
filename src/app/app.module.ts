@@ -26,7 +26,9 @@ import { AdminpanelBugapointsComponent } from './adminpanel-bugapoints/adminpane
 import { AdminpanelSubmenubarComponent } from './adminpanel-submenubar/adminpanel-submenubar.component';
 import { AdminpanelBugapointlistComponent } from './adminpanel-bugapointlist/adminpanel-bugapointlist.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { AdminpanelNewpointexpensionpanelComponent } from './adminpanel-newpointexpensionpanel/adminpanel-newpointexpensionpanel.component';
+import { AdminpanelNewpointpanelComponent } from './adminpanel-newpointpanel/adminpanel-newpointpanel.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { AdminpanelBugapointpanelComponent } from './adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { AdminpanelNewpointexpensionpanelComponent } from './adminpanel-newpoint
     AdminpanelBugapointsComponent,
     AdminpanelSubmenubarComponent,
     AdminpanelBugapointlistComponent,
-    AdminpanelNewpointexpensionpanelComponent,
+    AdminpanelNewpointpanelComponent,
+    AdminpanelBugapointpanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { AdminpanelNewpointexpensionpanelComponent } from './adminpanel-newpoint
     MatStepperModule,
     MatListModule,
     MatExpansionModule,
+    MatAutocompleteModule,
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

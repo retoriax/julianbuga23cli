@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Bugapoint} from "../model/bugapoint";
+import {environment} from "../../environments/environment";
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +19,10 @@ export class BugapointService {
     return this.http.get<Bugapoint[]>(this.bugapointURL);
   }
 
-  public save(bugapoint: Bugapoint) {
-    return this.http.post<Bugapoint>(this.bugapointURL, bugapoint);
+  addBugapoint(title: string, latitude: number, longitude: number, type: string, adminEmail: string): Observable<any> {
+    const body = { title: title, latitude: latitude, longitude: longitude, type: type, adminEmail: adminEmail };
+    console.log(environment.baseUrl + '/addBugapoint', body);
+    return this.http.post(environment.baseUrl + '/addBugapoint', body);
   }
   getData(): Observable<any>  {
     return this.http.get(this.bugapointURL);

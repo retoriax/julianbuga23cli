@@ -6,10 +6,11 @@
   border-radius: 1rem;
 
 
-  background-color: lightgray;
+  background-color: #e1416d;
 }
 
 .title {
   font-family: Verdana, serif;
   font-size: 2.5em;
+  color: white;
 }

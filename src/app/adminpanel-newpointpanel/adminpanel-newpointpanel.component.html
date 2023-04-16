@@ -1,0 +1,55 @@
+<app-adminpanel-submenubar [title]="'New Bugapoint'" [backUrl]="'/admin/bugapoints'"></app-adminpanel-submenubar>
+
+<br>
+
+<div class="bugapointformular">
+
+
+  <mat-form-field class="inputfield">
+    <mat-label>Title of new point</mat-label>
+    <input matInput placeholder="Title" [formControl]="pTitle">
+  </mat-form-field>
+
+  <mat-form-field class="inputfield">
+    <mat-label>Type</mat-label>
+    <input matInput placeholder="Select type" [matAutocomplete]="typeAuto" [formControl]="type">
+    <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
+      <mat-option *ngFor="let type of this.discriminators" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field class="inputfield">
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Enter description for this Bugapoint here" [formControl]="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="inputfield">
+    <mat-label>Latitude</mat-label>
+    <input matInput placeholder="Enter latitude here" [formControl]="latitude">
+  </mat-form-field>
+
+  <mat-form-field class="inputfield">
+    <mat-label>Longitude</mat-label>
+    <input matInput placeholder="Enter longitude here" [formControl]="longitude">
+  </mat-form-field>
+
+  <button mat-raised-button class="button" color="primary" (click)="getGeoLocation()">Use my location</button>
+  <br><br>
+
+  <mat-form-field>
+    <mat-label>Admin</mat-label>
+    <input matInput placeholder="Select admin accountable for this Bugapoint" [matAutocomplete]="adminAuto"
+           [formControl]="admin">
+    <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
+      <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
+        {{admin.emailadress}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+  <button mat-raised-button class="button" color="primary" (click)="saveBugapoint()">Save</button>
+
+</div>

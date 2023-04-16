@@ -1,6 +1,4 @@
-<app-adminpanel-submenubar [title]="'Buga Points'"></app-adminpanel-submenubar>
+<app-adminpanel-submenubar [title]="'Buga Points'" [backUrl]="'/admin/menu'"></app-adminpanel-submenubar>
 <app-adminpanel-bugapointlist></app-adminpanel-bugapointlist>
-
-
-
-
+<br>
+<button mat-raised-button routerLink='/admin/bugapoints/new'>Add new point</button>
