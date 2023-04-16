@@ -20,10 +20,21 @@ export class BugapointService {
   }
 
   addBugapoint(title: string, latitude: number, longitude: number, type: string, adminEmail: string): Observable<any> {
-    const body = { title: title, latitude: latitude, longitude: longitude, type: type, adminEmail: adminEmail };
-    console.log(environment.baseUrl + '/addBugapoint', body);
-    return this.http.post(environment.baseUrl + '/addBugapoint', body);
+    const url = `${environment.baseUrl}/addBugapoint`;
+    const params = new HttpParams()
+      .set('title', title)
+      .set('latitude', latitude.toString())
+      .set('longitude', longitude.toString())
+      .set('type', type)
+      .set('adminEmail', adminEmail);
+
+    console.log(url, params)
+
+    return this.http.post(url, null, { params: params });
+
   }
+
+
   getData(): Observable<any>  {
     return this.http.get(this.bugapointURL);
   }

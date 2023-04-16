@@ -12,10 +12,11 @@
 
   <mat-form-field>
     <mat-label>Admin</mat-label>
-    <input matInput placeholder="Select admin">
+    <input matInput placeholder="Select admin accountable for this Bugapoint" [matAutocomplete]="adminAuto"
+           [formControl]="adminForm">
     <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
-      <mat-option>
-        Test
+      <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
+        {{admin.emailadress}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

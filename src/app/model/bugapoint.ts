@@ -6,6 +6,7 @@ export class Bugapoint {
   }
 
   id: string;
+  adminId: number;
   title: string;
   longitude: number;
   latitude : number;

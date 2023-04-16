@@ -20,8 +20,4 @@ export class UserService {
   public save(user: User) {
     return this.http.post<User>(this.usersUrl, user);
   }
-
-  public getAdminOfBugapoint(point: Bugapoint) {
-    return this.http.post<User>(this.usersUrl + '/adminOfBugapoint', point);
-  }
 }
