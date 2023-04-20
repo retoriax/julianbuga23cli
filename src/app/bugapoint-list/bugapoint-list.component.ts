@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Bugapoint} from "../model/bugapoint";
-import {BugapointServiceService} from "../service/bugapoint-service.service";
+import {BugapointServiceService} from "../services/bugapoint-service.service";
 
 @Component({
   selector: 'app-bugapoint-user-list',
