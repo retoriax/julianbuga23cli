@@ -4,7 +4,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import {BugapointListComponent} from "./bugapoint-list/bugapoint-list.component";
 import {MapComponent} from "./map/map.component";
-import {RegisterFormComponent} from "./register-form/register-form.component";
+import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
+
 
 
 const routes: Routes = [
@@ -12,7 +13,7 @@ const routes: Routes = [
   { path: 'adduser', component: UserFormComponent },
   { path: 'bugapoints', component: BugapointListComponent},
   { path: 'map', component: MapComponent},
-  { path: 'register', component: RegisterFormComponent}
+  { path: 'register', component: RegisterUiComponent}
 ];
 
 @NgModule({

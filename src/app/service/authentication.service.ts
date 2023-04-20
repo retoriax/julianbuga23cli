@@ -13,13 +13,6 @@ export class AuthenticationService {
   }
 
   public register(request: RegisterRequest) {
-    console.log("hallo");
-    //return this.http.post<RegisterRequest>("localhost:8080/api/v1/auth/register", request);
-
-    const body = { firstname: "Julian", lastname: "Sammet", email: "julian@sammet.de", password: "1234" };
-
-    console.log('http://localhost:8080/api/v1/auth/register', body);
-
-    return this.http.post("http://localhost:8080/api/v1/auth/register" ,body);
+    return this.http.post(this.url + "/register" ,request).subscribe(data => console.log("registered account" + data));
   }
 }
