@@ -26,7 +26,7 @@ export class BugapointServiceService {
   }
   searchByTitle(searchtitle: string): Observable<Bugapoint[]> {
     return this.http.get<Bugapoint[]>(this.bugapointURL)
-      .pipe(map(value => value.filter(value1 => value1.title.toLowerCase().includes(searchtitle))));
+      .pipe(map(value => value.filter(value1 => value1.title.toLowerCase().trim().includes(searchtitle.toLowerCase().trim()))));
   }
 
 
