@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {debounceTime, mergeAll, Observable} from 'rxjs';
+import {mergeAll, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {BugapointServiceService} from "../service/bugapoint-service.service";
 import {Bugapoint} from "../model/bugapoint";
@@ -33,7 +33,7 @@ export class BugapointAutocorrectFieldComponent implements OnInit {
     this.filteredBugapoints = this.myControl.valueChanges.pipe(
       startWith(''),
       // delay emits
-      debounceTime(300),
+      //debounceTime(300),
       map(value => {
         const title = typeof value === 'string' ? value : value?.title;
         return this.lookup(title as string);

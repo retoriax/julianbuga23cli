@@ -1,1 +1,12 @@
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 
+
+.routeButton {
+  width: 500px;
+}
