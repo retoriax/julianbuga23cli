@@ -16,17 +16,25 @@ export class BugapointService {
 
   constructor(private http: HttpClient) { }
 
+  findAll(): Observable<Bugapoint[]> {
+    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`);
+  }
+
   getBugapoints(): Observable<Bugapoint[]> {
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`);
   }
 
-  getFilteredBugapoints(discriminators: string[]): Observable<Bugapoint[]> {
+  getFilteredBugapoints(discriminators: Set<string>): Observable<Bugapoint[]> {
+    const discriminatorList = Array.from(discriminators); // Convert Set to array
+    const discriminatorParams = discriminatorList.join(',');
+
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/filter`, {
       params: {
-        discriminators: discriminators.join(',')
+        discriminators: Array.from(discriminators).join(',')
       }
     });
   }
+
 
   saveBugapoint(bugapoint: Bugapoint): Observable<DatabaseSaveResponse> {
     return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint);
