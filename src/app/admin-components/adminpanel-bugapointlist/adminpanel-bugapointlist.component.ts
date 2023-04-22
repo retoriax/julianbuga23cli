@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BugapointService} from "../../services/bugapoint.service";
 
 @Component({
-  selector: 'app-adminpanel-bugapointlist',
+  selector: 'app-admin-components-bugapointlist',
   templateUrl: './adminpanel-bugapointlist.component.html',
   styleUrls: ['./adminpanel-bugapointlist.component.css']
 })

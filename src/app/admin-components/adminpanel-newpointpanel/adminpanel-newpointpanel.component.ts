@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../../model/user";
 import {FormControl} from "@angular/forms";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {Bugapoint} from "../../model/bugapoint";
+import {Admin} from "../../model/admin";
 
 @Component({
-  selector: 'app-adminpanel-newpointpanel',
+  selector: 'app-admin-components-newpointpanel',
   templateUrl: './adminpanel-newpointpanel.component.html',
   styleUrls: ['./adminpanel-newpointpanel.component.css']
 })
 export class AdminpanelNewpointpanelComponent implements OnInit {
 
-  admins: User[]
+  admins: Admin[]
   discriminators = new Set<string>
 
   pTitle = new FormControl('');
@@ -27,7 +27,7 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adminService.findAll().subscribe((data: User[]) => {
+    this.adminService.getAdmins().subscribe((data: Admin[]) => {
       console.log(data)
       this.admins = data;
     })

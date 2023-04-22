@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Bugapoint} from "../../model/bugapoint";
 import {FormControl} from "@angular/forms";
-import {User} from "../../model/user";
+import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
 
 @Component({
-  selector: 'app-adminpanel-bugapointpanel',
+  selector: 'app-admin-components-bugapointpanel',
   templateUrl: './adminpanel-bugapointpanel.component.html',
   styleUrls: ['./adminpanel-bugapointpanel.component.css']
 })
@@ -14,7 +14,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   constructor(private adminService: AdminService) {
   }
 
-  admins: User[]
+  admins: Admin[]
 
   @Input()
   point: Bugapoint
@@ -27,13 +27,13 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   descriptionForm = new FormControl('')
 
   async ngOnInit(): Promise<void> {
-    this.adminService.findAll().subscribe((data: any) => {
+    this.adminService.getAdmins().subscribe((data: any) => {
       this.admins = data;
     })
 
     await this.adminService.getAdminById(this.point.adminId).subscribe((data: any) => {
-      const user: User = data;
-      console.log(user);
+      const admin: Admin = data;
+      console.log(admin);
     });
 
     console.log(this.point.adminId);

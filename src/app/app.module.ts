@@ -13,18 +13,18 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { AdminpanelMenuComponent } from './adminpanel/adminpanel-menu/adminpanel-menu.component';
+import { AdminpanelMenuComponent } from './admin-components/adminpanel-menu/adminpanel-menu.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatListModule} from "@angular/material/list";
-import { AdminpanelBugapointsComponent } from './adminpanel/adminpanel-bugapointmenu/adminpanel-bugapoints.component';
-import { AdminpanelSubmenubarComponent } from './adminpanel/adminpanel-submenubar/adminpanel-submenubar.component';
-import { AdminpanelBugapointlistComponent } from './adminpanel/adminpanel-bugapointlist/adminpanel-bugapointlist.component';
+import { AdminpanelBugapointsComponent } from './admin-components/adminpanel-bugapointmenu/adminpanel-bugapoints.component';
+import { AdminpanelSubmenubarComponent } from './admin-components/adminpanel-submenubar/adminpanel-submenubar.component';
+import { AdminpanelBugapointlistComponent } from './admin-components/adminpanel-bugapointlist/adminpanel-bugapointlist.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { AdminpanelNewpointpanelComponent } from './adminpanel/adminpanel-newpointpanel/adminpanel-newpointpanel.component';
+import { AdminpanelNewpointpanelComponent } from './admin-components/adminpanel-newpointpanel/adminpanel-newpointpanel.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import { AdminpanelBugapointpanelComponent } from './adminpanel/adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
+import { AdminpanelBugapointpanelComponent } from './admin-components/adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
 
 @NgModule({
   declarations: [

@@ -14,7 +14,7 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<Admin[]> {
+  getAdmins(): Observable<Admin[]> {
     return this.http.get<Admin[]>(environment.backEndUrl + `${this.subUrl}/users`);
   }
 

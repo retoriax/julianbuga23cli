@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-adminpanel-bugapointmenu',
+  selector: 'app-admin-components-bugapointmenu',
   templateUrl: './adminpanel-bugapoints.component.html',
   styleUrls: ['./adminpanel-bugapoints.component.css']
 })
