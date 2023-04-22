@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {User} from "../model/user";
-import {Bugapoint} from "../model/bugapoint";
+import {environment} from "../../environments/environment.development";
 
 
 @Injectable({
@@ -10,16 +10,16 @@ import {Bugapoint} from "../model/bugapoint";
 })
 export class AdminService {
 
-  private baseUrl = 'http://localhost:8080';
+  private subUrl = '/admin';
 
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/users`);
+    return this.http.get<User[]>(environment.backEndUrl + `${this.subUrl}/users`);
   }
 
   getAdminById(adminId: number): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/adminOfId?adminId=${adminId}`);
+    return this.http.get<User>(environment.backEndUrl + `${this.subUrl}/adminOfId?adminId=${adminId}`);
   }
 
 }
