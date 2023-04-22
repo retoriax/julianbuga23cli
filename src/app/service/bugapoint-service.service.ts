@@ -10,7 +10,7 @@ export class BugapointServiceService {
   private bugapointURL: string;
 
   constructor(private http: HttpClient) {
-    this.bugapointURL = 'http://localhost:8080/bugapoints';
+    this.bugapointURL = 'http://localhost:8080/bugapoint';
   }
 
   public findAll(): Observable<Bugapoint[]> {
@@ -25,7 +25,7 @@ export class BugapointServiceService {
   }
 
   public getDiscriminators(): any {
-    return this.http.get('http://localhost:8080/getDiscriminators')
+    return this.http.get(this.bugapointURL + '/discriminators')
   }
 
   public filterBugapoints(selectedDiscriminators: Set<string>): Observable<Bugapoint[]> {
@@ -34,7 +34,7 @@ export class BugapointServiceService {
       params = params.append('discriminators', discriminator);
     });
 
-    return this.http.get<Bugapoint[]>('http://localhost:8080/filterBugapoints', { params: params });
+    return this.http.get<Bugapoint[]>(this.bugapointURL + '/list/filter', { params: params });
   }
 
 

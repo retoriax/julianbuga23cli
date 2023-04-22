@@ -17,6 +17,11 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NewMapFilterComponent } from './new-map-filter/new-map-filter.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
+import {MatIconModule} from "@angular/material/icon";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -28,6 +33,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MapComponent,
     NavbarComponent,
     MapFilterComponent,
+    NewMapFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +46,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatChipsModule,
+    MatLegacyChipsModule,
+    MatIconModule,
+    MatAutocompleteModule,
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

@@ -1,17 +1,6 @@
 
   <div class="filter-list">
-    <mat-form-field appearance="fill">
-      <mat-label>Punkte</mat-label>
-      <mat-select [formControl]="discriminators" multiple>
-        <mat-select-trigger>
-          {{discriminators.value?.[0] || ''}}
-          <span *ngIf="(discriminators.value?.length || 0) > 1" class="example-additional-selection">
-        (+{{(discriminators.value?.length || 0) - 1}} {{discriminators.value?.length === 2 ? 'other' : 'others'}})
-      </span>
-        </mat-select-trigger>
-        <mat-option *ngFor="let topping of discriminatorSet" [value]="topping">{{topping}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-new-map-filter></app-new-map-filter>
   </div>
   <div class="filter-button">
     <input type="checkbox" id="check">
