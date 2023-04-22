@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import {Bugapoint} from "../model/bugapoint";
-import {BugapointService} from "../service/bugapoint.service";
 import {FormControl} from '@angular/forms';
+import {BugapointService} from "../services/bugapoint.service";
 
 @Component({
   selector: 'app-map-filter',
@@ -38,13 +38,15 @@ export class MapFilterComponent implements OnInit{
       this.discriminatorSet = data;
     })
 
+
+
     this.bugapointservice.findAll().subscribe(allbugapoints => {
       this.filteredBugapointsChange.emit(allbugapoints);
     })
 
     this.discriminators.valueChanges.subscribe(() => {
       const selectedDiscriminators: Set<string> = new Set<string>([this.discriminators.value!]);
-      this.bugapointservice.filterBugapoints(selectedDiscriminators).subscribe(filteredBugapoints => {
+      this.bugapointservice.getFilteredBugapoints(selectedDiscriminators).subscribe(filteredBugapoints => {
         this.filteredBugapointsChange.emit(filteredBugapoints);
       });
     });

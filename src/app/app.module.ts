@@ -4,11 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { UserFormComponent } from './user-form/user-form.component';
-import { UserService } from './service/user-service.service';
-import { BugapointListComponent } from './bugapoint-list/bugapoint-list.component';
-import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.component';
+import { BugapointListComponent } from '../testComponents/bugapoint-list/bugapoint-list.component';
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -17,35 +13,16 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { AdminpanelMenuComponent } from './adminpanel-menu/adminpanel-menu.component';
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {MatStepperModule} from "@angular/material/stepper";
-import {MatListModule} from "@angular/material/list";
-import { AdminpanelBugapointsComponent } from './adminpanel-bugapoints/adminpanel-bugapoints.component';
-import { AdminpanelSubmenubarComponent } from './adminpanel-submenubar/adminpanel-submenubar.component';
-import { AdminpanelBugapointlistComponent } from './adminpanel-bugapointlist/adminpanel-bugapointlist.component';
-import {MatExpansionModule} from "@angular/material/expansion";
-import { AdminpanelNewpointpanelComponent } from './adminpanel-newpointpanel/adminpanel-newpointpanel.component';
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import { AdminpanelBugapointpanelComponent } from './adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
+import { BlankComponent } from './blank/blank.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserListComponent,
-    UserFormComponent,
     BugapointListComponent,
-    BugapointFormComponent,
     MapComponent,
     NavbarComponent,
     MapFilterComponent,
-    AdminpanelMenuComponent,
-    AdminpanelBugapointsComponent,
-    AdminpanelSubmenubarComponent,
-    AdminpanelBugapointlistComponent,
-    AdminpanelNewpointpanelComponent,
-    AdminpanelBugapointpanelComponent,
+    BlankComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,14 +35,8 @@ import { AdminpanelBugapointpanelComponent } from './adminpanel-bugapointpanel/a
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    MatIconModule,
-    MatButtonModule,
-    MatStepperModule,
-    MatListModule,
-    MatExpansionModule,
-    MatAutocompleteModule,
   ],
-  providers: [UserService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
