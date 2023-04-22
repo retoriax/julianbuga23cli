@@ -28,6 +28,7 @@ export class MapComponent implements OnInit {
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
     this.bugapoints = filteredBugapoints;
     this.updateMarkers();
+    this.showRoute(this.bugapoints)
   }
 
 
@@ -58,6 +59,7 @@ export class MapComponent implements OnInit {
     }
   }
 
+
   /**
    * Draws a route on the map between the points.
    *
@@ -71,10 +73,11 @@ export class MapComponent implements OnInit {
     });
 
     L.Routing.control({
-      waypoints: waypoints,
+      addWaypoints: false,
+      plan: L.Routing.plan(waypoints, {draggableWaypoints: false, addWaypoints: false, language: 'de'}),
       router: L.Routing.osrmv1({
         serviceUrl: 'http://localhost:5000/route/v1',
-        profile: 'foot'
+        profile: 'foot',
       })
     }).addTo(this.map);
   }
