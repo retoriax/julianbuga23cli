@@ -13,7 +13,18 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BlankComponent } from './blank/blank.component';
+import { AdminpanelMenuComponent } from './adminpanel/adminpanel-menu/adminpanel-menu.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatListModule} from "@angular/material/list";
+import { AdminpanelBugapointsComponent } from './adminpanel/adminpanel-bugapointmenu/adminpanel-bugapoints.component';
+import { AdminpanelSubmenubarComponent } from './adminpanel/adminpanel-submenubar/adminpanel-submenubar.component';
+import { AdminpanelBugapointlistComponent } from './adminpanel/adminpanel-bugapointlist/adminpanel-bugapointlist.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import { AdminpanelNewpointpanelComponent } from './adminpanel/adminpanel-newpointpanel/adminpanel-newpointpanel.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { AdminpanelBugapointpanelComponent } from './adminpanel/adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +33,12 @@ import { BlankComponent } from './blank/blank.component';
     MapComponent,
     NavbarComponent,
     MapFilterComponent,
-    BlankComponent,
+    AdminpanelMenuComponent,
+    AdminpanelBugapointsComponent,
+    AdminpanelSubmenubarComponent,
+    AdminpanelBugapointlistComponent,
+    AdminpanelNewpointpanelComponent,
+    AdminpanelBugapointpanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +51,12 @@ import { BlankComponent } from './blank/blank.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatIconModule,
+    MatButtonModule,
+    MatStepperModule,
+    MatListModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
