@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Bugapoint} from "../model/bugapoint";
-import {BugapointService} from "../service/bugapoint.service";
+import {Bugapoint} from "../../model/bugapoint";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {BugapointService} from "../../services/bugapoint.service";
 
 @Component({
   selector: 'app-adminpanel-bugapointlist',

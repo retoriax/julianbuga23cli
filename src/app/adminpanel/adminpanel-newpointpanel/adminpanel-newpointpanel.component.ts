@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../model/user";
-import {UserService} from "../service/user-service.service";
+import {User} from "../../model/user";
 import {FormControl} from "@angular/forms";
-import {BugapointService} from "../service/bugapoint.service";
+import {AdminService} from "../../services/admin.service";
+import {BugapointService} from "../../services/bugapoint.service";
+import {Bugapoint} from "../../model/bugapoint";
 
 @Component({
   selector: 'app-adminpanel-newpointpanel',
@@ -22,11 +23,11 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
   admin = new FormControl('');
 
 
-  constructor(private userService: UserService, private bugapointService: BugapointService) {
+  constructor(private adminService: AdminService, private bugapointService: BugapointService) {
   }
 
   ngOnInit(): void {
-    this.userService.findAll().subscribe((data: User[]) => {
+    this.adminService.findAll().subscribe((data: User[]) => {
       console.log(data)
       this.admins = data;
     })
@@ -53,8 +54,15 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
    * Saves the inputs as a bugapoint.
    */
   saveBugapoint() {
-    this.bugapointService.addBugapoint(String(this.pTitle.value), Number(this.latitude.value),
-      Number(this.longitude.value), String(this.type.value), String(this.admin.value));
+
+    let bugaPoint = new Bugapoint(Number(this.latitude.value), Number(this.longitude.value));
+
+    bugaPoint.title = String(this.pTitle.value);
+    bugaPoint.adminId = Number(this.admin.value);
+    bugaPoint.discriminator = String(this.type.value);
+
+
+    this.bugapointService.saveBugapoint(bugaPoint)
   }
 
 }

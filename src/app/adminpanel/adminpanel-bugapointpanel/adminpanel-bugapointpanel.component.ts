@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Bugapoint} from "../model/bugapoint";
+import {Bugapoint} from "../../model/bugapoint";
 import {FormControl} from "@angular/forms";
-import {AdminService} from "../service/admin.service";
-import {User} from "../model/user";
+import {User} from "../../model/user";
+import {AdminService} from "../../services/admin.service";
 
 @Component({
   selector: 'app-adminpanel-bugapointpanel',
@@ -26,15 +26,17 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
 
   descriptionForm = new FormControl('')
 
-  ngOnInit(): void {
-    this.adminService.getUsers().subscribe((data: any) => {
+  async ngOnInit(): Promise<void> {
+    this.adminService.findAll().subscribe((data: any) => {
       this.admins = data;
     })
 
-    this.adminService.getAdminById(this.point.adminId).subscribe((data: any) => {
+    await this.adminService.getAdminById(this.point.adminId).subscribe((data: any) => {
       const user: User = data;
       console.log(user);
     });
+
+    console.log(this.point.adminId);
   }
 
   getGeoLocation() {

@@ -1,4 +1,9 @@
 
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
 .buttonBar {
   display: flex;
   flex-direction: row;
