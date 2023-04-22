@@ -1,0 +1,24 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Höhe des Formulars auf die volle Höhe des Viewports setzen */
+  box-sizing: border-box; /* Box-Sizing auf border-box setzen */
+}
+
+.mat-form-field {
+  width: 100%; /* Volle Breite der Formularfelder */
+  margin-bottom: 16px; /* Abstand zwischen den Formularfeldern */
+}
+
+.mat-label {
+  text-align: center; /* Text zentrieren */
+}
+
+.mat-error {
+  margin-top: 8px; /* Abstand zwischen Fehlermeldung und Formularfeld */
+}
+
+
+

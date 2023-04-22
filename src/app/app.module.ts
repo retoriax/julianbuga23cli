@@ -12,11 +12,13 @@ import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.componen
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 import { MapFilterComponent } from './map-filter/map-filter.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatIconModule} from "@angular/material/icon";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
@@ -35,6 +37,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
     BugapointFormComponent,
     MapComponent,
     NavbarComponent,
+    LoginFormComponent,
     MapFilterComponent,
     RegisterFormComponent,
     RegisterUiComponent,
