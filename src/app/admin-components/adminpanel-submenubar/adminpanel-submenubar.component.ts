@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-admin-components-submenubar',

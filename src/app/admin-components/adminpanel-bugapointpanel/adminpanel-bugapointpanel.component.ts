@@ -27,7 +27,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   descriptionForm = new FormControl('')
 
   async ngOnInit(): Promise<void> {
-    this.adminService.getAdmins().subscribe((data: any) => {
+    this.adminService.findAll().subscribe((data: any) => {
       this.admins = data;
     })
 

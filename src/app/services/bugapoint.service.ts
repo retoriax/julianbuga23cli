@@ -16,17 +16,28 @@ export class BugapointService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * returns all bugapoints
+   */
   findAll(): Observable<Bugapoint[]> {
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`);
   }
 
+  /**
+   * returns all bugapoints
+   */
   getBugapoints(): Observable<Bugapoint[]> {
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`);
   }
 
+  /**
+   * Returns all bugapoints with the given discriminators.
+   *
+   * @param discriminators discriminators
+   */
   getFilteredBugapoints(discriminators: Set<string>): Observable<Bugapoint[]> {
-    const discriminatorList = Array.from(discriminators); // Convert Set to array
-    const discriminatorParams = discriminatorList.join(',');
+    //const discriminatorList = Array.from(discriminators); // Convert Set to array
+    //const discriminatorParams = discriminatorList.join(',');
 
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/filter`, {
       params: {

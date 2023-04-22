@@ -27,7 +27,7 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adminService.getAdmins().subscribe((data: Admin[]) => {
+    this.adminService.findAll().subscribe((data: Admin[]) => {
       console.log(data)
       this.admins = data;
     })

@@ -1,3 +1,7 @@
+mat-expansion-panel {
+  display: flex;
+  flex-direction: column;
+}
 
 .list {
   display: flex;
