@@ -4,8 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { BugapointListComponent } from './bugapoint-list/bugapoint-list.component';
-import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.component';
+import { BugapointListComponent } from '../testComponents/bugapoint-list/bugapoint-list.component';
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -20,7 +19,6 @@ import { BlankComponent } from './blank/blank.component';
   declarations: [
     AppComponent,
     BugapointListComponent,
-    BugapointFormComponent,
     MapComponent,
     NavbarComponent,
     MapFilterComponent,
