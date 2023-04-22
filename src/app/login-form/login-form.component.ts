@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
+import {loginrequest} from "../model/loginrequest";
+import {AuthenticationService} from "../service/authentication.service";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -20,4 +22,16 @@ export class LoginFormComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   matcher = new MyErrorStateMatcher();
+  constructor(private authService: AuthenticationService) {
+
+  }
+  login(){
+    const email = document.getElementById("loginEmail") as HTMLInputElement
+    const password = document.getElementById("loginPassword") as HTMLInputElement
+    const request : loginrequest = new loginrequest();
+    request.email = email.value
+    request.password = password.value
+    this.authService.login(request)
+    console.log("Login triggered")
+  }
 }
