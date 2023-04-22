@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {User} from "../model/user";
+import {Admin} from "../model/admin";
 import {environment} from "../../environments/environment.development";
 
 
@@ -14,11 +14,12 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getAdminById(adminId: number): Observable<User> {
-    return this.http.get<User>(environment.backEndUrl + `${this.subUrl}/id/${adminId}`);
+  getUsers(): Observable<Admin[]> {
+    return this.http.get<Admin[]>(environment.backEndUrl + `${this.subUrl}/users`);
   }
 
-  findAll() {
-    return this.http.get<User[]>(environment.backEndUrl + `${this.subUrl}/list`);
+  getAdminById(adminId: number): Observable<Admin> {
+    return this.http.get<Admin>(environment.backEndUrl + `${this.subUrl}/adminOfId?adminId=${adminId}`);
   }
+
 }
