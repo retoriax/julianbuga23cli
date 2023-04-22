@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {BugapointListComponent} from "./bugapoint-list/bugapoint-list.component";
 import {MapComponent} from "./map/map.component";
 import {BlankComponent} from "./blank/blank.component";
 
