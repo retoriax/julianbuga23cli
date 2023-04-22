@@ -21,7 +21,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatIconModule} from "@angular/material/icon";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
 import { TokenCheckerComponent } from './UI/register-components/token-checker/token-checker.component';

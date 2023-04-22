@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'adduser', component: UserFormComponent },
   { path: 'bugapoints', component: BugapointListComponent},
   { path: 'map', component: MapComponent},
-  { path: 'register', component: RegisterUiComponent}
+  { path: 'register', component: RegisterUiComponent},
   { path: 'login', component: LoginFormComponent}
 ];
 
