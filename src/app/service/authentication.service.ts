@@ -26,7 +26,7 @@ export class AuthenticationService {
     this.http.post(this.registerUrl, request).subscribe({
       next: (data) => {
         this.setCookie(data)
-        this.router.navigate(['/login']) // Adminpanel von max eingeben
+        this.router.navigate(['/admin/menu'])
       },
       error: (error: any) => {
         console.error(error);
@@ -43,7 +43,7 @@ export class AuthenticationService {
     this.http.post(this.loginUrl, request).subscribe({
       next: (data) => {
         this.setCookie(data)
-        this.router.navigate(['/register'])
+        this.router.navigate(['/admin/menu'])
       },
       error: (error: any) => {
         if (error.status === 403) {
