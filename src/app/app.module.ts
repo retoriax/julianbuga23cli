@@ -28,6 +28,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,9 @@ import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
     MatIconModule,
     MatAutocompleteModule,
     MatChipsModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatButtonModule,
     MatLegacyChipsModule,
   ],
   exports: [
