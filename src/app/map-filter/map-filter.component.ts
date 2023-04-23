@@ -55,12 +55,7 @@ export class MapFilterComponent implements OnInit {
     this.bugapointservice.getDiscriminators().subscribe((data: any) => {
       this.discriminatorSet = new Set<string>(data);
       this.selectedDiscriminators = new Set<string>(data);
-    });
-
-    // Abfrage aller Bugapoints von der Datenbank
-    this.bugapointservice.findAll().subscribe(allbugapoints => {
-      // Initialer Filter auf alle Bugapoints
-      this.filteredBugapointsChange.emit(allbugapoints);
+      this.filterBugapoints();
     });
   }
 
@@ -101,8 +96,6 @@ export class MapFilterComponent implements OnInit {
     }
     this.alleSelected = true;
     this.selectedDiscriminators = new Set(this.discriminatorSet);
-    this.bugapointservice.findAll().subscribe(bugapoints => {
-      this.filteredBugapointsChange.emit(bugapoints);
-    })
+    this.filterBugapoints();
   }
 }
