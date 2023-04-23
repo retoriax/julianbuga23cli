@@ -59,16 +59,23 @@ export class AuthenticationService {
     });
   }
 
-  public checkIfLoggedIn(){
-    const request : LoginStatusrequest = new LoginStatusrequest
-    request.token = JSON.stringify({headers: this.getAuthheader().headers})
-    const token: string = JSON.stringify({headers: this.getAuthheader().headers})
-    this.http.post<boolean>(this.loginStatusUrl, request).subscribe({
+  public checkIfLoggedIn(callback: (success: boolean) => void) {
+    const statusrequest: LoginStatusrequest = new LoginStatusrequest();
+    statusrequest.token = this.cookieService.get('token');
+    console.log('Authorization header:' + statusrequest);
+    this.http.post<boolean>(this.loginStatusUrl, statusrequest).subscribe({
       next: (data) => {
-        return data
+        if (data) {
+          console.log("eingeloggt service")
+          callback(true);
+        } else {
+          console.log("nicht eingeloggt service ")
+          callback(false);
+        }
       },
       error: (error: any) => {
-          console.error(error);
+        console.error(error);
+        callback(false);
       },
       complete: () => {
         console.log('Login status check completed');
