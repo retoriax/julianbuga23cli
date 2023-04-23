@@ -1,12 +1,17 @@
-
-  <div class="filter-list">
-    <app-new-map-filter></app-new-map-filter>
-  </div>
-  <div class="filter-button">
-    <input type="checkbox" id="check">
-    <label for="check" class="checkbtn">
-      <ion-icon name="filter-outline"></ion-icon>
-    </label>
-  </div>
+<div class="filter-list">
+    <mat-chip-list #chipList>
+      <mat-chip-option [selected]="alleSelected" s (click)="alleAuswaehlen()">Alle auswählen</mat-chip-option>
+      <mat-chip-option *ngFor="let discriminator of discriminatorSet" [selected]="selectedDiscriminators.has(discriminator)" [selectable]="true" [removable]="false"
+                       (click)="toggleSelection(discriminator); $event.stopPropagation()">
+        {{discriminator}}
+      </mat-chip-option>
+    </mat-chip-list>
+</div>
+<div class="filter-button">
+  <input type="checkbox" id="check">
+  <label for="check" class="checkbtn">
+    <ion-icon name="filter-outline"></ion-icon>
+  </label>
+</div>
 
 

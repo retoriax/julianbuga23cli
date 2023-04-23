@@ -28,7 +28,6 @@ export class MapComponent implements OnInit {
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
     this.bugapoints = filteredBugapoints;
     this.updateMarkers();
-    this.showRoute(this.bugapoints)
   }
 
 

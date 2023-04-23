@@ -14,10 +14,10 @@ import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BlankComponent } from './blank/blank.component';
-import {MatChipsModule} from "@angular/material/chips";
-import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatIconModule} from "@angular/material/icon";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 
 @NgModule({
   declarations: [
@@ -39,10 +39,13 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    MatChipsModule,
-    MatLegacyChipsModule,
     MatIconModule,
     MatAutocompleteModule,
+    MatChipsModule,
+    MatLegacyChipsModule,
+  ],
+  exports: [
+    MapFilterComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
