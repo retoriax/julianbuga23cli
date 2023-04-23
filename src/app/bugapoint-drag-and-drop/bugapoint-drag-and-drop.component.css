@@ -7,9 +7,7 @@
   display: block;
   background: white;
   border-radius: 4px;
-  overflow: hidden;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
+  font-size: 20px;
 }
 
 .routepoint-box {
@@ -23,8 +21,28 @@
   box-sizing: border-box;
   cursor: move;
   background: white;
-  font-size: 20px;
+  font-size: 21px;
 }
+/* Font size for screens smaller than 768px */
+@media (max-width: 500px) {
+  .routepoint-box {
+    font-size: 19px;
+  }
+  .routeButton {
+    font-size: 14px;
+  }
+}
+
+/* Font size for screens smaller than 576px */
+@media (max-width: 350px) {
+  .routepoint-box {
+    font-size: 17px;
+  }
+  .routeButton {
+    font-size: 12px;
+  }
+}
+
 
 .cdk-drag-preview {
   box-sizing: border-box;
@@ -51,8 +69,34 @@
 }
 
 .scrollable-content {
+  height: calc(100vh - 160px);
+  overflow: auto;
+  overflow-y: scroll;
+
 }
 
 .element-handle {
+  width: auto;
+  margin-right: 10px;
 }
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.routeButton {
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+.sideBySideButtonsAndHandle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+button[aria-label="delete Button"],
+.cdkDragHandle {
+  margin-right: 30px;
+}
+
 

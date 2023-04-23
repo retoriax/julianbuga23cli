@@ -42,5 +42,4 @@ export class BugapointServiceService {
     return this.http.get<Bugapoint[]>('http://localhost:8080/filterBugapoints', { params: params });
   }
 
-
 }

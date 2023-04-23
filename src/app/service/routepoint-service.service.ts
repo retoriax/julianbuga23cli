@@ -24,8 +24,10 @@ export class RoutepointServiceService {
   }
 
   addRoutePoint(routepoint: Bugapoint) {
-    this.routepoints.push({index : this.elementIndex++, bugapoint : routepoint});
-    this.routepointsSubject.next(Object.assign([], this.routepoints));
+    if (!(this.routepoints.length > 0 && this.routepoints[this.routepoints.length - 1].bugapoint === routepoint)) {
+      this.routepoints.push({index : this.elementIndex++, bugapoint : routepoint});
+      this.routepointsSubject.next(Object.assign([], this.routepoints));
+    }
   }
   deleteRoutePointByIndex(index: number) {
     this.routepoints = this.routepoints.filter(item=>item.index!==index);
@@ -40,4 +42,5 @@ export class RoutepointServiceService {
     this.routepoints = [];
     this.routepointsSubject.next(Object.assign([], this.routepoints));
   }
+
 }

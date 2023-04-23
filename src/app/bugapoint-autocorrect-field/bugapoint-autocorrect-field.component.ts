@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {mergeAll, Observable} from 'rxjs';
+import {filter, mergeAll, Observable, take} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {BugapointServiceService} from "../service/bugapoint-service.service";
 import {Bugapoint} from "../model/bugapoint";
 import {RoutepointServiceService} from "../service/routepoint-service.service";
+import {RoutepointErrorstateMatcher} from "./RoutepointErrorstateMatcher";
+import {ErrorStateMatcher} from "@angular/material/core";
 
 @Component({
   selector: 'app-bugapoint-autocorrect-field',
@@ -13,13 +15,10 @@ import {RoutepointServiceService} from "../service/routepoint-service.service";
 })
 export class BugapointAutocorrectFieldComponent implements OnInit {
   myControl = new FormControl<string | Bugapoint>('');
-  //private bugapoints: Bugapoint[]
-    /**
-    = [{"id" : "1","title" : "hurensohnPunkt", "longitude":40,"latitude":40},
-    {"id" : "1","title" : "fsd", "longitude":40,"latitude":40},{"id" : "1","title" : "dumm", "longitude":40,"latitude":40}];
-     */
   filteredBugapoints: Observable<Bugapoint[]>;
   newElement: Bugapoint;
+  routePointErrorStateMatcher = new RoutepointErrorstateMatcher();
+  matcher = new ErrorStateMatcher();
 
  constructor(private bugapointservice: BugapointServiceService,
              private routepointservice: RoutepointServiceService) {
@@ -47,43 +46,34 @@ export class BugapointAutocorrectFieldComponent implements OnInit {
     }
     submit() {
       if (this.newElement && typeof this.newElement !== 'string') {
+        this.routePointErrorStateMatcher.isValid();
         this.routepointservice.addRoutePoint(this.newElement);
       } else {
-        //unhandled am besten irgendwie das Feld rot färben um invalid input anzuzeigen
+        this.routePointErrorStateMatcher.isFalse();
+        this.findBugapointByTitle(this.newElement as string);
       }
+
     }
-  /**
-  ngOnInit() {
-
-    this.bugapointservice.findAll().subscribe((data: Bugapoint[]) => {
-      this.bugapoints = data;});
 
 
-    this.filteredBugapoints = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const title = typeof value === 'string' ? value : value?.title;
-        return title ? this._filter(title as string) : this.bugapoints.slice();
-      }),
-    );
-  }
+    findBugapointByTitle(searchString: string) {
+      const searchByString: Observable<Bugapoint|undefined> = this.filteredBugapoints.pipe(
+        // filter the array to find the first element of type MyType
+        filter((arr: Bugapoint[]) => arr.some((item: Bugapoint) => item.title === searchString)),
+        // map the filtered array to the first element of type MyType
+        map((arr: Bugapoint[]) => arr.find((item: Bugapoint) => item.title === searchString)),
+        take(1)
+      );
+      searchByString.subscribe((item: Bugapoint | undefined) => {
+        if (item === undefined) {
+          console.log("myFilteredObservable contains an undefined value");
+        } else {
+          this.routePointErrorStateMatcher.isValid();
+          this.routepointservice.addRoutePoint(item);
+        }
+      });
 
-  private _filter(name: string): Bugapoint[] {
-    const filterValue = name.toLowerCase();
-
-    return this.bugapoints.filter(bugapoint => bugapoint.title.toLowerCase().includes(filterValue));
-  }
-  displayFn(bugapoint: Bugapoint): string {
-    return bugapoint && bugapoint.title ? bugapoint.title : '';
-  }
-  submit() {
-    if (this.newElement && typeof this.newElement !== 'string') {
-      this.routepointservice.addRoutePoint(this.newElement);
-    } else {
-      //unhandled am besten irgendwie das Feld rot färben um invalid input anzuzeigen
     }
-  }
-  */
 
 }
 
