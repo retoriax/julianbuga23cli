@@ -4,6 +4,7 @@ import {RegisterRequest} from "../model/registerrequest";
 import {CookieService} from 'ngx-cookie-service';
 import {loginrequest} from "../model/loginrequest";
 import {LoginStatusrequest} from "../model/login-statusrequest";
+import {Router} from '@angular/router';
 
 
 @Injectable({
@@ -14,35 +15,35 @@ export class AuthenticationService {
   private loginUrl: string;
   private loginStatusUrl: string;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
     this.registerUrl = "http://localhost:8080/api/v1/auth/register";
     this.loginUrl = "http://localhost:8080/api/v1/auth/authenticate"
     this.loginStatusUrl = "http://localhost:8080/api/v1/auth/checkToken"
 
-
   }
 
   public register(request: RegisterRequest) {
-
-    this.http.post<authResponse>(this.registerUrl, request).subscribe({
+    this.http.post(this.registerUrl, request).subscribe({
       next: (data) => {
         this.setCookie(data)
+        this.router.navigate(['/login']) // Adminpanel von max eingeben
       },
       error: (error: any) => {
-          console.error(error);
-          // @TODO visual response in frontend
+        console.error(error);
+
+        // @TODO visual response in frontend
       },
       complete: () => {
         console.log('Register request completed');
       }
     });
-
   }
 
   public login(request: loginrequest) {
-    this.http.post<authResponse>(this.loginUrl, request).subscribe({
+    this.http.post(this.loginUrl, request).subscribe({
       next: (data) => {
         this.setCookie(data)
+        this.router.navigate(['/register'])
       },
       error: (error: any) => {
         if (error.status === 403) {
@@ -91,15 +92,18 @@ export class AuthenticationService {
     return new Date(now.getTime() + hour);
   }
 
-  getAuthheader(){
-    return {
+  getAuthheader() {
+    let a: string = this.cookieService.get('token');
+    let bearer: string = "Bearer " + a;
+    const authHeader = {
       headers: new HttpHeaders({
-        'Authorization': "Bearer " + this.cookieService.get('token')
+        'Authorization': bearer
       })
     }
+    return authHeader;
   }
 
-  setCookie(data : authResponse){
+  setCookie(data: any) {
     //https://tkacz.pro/how-to-securely-store-jwt-tokens/
     this.cookieService.set('token', data.token, {
       secure: true,
@@ -110,24 +114,4 @@ export class AuthenticationService {
   }
 }
 
-interface authResponse {
-  token: string;
-}
 
-
-/*
- let a: String = this.cookieService.get('token');
-
-      let bearer: string = "Bearer " + this.cookieService.get('token');
-      const authHeader = {
-        headers: new HttpHeaders({
-          'Authorization': bearer
-        })
-      }
-      //,{headers: authHeader.headers}
-      this.http.get("http://localhost:8080/api/v1/admin/users", {headers: authHeader.headers})
-        .subscribe(data => {
-          console.log(data);
-        })
-
- */
