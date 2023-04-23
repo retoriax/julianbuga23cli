@@ -5,9 +5,9 @@ export class Bugapoint {
     this.longitude = longitude;
   }
 
-  id: string;
-  adminId: number;
-  parkId: number;
+  id: number;
+  adminID: number;
+  parkID: number;
   title: string;
   longitude: number;
   latitude : number;

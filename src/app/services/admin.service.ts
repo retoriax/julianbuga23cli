@@ -14,10 +14,18 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<Admin[]> {
-    return this.http.get<Admin[]>(environment.backEndUrl + `${this.subUrl}/users`);
+  /**
+   * returns all admins
+   */
+  findAll(): Observable<Admin[]> {
+    return this.http.get<Admin[]>(environment.backEndUrl + `${this.subUrl}/list`);
   }
 
+  /**
+   * returns admin with the given id
+   *
+   * @param adminId id of admin
+   */
   getAdminById(adminId: number): Observable<Admin> {
     return this.http.get<Admin>(environment.backEndUrl + `${this.subUrl}/adminOfId?adminId=${adminId}`);
   }

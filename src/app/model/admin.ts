@@ -3,5 +3,4 @@ export class Admin {
   firstname: string;
   lastname: string;
   emailadress: string;
-  discriminator: string;
 }
