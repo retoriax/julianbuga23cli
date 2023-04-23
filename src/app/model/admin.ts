@@ -1,8 +1,7 @@
-export class User {
+export class Admin {
   id: string;
   firstname: string;
   lastname: string;
-  birthdate: Date;
   emailadress: string;
   discriminator: string;
 }
