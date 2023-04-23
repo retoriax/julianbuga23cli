@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Bugapoint} from "../model/bugapoint";
-import {BugapointServiceService} from "../service/bugapoint-service.service";
+import {Bugapoint} from "../../app/model/bugapoint";
+import {BugapointService} from "../../app/services/bugapoint.service";
 
 @Component({
   selector: 'app-bugapoint-user-list',
@@ -11,10 +11,9 @@ export class BugapointListComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
 
-  constructor(private bugapointservice: BugapointServiceService) {
+  constructor(private bugapointservice: BugapointService) {
   }
   ngOnInit() {
-
     this.bugapointservice.findAll().subscribe((data: Bugapoint[]) => {
       this.bugapoints = data;
     });

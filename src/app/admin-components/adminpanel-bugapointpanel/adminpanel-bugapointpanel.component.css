@@ -1,0 +1,20 @@
+mat-expansion-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+button {
+  margin-right: 5vw;
+}

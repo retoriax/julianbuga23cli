@@ -1,8 +1,6 @@
-export class User {
+export class Admin {
   id: string;
   firstname: string;
   lastname: string;
   emailadress: string;
-  password: string;
-  discriminator: string;
 }

@@ -29,20 +29,28 @@
   position: absolute;
   top: 0;
   right: -100%;
-  width: 200px;
+  width: 50vw;
   height: 100vh;
   background: rgba(227, 227, 227, 1);
   transition: 0.5s;
   text-align: center;
 }
 
-.filter-list mat-form-field{
+.filter-list mat-chip-list{
   position: relative;
   top: 110px;
-  width: 100%;
+  width: 50vw;
+  left: 5px;
 }
 
 .shown {
   right:0;
+}
+
+mat-chip-option {
+  width: 50vw;
+  height: 4vh;
+  margin-bottom: 1vh;
+  font-size: 4vw;
 }
 
