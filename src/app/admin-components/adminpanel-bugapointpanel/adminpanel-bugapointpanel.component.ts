@@ -31,12 +31,12 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
       this.admins = data;
     })
 
-    await this.adminService.getAdminById(this.point.adminId).subscribe((data: any) => {
+    await this.adminService.getAdminById(this.point.adminID).subscribe((data: any) => {
       const admin: Admin = data;
       console.log(admin);
     });
 
-    console.log(this.point.adminId);
+    console.log(this.point.adminID);
   }
 
   getGeoLocation() {

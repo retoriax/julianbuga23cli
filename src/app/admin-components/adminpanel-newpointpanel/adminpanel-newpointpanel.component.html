@@ -26,6 +26,16 @@
   </mat-form-field>
 
   <mat-form-field class="inputfield">
+    <mat-label>Park</mat-label>
+    <input matInput placeholder="Select park" [matAutocomplete]="parkAuto" [formControl]="park">
+    <mat-autocomplete autoActiveFirstOption #parkAuto="matAutocomplete">
+      <mat-option *ngFor="let type of this.parks" [value]="type.title">
+        {{type.title}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field class="inputfield">
     <mat-label>Latitude</mat-label>
     <input matInput placeholder="Enter latitude here" [formControl]="latitude">
   </mat-form-field>
