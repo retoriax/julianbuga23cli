@@ -3,6 +3,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 import {ErrorStateMatcher} from "@angular/material/core";
 import {loginrequest} from "../model/loginrequest";
 import {AuthenticationService} from "../service/authentication.service";
+import {Router} from "@angular/router";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -22,9 +23,11 @@ export class LoginFormComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   matcher = new MyErrorStateMatcher();
-  constructor(private authService: AuthenticationService) {
+  constructor(private router: Router, private authService: AuthenticationService) {
 
   }
+
+  //TODO COMMENT
   login(){
     const email = document.getElementById("loginEmail") as HTMLInputElement
     const password = document.getElementById("loginPassword") as HTMLInputElement
@@ -33,5 +36,16 @@ export class LoginFormComponent {
     request.password = password.value
     this.authService.login(request)
     console.log("Login triggered")
+
+    this.authService.checkIfLoggedIn((success: boolean) => {
+      if (success) {
+        console.log("Du bist eingeloggt!");
+        this.router.navigate(['/admin/menu'])
+      } else {
+        console.log("Du bist nicht eingeloggt.");
+        //TODO: VISUAL RESPONSE REQUIRED
+      }
+    });
+
   }
 }

@@ -82,6 +82,7 @@ export class AuthenticationService {
       }
     });
   }
+
   // UTC time zone
   getExpirationDate() {
     // 1 hour = 60 minutes * 60 seconds * 1000 milliseconds
