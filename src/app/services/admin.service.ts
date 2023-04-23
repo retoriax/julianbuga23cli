@@ -27,7 +27,7 @@ export class AdminService {
    * @param adminId id of admin
    */
   getAdminById(adminId: number): Observable<Admin> {
-    return this.http.get<Admin>(environment.backEndUrl + `${this.subUrl}/adminOfId?adminId=${adminId}`);
+    return this.http.get<Admin>(environment.backEndUrl + `${this.subUrl}/id/${adminId}`);
   }
 
 }
