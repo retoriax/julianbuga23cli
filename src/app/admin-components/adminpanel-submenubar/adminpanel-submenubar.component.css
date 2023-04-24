@@ -1,0 +1,16 @@
+.submenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 1rem;
+
+
+  background-color: #e1416d;
+}
+
+.title {
+  font-family: Verdana, serif;
+  font-size: 2.5em;
+  color: white;
+}

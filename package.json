@@ -23,7 +23,8 @@
     "@ionic/angular": "^6.7.0",
     "ionicons": "^7.1.0",
     "leaflet": "^1.9.3",
-    "leaflet-routing-machine": "^3.2.12",
+    "leaflet-routing-machine": "github:perliedman/leaflet-routing-machine",
+    "ngx-cookie-service": "^15.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

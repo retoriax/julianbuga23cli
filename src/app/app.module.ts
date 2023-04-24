@@ -4,11 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { UserFormComponent } from './user-form/user-form.component';
-import { UserService } from './service/user-service.service';
-import { BugapointListComponent } from './bugapoint-list/bugapoint-list.component';
-import { BugapointFormComponent } from './bugapoint-form/bugapoint-form.component';
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -20,26 +15,53 @@ import { BugapointAutocorrectFieldComponent } from './bugapoint-autocorrect-fiel
 import { BugapointDragAndDropComponent } from './bugapoint-drag-and-drop/bugapoint-drag-and-drop.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { LoginFormComponent } from './login-form/login-form.component';
 import { MapFilterComponent } from './map-filter/map-filter.component';
-import {MatSelectModule} from "@angular/material/select";
+import {MatSelectModule} from "@angular/material/select";0
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
+import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
+import { TokenCheckerComponent } from './UI/register-components/token-checker/token-checker.component';
+import {MatCardModule} from "@angular/material/card";
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import { AdminpanelMenuComponent } from './admin-components/adminpanel-menu/adminpanel-menu.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatListModule} from "@angular/material/list";
+import { AdminpanelBugapointsComponent } from './admin-components/adminpanel-bugapointmenu/adminpanel-bugapoints.component';
+import { AdminpanelSubmenubarComponent } from './admin-components/adminpanel-submenubar/adminpanel-submenubar.component';
+import { AdminpanelBugapointlistComponent } from './admin-components/adminpanel-bugapointlist/adminpanel-bugapointlist.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import { AdminpanelNewpointpanelComponent } from './admin-components/adminpanel-newpointpanel/adminpanel-newpointpanel.component';
+import { AdminpanelBugapointpanelComponent } from './admin-components/adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
+import { BlankComponent } from './blank/blank.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserListComponent,
-    UserFormComponent,
-    BugapointListComponent,
-    BugapointFormComponent,
     MapComponent,
     NavbarComponent,
     RoutePlannerComponent,
     BugapointAutocorrectFieldComponent,
     BugapointAutocorrectFieldComponent,
     BugapointDragAndDropComponent,
+    LoginFormComponent,
     MapFilterComponent,
+    AdminpanelMenuComponent,
+    AdminpanelBugapointsComponent,
+    AdminpanelSubmenubarComponent,
+    AdminpanelBugapointlistComponent,
+    AdminpanelNewpointpanelComponent,
+    AdminpanelBugapointpanelComponent,
+    BlankComponent,
+    RegisterFormComponent,
+    RegisterUiComponent,
+    TokenCheckerComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -60,9 +82,28 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     DragDropModule,
     MatButtonModule,
     MatIconModule,
-    ScrollingModule
+    ScrollingModule,
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatButtonModule,
+    MatLegacyChipsModule,
+    MatStepperModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
   ],
-  providers: [UserService],
+  exports: [
+    MapFilterComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatStepperModule,
+    MatListModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
+  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

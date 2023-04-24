@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Element} from "@angular/compiler";
+import {Router} from '@angular/router';
+import {AuthenticationService} from "../service/authentication.service";
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,6 +9,11 @@ import {Element} from "@angular/compiler";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
+
+
+  constructor(private router: Router, private authservice: AuthenticationService) {
+  }
+
   ngOnInit(): void {
     const list = document.querySelectorAll('.list');
     function activeLink(this: HTMLElement){
@@ -19,4 +26,18 @@ export class NavbarComponent implements OnInit{
       item.addEventListener('click', activeLink));
   }
 
+  /**
+   * Test method to check if admin is logged in.
+   */
+  routeHelp() {
+    this.authservice.checkIfLoggedIn((success: boolean) => {
+      if (success) {
+        console.log("Du bist eingeloggt!");
+        this.router.navigate(['/admin/menu'])
+      } else {
+        console.log("Du bist nicht eingeloggt.");
+        this.router.navigate(['/login'])
+      }
+    });
+  }
 }
