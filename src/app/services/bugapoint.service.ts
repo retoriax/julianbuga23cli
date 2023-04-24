@@ -1,9 +1,10 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
 import {DatabaseSaveResponse} from "./DatabaseSaveResponse";
 import {environment} from "../../environments/environment.development";
+import {map} from "rxjs/operators";
 
 
 
@@ -64,6 +65,11 @@ export class BugapointService {
    */
   getDiscriminators(): Observable<string[]> {
     return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
+  }
+
+  searchByTitle(searchtitle: string): Observable<Bugapoint[]> {
+    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`)
+      .pipe(map(value => value.filter(value1 => value1.title.toLowerCase().trim().includes(searchtitle.toLowerCase().trim()))));
   }
 
 }

@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {filter, mergeAll, Observable, take} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {BugapointServiceService} from "../service/bugapoint-service.service";
 import {Bugapoint} from "../model/bugapoint";
 import {RoutepointServiceService} from "../service/routepoint-service.service";
 import {RoutepointErrorstateMatcher} from "./RoutepointErrorstateMatcher";
 import {ErrorStateMatcher} from "@angular/material/core";
+import {BugapointService} from "../services/bugapoint.service";
 
 @Component({
   selector: 'app-bugapoint-autocorrect-field',
@@ -20,7 +20,7 @@ export class BugapointAutocorrectFieldComponent implements OnInit {
   routePointErrorStateMatcher = new RoutepointErrorstateMatcher();
   matcher = new ErrorStateMatcher();
 
- constructor(private bugapointservice: BugapointServiceService,
+ constructor(private bugapointservice: BugapointService,
              private routepointservice: RoutepointServiceService) {
  }
 
