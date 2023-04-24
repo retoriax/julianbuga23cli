@@ -1,7 +1,8 @@
 <form class="bugapoint-form">
   <mat-form-field class="bugapoint-full-width" appearance="fill">
     <mat-label>Pick a Buga-Location</mat-label>
-    <input type="text"
+    <input #locationInput
+           type="text"
            placeholder="Pick one"
            aria-label="LocationField"
            matInput
@@ -18,7 +19,7 @@
     <mat-error *ngIf="routePointErrorStateMatcher.isErrorState">
       Location not found
     </mat-error>
-    <button mat-fab color="primary" aria-label="add" class="add-button" (click)="submit()" >
+    <button mat-fab color="primary" aria-label="add" class="add-button" (click)="submit();" >
       <mat-icon>add</mat-icon>
     </button>
   </mat-form-field>

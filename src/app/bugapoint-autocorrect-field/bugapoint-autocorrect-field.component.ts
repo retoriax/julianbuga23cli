@@ -16,7 +16,7 @@ import {ErrorStateMatcher} from "@angular/material/core";
 export class BugapointAutocorrectFieldComponent implements OnInit {
   myControl = new FormControl<string | Bugapoint>('');
   filteredBugapoints: Observable<Bugapoint[]>;
-  newElement: Bugapoint;
+  newElement: (Bugapoint|string);
   routePointErrorStateMatcher = new RoutepointErrorstateMatcher();
   matcher = new ErrorStateMatcher();
 
@@ -48,6 +48,7 @@ export class BugapointAutocorrectFieldComponent implements OnInit {
       if (this.newElement && typeof this.newElement !== 'string') {
         this.routePointErrorStateMatcher.isValid();
         this.routepointservice.addRoutePoint(this.newElement);
+        this.newElement = "";
       } else {
         this.routePointErrorStateMatcher.isFalse();
         this.findBugapointByTitle(this.newElement as string);
@@ -70,6 +71,7 @@ export class BugapointAutocorrectFieldComponent implements OnInit {
         } else {
           this.routePointErrorStateMatcher.isValid();
           this.routepointservice.addRoutePoint(item);
+          this.newElement = "";
         }
       });
 
