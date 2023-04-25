@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from "../service/authentication.service";
+import { CookieService } from 'ngx-cookie-service';
+
 
 
 @Component({
@@ -11,19 +13,29 @@ import {AuthenticationService} from "../service/authentication.service";
 export class NavbarComponent implements OnInit{
 
 
-  constructor(private router: Router, private authservice: AuthenticationService) {
+  constructor(private router: Router, private authservice: AuthenticationService, private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
     const list = document.querySelectorAll('.list');
+    const self = this;
     function activeLink(this: HTMLElement){
-      list.forEach((item) =>
+        list.forEach((item) =>
         item.classList.remove("active"));
         this.classList.add("active");
+        self.cookieService.set('activeItem', this.id);
     }
 
-    list.forEach((item) =>
-      item.addEventListener('click', activeLink));
+    let active = document.getElementById(this.cookieService.get('activeItem'));
+    list.forEach((item) => {
+      item.classList.remove("active");
+      active?.classList.add("active");
+    });
+
+
+    list.forEach((item) => {
+      item.addEventListener('click', activeLink);
+    });
   }
 
   /**
