@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Bugapoint } from '../model/bugapoint';
 import {BugapointService} from "../services/bugapoint.service";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-map-filter',
@@ -25,7 +26,7 @@ export class MapFilterComponent implements OnInit {
   filteredBugapoints: Bugapoint[];
 
 
-  constructor(private bugapointservice: BugapointService) {}
+  constructor(private bugapointservice: BugapointService, private cookieService: CookieService) {}
 
   ngOnInit() {
     /**
@@ -60,7 +61,13 @@ export class MapFilterComponent implements OnInit {
     // Abfrage aller möglichen Diskriminatoren von der Datenbank
     this.bugapointservice.getDiscriminators().subscribe((data: any) => {
       this.discriminatorSet = new Set<string>(data);
-      this.selectedDiscriminators = new Set<string>(data);
+      if (this.cookieService.check("selectedDiscriminators")) {
+        this.selectedDiscriminators = new Set<string>(this.cookieService.get("selectedDiscriminators").split(","));
+        if (this.cookieService.get("selectedDiscriminators").split(',').length != this.discriminatorSet.size) {
+          this.alleSelected = false;
+        }
+      }
+      else this.selectedDiscriminators = new Set<string>(data);
       this.filterBugapoints();
     });
   }
@@ -89,6 +96,9 @@ export class MapFilterComponent implements OnInit {
     if (this.bugapoints == null || this.selectedDiscriminators == null || this.selectedDiscriminators.size == 0) {
       return this.filteredBugapointsChange.emit(new Array());
     }
+
+    //Push selectedDiscriminators to Cookie
+    this.cookieService.set("selectedDiscriminators", Array.from(this.selectedDiscriminators).join(","));
     // Apply the selected filters to the bugapoints list and emit to parent
     this.filteredBugapointsChange.emit(this.bugapoints
       .filter((bugapoint: Bugapoint) => {
