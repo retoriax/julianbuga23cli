@@ -95,18 +95,15 @@ export class MapComponent implements OnInit {
     } else {
       console.warn(`Icon file '${iconUrl}' not found. Using default icon.`);
       const defaultIconUrl = '././assets/MapIcons/Default.png';
-      if (this.iconsCache[defaultIconUrl]) {
-        return this.iconsCache[defaultIconUrl];
-      } else {
-        const defaultIcon = L.icon({
+      const defaultIcon = L.icon({
           iconUrl: defaultIconUrl,
           iconSize: [32, 32],
-        });
-        this.iconsCache[defaultIconUrl] = defaultIcon;
-        return defaultIcon;
-      }
+      });
+      this.iconsCache[iconUrl] = defaultIcon;
+      return defaultIcon;
     }
   }
+
   fileExists(url: string): boolean {
     let http = new XMLHttpRequest();
     http.open('HEAD', url, false);
