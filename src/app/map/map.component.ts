@@ -11,7 +11,7 @@ import {Bugapoint} from "../model/bugapoint";
 export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
-
+  iconsCache: { [key: string]: L.Icon } = {};
   constructor() {}
   ngOnInit() {
     /**
@@ -38,8 +38,8 @@ export class MapComponent implements OnInit {
    * @param longitude Longitude
    * @param title Title
    */
-  showMarker(latitude: number, longitude: number, title: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map)
+  showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.getIconFromDiscriminator(discriminator))
   }
 
   /**
@@ -54,7 +54,7 @@ export class MapComponent implements OnInit {
     });
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
-      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title);
+      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.discriminator);
     }
   }
 
@@ -79,5 +79,45 @@ export class MapComponent implements OnInit {
         profile: 'foot',
       })
     }).addTo(this.map);
+  }
+
+  getIconFromDiscriminator(discriminator: string): L.Icon {
+    const iconUrl = `././assets/MapIcons/${discriminator}.png`;
+    if (this.iconsCache[iconUrl]) {
+      return this.iconsCache[iconUrl];
+    } else if (this.fileExists(iconUrl)) {
+      const icon = L.icon({
+        iconUrl: iconUrl,
+        iconSize: [32, 32],
+      });
+      this.iconsCache[iconUrl] = icon;
+      return icon;
+    } else {
+      console.warn(`Icon file '${iconUrl}' not found. Using default icon.`);
+      const defaultIconUrl = '././assets/MapIcons/Default.png';
+      if (this.iconsCache[defaultIconUrl]) {
+        return this.iconsCache[defaultIconUrl];
+      } else {
+        const defaultIcon = L.icon({
+          iconUrl: defaultIconUrl,
+          iconSize: [32, 32],
+        });
+        this.iconsCache[defaultIconUrl] = defaultIcon;
+        return defaultIcon;
+      }
+    }
+  }
+  fileExists(url: string): boolean {
+    let http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status != 404;
+  }
+
+  preloadImages(imageUrls: string[]) {
+    for (const url of imageUrls) {
+      const img = new Image();
+      img.src = url;
+    }
   }
 }
