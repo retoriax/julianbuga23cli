@@ -93,7 +93,11 @@ export class MapFilterComponent implements OnInit {
 
   // Funktion, um die Bugapoints entsprechend der ausgewählten Diskriminatoren zu filtern
   filterBugapoints(): void {
-    if (this.bugapoints == null || this.selectedDiscriminators == null || this.selectedDiscriminators.size == 0) {
+    if (this.selectedDiscriminators.size == 0) {
+      this.cookieService.set('selectedDiscriminators', "");
+      return this.filteredBugapointsChange.emit(new Array());
+    }
+    if (this.bugapoints == null || this.selectedDiscriminators == null) {
       return this.filteredBugapointsChange.emit(new Array());
     }
 
