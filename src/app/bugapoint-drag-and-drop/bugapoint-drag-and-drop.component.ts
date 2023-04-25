@@ -4,6 +4,8 @@ import {RoutepointServiceService} from "../service/routepoint-service.service";
 import {Observable} from "rxjs";
 import {Routepoint} from "../model/routepoint";
 import {Bugapoint} from "../model/bugapoint";
+import {MapInteractionServiceService} from "../service/map-interaction-service.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-bugapoint-drag-and-drop',
@@ -14,7 +16,9 @@ export class BugapointDragAndDropComponent implements OnInit{
 
   route: Observable<Routepoint[]>;
 
-  constructor(private routePointService: RoutepointServiceService) {
+  constructor(private routePointService: RoutepointServiceService,
+              private mapInteractionService: MapInteractionServiceService,
+              private router: Router) {
   }
   ngOnInit(): void {
     this.route = this.routePointService.routepointsObservable;
@@ -29,7 +33,8 @@ export class BugapointDragAndDropComponent implements OnInit{
   }
 
   displayPointOnMap(bugapoint: Bugapoint) {
-    console.log(bugapoint);
+    this.mapInteractionService.showBugapoint(bugapoint);
+    this.router.navigate(['/map']);
   }
 }
 

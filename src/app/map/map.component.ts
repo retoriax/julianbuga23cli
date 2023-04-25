@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
+import {MapInteractionServiceService} from "../service/map-interaction-service.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-map',
@@ -11,8 +13,11 @@ import {Bugapoint} from "../model/bugapoint";
 export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
+  displayedBugapoint: Observable<Bugapoint>;
 
-  constructor() {}
+  constructor(private mapInteractionService: MapInteractionServiceService) {
+    this.displayedBugapoint = this.mapInteractionService.displayedBugapointObservable;
+  }
   ngOnInit() {
     /**
      * Map init at given position and zoom level.
@@ -23,7 +28,13 @@ export class MapComponent implements OnInit {
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
+    this.displayedBugapoint.subscribe(bugapoint => {
+      if(bugapoint.latitude>=0 && bugapoint.longitude>=0) {
+        this.displayPointCentered(bugapoint);
+      }
+    });
   }
+
 
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
     this.bugapoints = filteredBugapoints;
@@ -85,7 +96,7 @@ export class MapComponent implements OnInit {
    * Method to display one Bugapoint centered.
    * @param bugapoint Point
    */
-  showPoint(bugapoint: Bugapoint) {
-    this.map = L.map('map').setView([bugapoint.longitude, bugapoint.latitude], 12);
+  displayPointCentered(bugapoint: Bugapoint) {
+    this.map.setView(new L.LatLng(bugapoint.latitude, bugapoint.longitude), 23);
   }
 }
