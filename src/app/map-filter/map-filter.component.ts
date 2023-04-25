@@ -53,13 +53,13 @@ export class MapFilterComponent implements OnInit {
       }
     });
 
-    this.updateBugapoints();
 
     // Abfrage aller möglichen Diskriminatoren von der Datenbank
-    this.bugapointservice.getDiscriminators().subscribe((data: any) => {
+    this.bugapointservice.getDiscriminators().subscribe((data: any) =>
+    {
+      this.updateBugapoints();
       this.discriminatorSet = new Set<string>(data);
       this.selectedDiscriminators = new Set<string>(data);
-      this.filterBugapoints();
     });
   }
 
@@ -85,7 +85,7 @@ export class MapFilterComponent implements OnInit {
   // Funktion, um die Bugapoints entsprechend der ausgewählten Diskriminatoren zu filtern
   filterBugapoints(): void {
     if (this.selectedDiscriminators == null || this.selectedDiscriminators.size == 0) {
-      return this.filteredBugapointsChange.emit(new Array());
+      return this.filteredBugapointsChange.emit([]);
 
     }
     // Apply the selected filters to the bugapoints list and emit to parent
@@ -111,6 +111,7 @@ export class MapFilterComponent implements OnInit {
   updateBugapoints() {
     this.bugapointservice.findAll().subscribe((bugapoints: Bugapoint[]) => {
       this.bugapoints = bugapoints;
+      this.filterBugapoints();
     });
   }
 }
