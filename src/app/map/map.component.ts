@@ -80,4 +80,12 @@ export class MapComponent implements OnInit {
       })
     }).addTo(this.map);
   }
+
+  /**
+   * Method to display one Bugapoint centered.
+   * @param bugapoint Point
+   */
+  showPoint(bugapoint: Bugapoint) {
+    this.map = L.map('map').setView([bugapoint.longitude, bugapoint.latitude], 12);
+  }
 }

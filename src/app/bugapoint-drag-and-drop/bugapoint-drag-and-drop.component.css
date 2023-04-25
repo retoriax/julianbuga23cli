@@ -19,7 +19,6 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  cursor: move;
   background: white;
   font-size: 21px;
 }
@@ -78,6 +77,7 @@
 .element-handle {
   width: auto;
   margin-right: 10px;
+  cursor: move;
 }
 .vertical-center {
   display: flex;
@@ -96,7 +96,27 @@
 }
 button[aria-label="delete Button"],
 .cdkDragHandle {
-  margin-right: 30px;
+  margin-right: 25px;
 }
+
+.positionDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1px;
+
+}
+
+.positionIcon {
+  margin-right: 3px;
+  flex-shrink: 0;
+}
+
+.textDiv{
+  flex: 1;
+  margin-left: 3px;
+}
+
+
 
 

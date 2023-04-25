@@ -17,7 +17,7 @@ import {HttpParams} from "@angular/common/http";
 export class AdminpanelNewpointpanelComponent implements OnInit {
 
   admins: Admin[]
-  discriminators = new Set<string>
+  discriminators = new Set<string>;
 
   parks: Park[]
 

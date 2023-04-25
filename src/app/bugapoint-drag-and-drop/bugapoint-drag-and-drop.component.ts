@@ -3,6 +3,7 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {RoutepointServiceService} from "../service/routepoint-service.service";
 import {Observable} from "rxjs";
 import {Routepoint} from "../model/routepoint";
+import {Bugapoint} from "../model/bugapoint";
 
 @Component({
   selector: 'app-bugapoint-drag-and-drop',
@@ -25,6 +26,10 @@ export class BugapointDragAndDropComponent implements OnInit{
 
   deleteElement(index: number) {
     this.routePointService.deleteRoutePointByIndex(index);
+  }
+
+  displayPointOnMap(bugapoint: Bugapoint) {
+    console.log(bugapoint);
   }
 }
 
