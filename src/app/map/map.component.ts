@@ -110,11 +110,4 @@ export class MapComponent implements OnInit {
     http.send();
     return http.status != 404;
   }
-
-  preloadImages(imageUrls: string[]) {
-    for (const url of imageUrls) {
-      const img = new Image();
-      img.src = url;
-    }
-  }
 }
