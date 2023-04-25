@@ -15,6 +15,7 @@ export class MapFilterComponent implements OnInit {
   // Flag, ob alle Chip-Optionen ausgewählt sind
   alleSelected = true;
 
+
   // Set, welches alle möglichen Diskriminatoren enthält
   discriminatorSet = new Set<string>();
   // Set, welches alle aktuell ausgewählten Diskriminatoren enthält
@@ -22,6 +23,7 @@ export class MapFilterComponent implements OnInit {
 
   bugapoints: Bugapoint[];
   filteredBugapoints: Bugapoint[];
+
 
   constructor(private bugapointservice: BugapointService) {}
 
@@ -84,9 +86,8 @@ export class MapFilterComponent implements OnInit {
 
   // Funktion, um die Bugapoints entsprechend der ausgewählten Diskriminatoren zu filtern
   filterBugapoints(): void {
-    if (this.selectedDiscriminators == null || this.selectedDiscriminators.size == 0) {
+    if (this.bugapoints == null || this.selectedDiscriminators == null || this.selectedDiscriminators.size == 0) {
       return this.filteredBugapointsChange.emit(new Array());
-
     }
     // Apply the selected filters to the bugapoints list and emit to parent
     this.filteredBugapointsChange.emit(this.bugapoints
@@ -111,6 +112,7 @@ export class MapFilterComponent implements OnInit {
   updateBugapoints() {
     this.bugapointservice.findAll().subscribe((bugapoints: Bugapoint[]) => {
       this.bugapoints = bugapoints;
+      this.filterBugapoints();
     });
   }
 }
