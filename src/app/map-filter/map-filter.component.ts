@@ -20,6 +20,9 @@ export class MapFilterComponent implements OnInit {
   // Set, welches alle aktuell ausgewählten Diskriminatoren enthält
   selectedDiscriminators = new Set<string>();
 
+  bugapoints: Bugapoint[];
+  filteredBugapoints: Bugapoint[];
+
   constructor(private bugapointservice: BugapointService) {}
 
   ngOnInit() {
@@ -50,6 +53,7 @@ export class MapFilterComponent implements OnInit {
       }
     });
 
+    this.updataBugapoints();
 
     // Abfrage aller möglichen Diskriminatoren von der Datenbank
     this.bugapointservice.getDiscriminators().subscribe((data: any) => {
@@ -80,10 +84,15 @@ export class MapFilterComponent implements OnInit {
 
   // Funktion, um die Bugapoints entsprechend der ausgewählten Diskriminatoren zu filtern
   filterBugapoints(): void {
-    this.bugapointservice.getFilteredBugapoints(this.selectedDiscriminators).subscribe(filteredBugapoints => {
-      // Aussenden der gefilterten Bugapoints an die Parent-Komponente
-      this.filteredBugapointsChange.emit(filteredBugapoints);
-    });
+    if (this.selectedDiscriminators == null || this.selectedDiscriminators.size == 0) {
+      return this.filteredBugapointsChange.emit(new Array());
+
+    }
+    // Apply the selected filters to the bugapoints list and emit to parent
+    this.filteredBugapointsChange.emit(this.bugapoints
+      .filter((bugapoint: Bugapoint) => {
+      return this.selectedDiscriminators.has(bugapoint.discriminator);
+    }));
   }
 
   // Funktion, um alle Chip-Optionen auszuwählen
@@ -97,5 +106,11 @@ export class MapFilterComponent implements OnInit {
     this.alleSelected = true;
     this.selectedDiscriminators = new Set(this.discriminatorSet);
     this.filterBugapoints();
+  }
+
+  updataBugapoints() {
+    this.bugapointservice.findAll().subscribe((bugapoints: Bugapoint[]) => {
+      this.bugapoints = bugapoints;
+    });
   }
 }
