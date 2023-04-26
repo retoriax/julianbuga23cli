@@ -67,14 +67,8 @@ export class BugapointService {
     return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
   }
 
-  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number, newDescription?: string)
-    : Promise<DatabaseSaveResponse> {
-    let response: DatabaseSaveResponse = new class implements DatabaseSaveResponse {
-      message: string;
-      success: boolean;
-    }
-
-    response.success = false
+  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number,
+                        newDescription?: string): Promise<DatabaseSaveResponse> {
 
     const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
      &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
@@ -82,12 +76,16 @@ export class BugapointService {
      &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
      &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
 
-    await this.http.put(url, null).subscribe((data: any) => {
-      response = data;
-      console.log(response)
-    });
-
-    return response
+    try {
+      let response = await this.http.put(url, null).toPromise();
+      return response as DatabaseSaveResponse;
+    } catch (e) {
+      return new class implements DatabaseSaveResponse {
+        message: string;
+        success: boolean = false;
+      }
+    }
   }
+
 
 }

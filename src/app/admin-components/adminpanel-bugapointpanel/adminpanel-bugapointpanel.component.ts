@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {Bugapoint} from "../../model/bugapoint";
 import {FormControl} from "@angular/forms";
 import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
-import {point} from "leaflet";
+import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
+import {async} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -13,7 +14,8 @@ import {point} from "leaflet";
 })
 export class AdminpanelBugapointpanelComponent implements OnInit {
 
-  constructor(private adminService: AdminService, private bugapointService: BugapointService) {
+  constructor(private adminService: AdminService, private bugapointService: BugapointService,
+              private elementRef: ElementRef, private renderer: Renderer2) {
   }
 
   admins: Admin[]
@@ -28,6 +30,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   longForm = new FormControl('')
 
   descriptionForm = new FormControl('')
+  backgroundClass: String = "mat-expansion-panel";
 
   async ngOnInit(): Promise<void> {
     this.adminService.findAll().subscribe((data: any) => {
@@ -62,8 +65,21 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   /**
    *
    */
-  update() {
-    console.log(this.bugapointService.updateBugapoint(this.point, Number(this.latForm.value), Number(this.longForm.value),
-      1, String(this.descriptionForm.value)))
+  async update() {
+    try {
+      const response: DatabaseSaveResponse = await this.bugapointService.updateBugapoint(this.point,
+        Number(this.latForm.value), Number(this.longForm.value), 1, String(this.descriptionForm.value));
+
+      const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
+
+      if (response.success) {
+        this.renderer.addClass(elem, 'success-animation');
+      } else {
+        this.renderer.addClass(elem, 'fail-animation');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
+
 }
