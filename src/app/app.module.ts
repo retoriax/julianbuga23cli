@@ -52,7 +52,6 @@ import {MatDividerModule} from "@angular/material/divider";
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
-
   ],
   imports: [
     BrowserModule,
