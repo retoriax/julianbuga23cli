@@ -5,6 +5,7 @@ import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -50,7 +51,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   }
 
   /**
-   *
+   * fills Lat and Long form controls with present geolocation
    */
   getGeoLocation() {
     if (navigator.geolocation) {
@@ -62,23 +63,49 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   }
 
   /**
-   *
+   * Updates the bugapoint with the values in the form controls
    */
   async update() {
     try {
-      const response: DatabaseSaveResponse = await this.bugapointService.updateBugapoint(this.point,
-        Number(this.latForm.value), Number(this.longForm.value), 1, String(this.descriptionForm.value));
+      const admin = await new Promise<Admin>((resolve, reject) => {
+        const adminResponse: Subscription = this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
+          (data: Admin) => {
+            resolve(data);
+          },
+          (error: any) => {
+            reject(error);
+          }
+        );
+      });
+
+      const bugaPointResponse: DatabaseSaveResponse = await this.bugapointService.updateBugapoint(
+        this.point,
+        Number(this.latForm.value),
+        Number(this.longForm.value),
+        admin.id,
+        String(this.descriptionForm.value).trim()
+      );
+
+      console.log("\"" + String(this.descriptionForm.value).trim() + "\"")
 
       const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
-      if (response.success) {
-        this.renderer.addClass(elem, 'success-animation');
+      if (bugaPointResponse.success) {
+        this.renderer.addClass(elem, "success-animation");
       } else {
-        this.renderer.addClass(elem, 'fail-animation');
+        this.renderer.addClass(elem, "fail-animation");
       }
     } catch (error) {
       console.error(error);
     }
   }
 
+
+  /**
+   * Deletes this bugapoint.
+   */
+  delete() {
+    this.bugapointService.deleteBugapointById(this.point.id);
+    window.location.reload()
+  }
 }

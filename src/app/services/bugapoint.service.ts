@@ -36,9 +36,6 @@ export class BugapointService {
    * @param discriminators discriminators
    */
   getFilteredBugapoints(discriminators: Set<string>): Observable<Bugapoint[]> {
-    //const discriminatorList = Array.from(discriminators); // Convert Set to array
-    //const discriminatorParams = discriminatorList.join(',');
-
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/filter`, {
       params: {
         discriminators: Array.from(discriminators).join(',')
@@ -66,6 +63,15 @@ export class BugapointService {
     return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
   }
 
+  /**
+   * Updates the bugapoint.
+   *
+   * @param bugapoint bugapoint which gets updated
+   * @param newLat new latitude
+   * @param newLong new longitude
+   * @param newAdminId new admin id
+   * @param newDescription new description
+   */
   async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number,
                         newDescription?: string): Promise<DatabaseSaveResponse> {
 
@@ -86,5 +92,17 @@ export class BugapointService {
     }
   }
 
+
+  /**
+   * Deletes a bugapoint with the id.
+   *
+   * @param id identifier
+   */
+  deleteBugapointById(id: number) {
+    return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`)
+      .subscribe((data: any) => {
+      console.log(data)
+    });
+  }
 
 }

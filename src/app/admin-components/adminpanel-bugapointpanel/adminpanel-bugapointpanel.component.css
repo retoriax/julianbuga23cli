@@ -4,6 +4,10 @@ mat-expansion-panel {
   background: white;
 }
 
+mat-form-field {
+  display: flex;
+}
+
 .list {
   display: flex;
   flex-direction: column;
