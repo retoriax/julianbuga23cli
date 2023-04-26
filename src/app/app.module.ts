@@ -18,7 +18,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { MapFilterComponent } from './map-filter/map-filter.component';
-import {MatSelectModule} from "@angular/material/select";0
+import {MatSelectModule} from "@angular/material/select";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
