@@ -3,14 +3,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  border-radius: 1rem;
 
+  border-bottom-left-radius: 1.2rem;
+  border-bottom-right-radius: 1.2rem;
 
   background-color: #e1416d;
 }
 
 .title {
   font-family: Verdana, serif;
-  font-size: 2.5em;
+  font-size: 2.75em;
   color: white;
 }
