@@ -134,7 +134,7 @@ export class MapComponent implements OnInit {
 
   fileExists(url: string): boolean {
     let http = new XMLHttpRequest();
-    http.open('HEAD',"buga23cli-test/"+ url, false);
+    http.open('HEAD',url, false);
     http.send();
     console.log(http.status + url);
     return http.status == 200;
