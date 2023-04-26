@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
+import * as fs from "fs";
 
 @Component({
   selector: 'app-map',
@@ -71,6 +72,7 @@ export class MapComponent implements OnInit {
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
       this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.discriminator);
+      console.warn("loop")
     }
   }
 
@@ -97,40 +99,37 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
   }
 
-  getIconFromDiscriminator(discriminator: string): L.Icon {
-    const defaultIconUrl = `././assets/MapIcons/${discriminator}.png`;
-    const iconUrl = `././assets/MapIcons/Standard.png`;
-    console.warn("test 123");
-  /*
+  getIconFromDiscriminator(discriminator:string): L.Icon {
     const iconUrl = `././assets/MapIcons/${discriminator}.png`;
-    const defaultIconUrl = `././assets/MapIcons/Standard.png`;
-   */
     if (this.iconsCache[iconUrl]) {
       return this.iconsCache[iconUrl];
-    } else if (this.fileExists(iconUrl)) {
+    }
+    let exits = false;
+    fs.promises.access(iconUrl, fs.constants.F_OK)
+      .then(() => {
+        exits = true;
+      })
+
+    if (exits) {
       const icon = L.icon({
         iconUrl: iconUrl,
         iconSize: [32, 32],
       });
       this.iconsCache[iconUrl] = icon;
       return icon;
-    } else {
+    }
+    else {
       console.warn(`Icon file '${iconUrl}' not found. Using default icon.`);
+      const defaultIconUrl = '././assets/MapIcons/Default.png';
       const defaultIcon = L.icon({
-          iconUrl: defaultIconUrl,
-          iconSize: [32, 32],
+        iconUrl: defaultIconUrl,
+        iconSize: [32, 32],
       });
       this.iconsCache[iconUrl] = defaultIcon;
       return defaultIcon;
     }
   }
 
-  fileExists(url: string): boolean {
-    let http = new XMLHttpRequest();
-    http.open('HEAD', url, false);
-    http.send();
-    return http.status != 404;
-  }
 
   saveMapView() {
     const center = this.map.getCenter();
