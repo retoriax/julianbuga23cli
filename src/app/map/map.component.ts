@@ -127,7 +127,6 @@ export class MapComponent implements OnInit {
       this.iconsCache[iconUrl] = defaultIcon;
       return defaultIcon;
     }
-    console.warn("ende")
   }
 
   fileExists(url: string): boolean {
@@ -135,7 +134,7 @@ export class MapComponent implements OnInit {
     http.open('HEAD', url, false);
     http.send();
     console.log(http.status);
-    return http.status == 404;
+    return http.status == 200;
   }
 
   saveMapView() {
