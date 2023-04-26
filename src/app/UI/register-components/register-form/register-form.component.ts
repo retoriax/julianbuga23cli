@@ -12,6 +12,7 @@ export class RegisterFormComponent {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  fourthFormGroup: FormGroup;
   isLinear = false;
   hide = true;
   @Output() userCreated = new EventEmitter<void>();
@@ -32,8 +33,10 @@ export class RegisterFormComponent {
   constructor(private _formBuilder: FormBuilder, private authService: AuthenticationService) {
     this.firstFormGroup = this._formBuilder.group({
       vorname: this.vorname,
-      nachname: this.nachname
     });
+    this.fourthFormGroup = this._formBuilder.group({
+      nachname: this.nachname
+    })
     this.secondFormGroup = this._formBuilder.group({
       email: this.email
     });

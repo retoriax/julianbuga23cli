@@ -87,7 +87,12 @@ import {MatDividerModule} from "@angular/material/divider";
     MatExpansionModule,
     MatAutocompleteModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
