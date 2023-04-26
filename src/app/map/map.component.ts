@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-map',
@@ -12,17 +13,32 @@ export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
   iconsCache: { [key: string]: L.Icon } = {};
-  constructor() {}
+  constructor(private cookieService: CookieService) {}
   ngOnInit() {
+
     /**
      * Map init at given position and zoom level.
      */
     this.map = L.map('map').setView([49.495, 8.5], 15);
+    const savedView = this.cookieService.get('mapView');
+    if (savedView) {
+      const { center, zoom } = JSON.parse(savedView);
+      this.map.setView(center, zoom);
+    }
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
+
+    //saves the current View in Cookie
+    this.map.on('moveend', () => this.saveMapView());
+
+    //reloads the Map, if not fully loaded
+    setTimeout(function () {
+      window.dispatchEvent(new Event("resize"));
+    }, 500);
+
   }
 
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
@@ -110,4 +126,12 @@ export class MapComponent implements OnInit {
     http.send();
     return http.status != 404;
   }
+
+  saveMapView() {
+    const center = this.map.getCenter();
+    const zoom = this.map.getZoom();
+    this.cookieService.set('mapView', JSON.stringify({ center, zoom }));
+  }
+
+
 }
