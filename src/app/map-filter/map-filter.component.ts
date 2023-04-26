@@ -61,11 +61,12 @@ export class MapFilterComponent implements OnInit {
     // Abfrage aller möglichen Diskriminatoren von der Datenbank
     this.bugapointservice.getDiscriminators().subscribe((data: any) => {
       this.discriminatorSet = new Set<string>(data);
+
       if (this.cookieService.check("selectedDiscriminators")) {
-        this.selectedDiscriminators = new Set<string>(this.cookieService.get("selectedDiscriminators").split(","));
-        if (this.cookieService.get("selectedDiscriminators").split(',').length != this.discriminatorSet.size) {
-          this.alleSelected = false;
-        }
+          this.selectedDiscriminators = new Set<string>(this.cookieService.get("selectedDiscriminators").split(",").filter(value => value !== ""));
+          if (this.selectedDiscriminators.size != this.discriminatorSet.size) {
+            this.alleSelected = false;
+          }
       }
       else this.selectedDiscriminators = new Set<string>(data);
       this.filterBugapoints();
@@ -93,21 +94,18 @@ export class MapFilterComponent implements OnInit {
 
   // Funktion, um die Bugapoints entsprechend der ausgewählten Diskriminatoren zu filtern
   filterBugapoints(): void {
-    if (this.selectedDiscriminators.size == 0) {
-      this.cookieService.set('selectedDiscriminators', "");
-      return this.filteredBugapointsChange.emit(new Array());
+    if (this.bugapoints != null && this.discriminatorSet != null) {
+      //Push selectedDiscriminators to Cookie
+      const selectedDiscriminatorsString = Array.from(this.selectedDiscriminators).join(",");
+      if (selectedDiscriminatorsString) {
+        this.cookieService.set("selectedDiscriminators", selectedDiscriminatorsString);
+      }
+      // Apply the selected filters to the bugapoints list and emit to parent
+      this.filteredBugapointsChange.emit(this.bugapoints
+        .filter((bugapoint: Bugapoint) => {
+          return this.selectedDiscriminators.has(bugapoint.discriminator);
+        }));
     }
-    if (this.bugapoints == null || this.selectedDiscriminators == null) {
-      return this.filteredBugapointsChange.emit(new Array());
-    }
-
-    //Push selectedDiscriminators to Cookie
-    this.cookieService.set("selectedDiscriminators", Array.from(this.selectedDiscriminators).join(","));
-    // Apply the selected filters to the bugapoints list and emit to parent
-    this.filteredBugapointsChange.emit(this.bugapoints
-      .filter((bugapoint: Bugapoint) => {
-      return this.selectedDiscriminators.has(bugapoint.discriminator);
-    }));
   }
 
   // Funktion, um alle Chip-Optionen auszuwählen
