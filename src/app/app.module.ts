@@ -18,7 +18,6 @@ import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
 import { TokenCheckerComponent } from './UI/register-components/token-checker/token-checker.component';
 import {MatCardModule} from "@angular/material/card";
-import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { AdminpanelMenuComponent } from './admin-components/adminpanel-menu/adminpanel-menu.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatListModule} from "@angular/material/list";

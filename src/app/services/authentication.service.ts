@@ -95,12 +95,11 @@ export class AuthenticationService {
   getAuthheader() {
     let a: string = this.cookieService.get('token');
     let bearer: string = "Bearer " + a;
-    const authHeader = {
+    return {
       headers: new HttpHeaders({
         'Authorization': bearer
       })
-    }
-    return authHeader;
+    };
   }
 
   setCookie(data: any) {

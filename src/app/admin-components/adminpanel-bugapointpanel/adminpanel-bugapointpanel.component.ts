@@ -5,7 +5,6 @@ import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
-import {async} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
