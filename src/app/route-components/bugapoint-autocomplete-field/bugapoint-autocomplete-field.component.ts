@@ -2,26 +2,26 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {filter, mergeAll, Observable, take} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {Bugapoint} from "../model/bugapoint";
-import {RoutepointServiceService} from "../service/routepoint-service.service";
+import {Bugapoint} from "../../model/bugapoint";
+import {RoutepointService} from "../../service/routepoint.service";
 import {RoutepointErrorstateMatcher} from "./RoutepointErrorstateMatcher";
-import {ErrorStateMatcher} from "@angular/material/core";
-import {BugapointService} from "../services/bugapoint.service";
+import {BugapointService} from "../../services/bugapoint.service";
 
 @Component({
-  selector: 'app-bugapoint-autocorrect-field',
-  templateUrl: './bugapoint-autocorrect-field.component.html',
-  styleUrls: ['./bugapoint-autocorrect-field.component.css']
+  selector: 'app-bugapoint-autocomplete-field',
+  templateUrl: './bugapoint-autocomplete-field.component.html',
+  styleUrls: ['./bugapoint-autocomplete-field.component.css']
 })
-export class BugapointAutocorrectFieldComponent implements OnInit {
+export class BugapointAutocompleteFieldComponent implements OnInit {
   myControl = new FormControl<string | Bugapoint>('');
   filteredBugapoints: Observable<Bugapoint[]>;
   newElement: (Bugapoint|string);
   routePointErrorStateMatcher = new RoutepointErrorstateMatcher();
-  matcher = new ErrorStateMatcher();
+  highlightIndex:number = 2;
+
 
  constructor(private bugapointservice: BugapointService,
-             private routepointservice: RoutepointServiceService) {
+             private routepointservice: RoutepointService) {
  }
 
   lookup(value: string): Observable<Bugapoint[]> {

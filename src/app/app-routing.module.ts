@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {MapComponent} from "./map/map.component";
-import {RoutePlannerComponent} from "./route-planner/route-planner.component";
+import {RoutePlannerComponent} from "./route-components/route-planner/route-planner.component";
 import {AdminpanelMenuComponent} from "./admin-components/adminpanel-menu/adminpanel-menu.component";
 import {AdminpanelBugapointsComponent} from "./admin-components/adminpanel-bugapointmenu/adminpanel-bugapoints.component";
 import {AdminpanelNewpointpanelComponent} from "./admin-components/adminpanel-newpointpanel/adminpanel-newpointpanel.component";

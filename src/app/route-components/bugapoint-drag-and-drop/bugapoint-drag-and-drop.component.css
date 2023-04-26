@@ -117,6 +117,31 @@ button[aria-label="delete Button"],
   margin-left: 3px;
 }
 
+.addHighlight {
+  animation: addGlow 1s;
+}
+
+@keyframes addGlow {
+  0% {
+    background: chartreuse;
+  }
+  100% {
+    background: white;
+  }
+}
+
+.unableToAddHighlight {
+  animation: unableToAddGlow 1s;
+}
+
+@keyframes unableToAddGlow {
+  0% {
+    background: red;
+  }
+  100% {
+    background: white;
+  }
+}
 
 
 

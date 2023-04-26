@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MapInteractionServiceService } from './map-interaction-service.service';
+import { MapInteractionService } from './map-interaction.service';
 
 describe('MapInteractionServiceService', () => {
-  let service: MapInteractionServiceService;
+  let service: MapInteractionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MapInteractionServiceService);
+    service = TestBed.inject(MapInteractionService);
   });
 
   it('should be created', () => {

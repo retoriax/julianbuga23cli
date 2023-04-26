@@ -2,8 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
-import {MapInteractionServiceService} from "../service/map-interaction-service.service";
-import {Observable} from "rxjs";
+import {MapInteractionService} from "../service/map-interaction.service";
 
 @Component({
   selector: 'app-map',
@@ -13,10 +12,9 @@ import {Observable} from "rxjs";
 export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
-  displayedBugapoint: Observable<Bugapoint>;
 
-  constructor(private mapInteractionService: MapInteractionServiceService) {
-    this.displayedBugapoint = this.mapInteractionService.displayedBugapointObservable;
+
+  constructor(private mapInteractionService: MapInteractionService) {
   }
   ngOnInit() {
     /**
@@ -28,11 +26,21 @@ export class MapComponent implements OnInit {
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
-    this.displayedBugapoint.subscribe(bugapoint => {
-      if(bugapoint.latitude>=0 && bugapoint.longitude>=0) {
-        this.displayPointCentered(bugapoint);
-      }
+    /**
+     * Displayes one point if there are any changes to the displayedBugapointObservable in the mapInteractionService
+     */
+    this.mapInteractionService.displayedBugapointObservable.subscribe(bugapoint => {
+      this.displayPointCentered(bugapoint);
     });
+    this.mapInteractionService.hideBugapoint();
+
+    /**
+     * Shows the Route if there are any changes to the displayedBugapointObservable in the mapInteractionService
+     */
+    this.mapInteractionService.routeObservable.subscribe(bugapoints => {
+      this.showRoute(bugapoints);
+    });
+    this.mapInteractionService.clearRoute();
   }
 
 
@@ -96,7 +104,9 @@ export class MapComponent implements OnInit {
    * Method to display one Bugapoint centered.
    * @param bugapoint Point
    */
-  displayPointCentered(bugapoint: Bugapoint) {
-    this.map.setView(new L.LatLng(bugapoint.latitude, bugapoint.longitude), 23);
+  displayPointCentered(bugapoint: Bugapoint|null) {
+    if(bugapoint !== null) {
+      this.map.setView(new L.LatLng(bugapoint.latitude, bugapoint.longitude), 23);
+    }
   }
 }

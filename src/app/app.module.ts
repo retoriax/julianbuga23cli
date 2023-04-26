@@ -8,11 +8,11 @@ import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RoutePlannerComponent } from './route-planner/route-planner.component';
+import { RoutePlannerComponent } from './route-components/route-planner/route-planner.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { BugapointAutocorrectFieldComponent } from './bugapoint-autocorrect-field/bugapoint-autocorrect-field.component';
-import { BugapointDragAndDropComponent } from './bugapoint-drag-and-drop/bugapoint-drag-and-drop.component';
+import { BugapointAutocompleteFieldComponent } from './route-components/./bugapoint-autocomplete-field/bugapoint-autocomplete-field.component';
+import { BugapointDragAndDropComponent } from './route-components/bugapoint-drag-and-drop/bugapoint-drag-and-drop.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatButtonModule} from '@angular/material/button';
 import {ScrollingModule} from '@angular/cdk/scrolling';
@@ -46,8 +46,7 @@ import {MatDividerModule} from "@angular/material/divider";
     MapComponent,
     NavbarComponent,
     RoutePlannerComponent,
-    BugapointAutocorrectFieldComponent,
-    BugapointAutocorrectFieldComponent,
+    BugapointAutocompleteFieldComponent,
     BugapointDragAndDropComponent,
     LoginFormComponent,
     MapFilterComponent,
@@ -83,7 +82,6 @@ import {MatDividerModule} from "@angular/material/divider";
     MatButtonModule,
     MatIconModule,
     ScrollingModule,
-    MatAutocompleteModule,
     MatChipsModule,
     MatDividerModule,
     MatExpansionModule,

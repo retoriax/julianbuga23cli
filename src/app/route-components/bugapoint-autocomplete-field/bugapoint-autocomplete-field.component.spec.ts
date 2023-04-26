@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BugapointAutocorrectFieldComponent } from './bugapoint-autocorrect-field.component';
+import { BugapointAutocompleteFieldComponent } from './bugapoint-autocomplete-field.component';
 
 describe('BugapointAutocorrectFieldComponent', () => {
-  let component: BugapointAutocorrectFieldComponent;
-  let fixture: ComponentFixture<BugapointAutocorrectFieldComponent>;
+  let component: BugapointAutocompleteFieldComponent;
+  let fixture: ComponentFixture<BugapointAutocompleteFieldComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BugapointAutocorrectFieldComponent ]
+      declarations: [ BugapointAutocompleteFieldComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BugapointAutocorrectFieldComponent);
+    fixture = TestBed.createComponent(BugapointAutocompleteFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

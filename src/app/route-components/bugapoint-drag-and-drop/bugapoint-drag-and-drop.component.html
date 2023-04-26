@@ -1,6 +1,7 @@
 <div class="scrollable-content" cdkScrollable>
   <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" style="overflow-y: scroll">
-    <div class="routepoint-box" *ngFor="let routeBugapoint of (route |async)" cdkDrag>
+    <div class="routepoint-box" *ngFor="let routeBugapoint of (route |async); let i = index"
+         cdkDrag>
       <div class="positionDiv" >
         <mat-icon class="positionIcon" (click)="displayPointOnMap(routeBugapoint.bugapoint)"> location_on</mat-icon>
         <div class="textDiv">
@@ -8,7 +9,7 @@
         </div>
       </div>
       <div class="sideBySideButtonsAndHandle">
-        <button mat-fab color="primary" aria-label="delete Button" (click)="deleteElement(routeBugapoint.index)">
+        <button mat-fab color="primary" aria-label="delete Button" (click)="deleteElement(i)">
           <mat-icon>delete</mat-icon>
         </button>
         <div cdkDragHandle>
@@ -17,7 +18,7 @@
       </div>
     </div>
     <div class="vertical-center">
-      <button  class="routeButton" mat-raised-button>Search for Route</button>
+      <button  class="routeButton" (click)="goToRoute()" mat-raised-button>Search for Route</button>
     </div>
   </div>
 </div>
