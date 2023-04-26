@@ -44,6 +44,7 @@ export class JWTTokenServiceService {
   }
 
   isTokenExpired(): boolean {
+    // @ts-ignore
     const expiryTime: number = this.getExpiryTime();
     if (expiryTime) {
       return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
