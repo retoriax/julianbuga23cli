@@ -1,10 +1,9 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
 import {DatabaseSaveResponse} from "./DatabaseSaveResponse";
 import {environment} from "../../environments/environment.development";
-import {bug} from "ionicons/icons";
 
 
 @Injectable({
