@@ -34,6 +34,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +85,12 @@ import {MatDividerModule} from "@angular/material/divider";
     MatExpansionModule,
     MatAutocompleteModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
