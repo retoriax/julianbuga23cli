@@ -33,6 +33,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
+import { AdminpanelParksliderComponent } from './adminpanel-parkslider/adminpanel-parkslider.component';
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
 
 @NgModule({
@@ -52,6 +54,7 @@ import {MatDividerModule} from "@angular/material/divider";
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
+    AdminpanelParksliderComponent,
   ],
   imports: [
     BrowserModule,
