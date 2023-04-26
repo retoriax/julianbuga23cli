@@ -100,6 +100,7 @@ export class MapComponent implements OnInit {
   getIconFromDiscriminator(discriminator: string): L.Icon {
     const defaultIconUrl = `././assets/MapIcons/${discriminator}.png`;
     const iconUrl = `././assets/MapIcons/Standard.png`;
+    console.warn("test 123");
   /*
     const iconUrl = `././assets/MapIcons/${discriminator}.png`;
     const defaultIconUrl = `././assets/MapIcons/Standard.png`;
