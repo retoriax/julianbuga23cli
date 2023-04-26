@@ -118,7 +118,8 @@ export class MapComponent implements OnInit {
       this.iconsCache[iconUrl] = icon;
       return icon;
     } else {
-      console.warn(`Icon file '${iconUrl}' not found. Using default icon.`);
+      //console.warn(`Icon file '${iconUrl}' not found. Using default icon.`);
+      console.warn("hallo else")
       const defaultIcon = L.icon({
           iconUrl: defaultIconUrl,
           iconSize: [32, 32],
@@ -126,6 +127,7 @@ export class MapComponent implements OnInit {
       this.iconsCache[iconUrl] = defaultIcon;
       return defaultIcon;
     }
+    console.warn("ende")
   }
 
   fileExists(url: string): boolean {
