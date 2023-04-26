@@ -15,5 +15,11 @@
     </mat-form-field>
 
     <button mat-raised-button class="login-button" color="primary" [disabled]="!email.valid || !loginPassword.value" (click)="login()">Login</button>
+    <div class="error-message" *ngIf="error">
+      Die Anmeldedaten sind ungültig.
+    </div>
+    <div class="register-link">
+      <a routerLink="/register">Registrierung</a>
+    </div>
   </form>
 </div>

@@ -20,12 +20,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginFormComponent {
   hide = true;
+  error = false;
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  matcher = new MyErrorStateMatcher();
-  constructor(private router: Router, private authService: AuthenticationService) {
-
-  }
+  constructor(private router: Router, private authService: AuthenticationService) {}
 
   //TODO COMMENT
   login(){
@@ -43,9 +41,8 @@ export class LoginFormComponent {
         this.router.navigate(['/admin/menu'])
       } else {
         console.log("Du bist nicht eingeloggt.");
-        //TODO: VISUAL RESPONSE REQUIRED
+        this.error = true;
       }
     });
-
   }
 }
