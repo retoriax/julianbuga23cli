@@ -98,9 +98,12 @@ export class MapComponent implements OnInit {
   }
 
   getIconFromDiscriminator(discriminator: string): L.Icon {
+    const defaultIconUrl = `././assets/MapIcons/${discriminator}.png`;
+    const iconUrl = `././assets/MapIcons/Standard.png`;
+  /*
     const iconUrl = `././assets/MapIcons/${discriminator}.png`;
     const defaultIconUrl = `././assets/MapIcons/Standard.png`;
-
+   */
     if (this.iconsCache[iconUrl]) {
       return this.iconsCache[iconUrl];
     } else if (this.fileExists(iconUrl)) {
