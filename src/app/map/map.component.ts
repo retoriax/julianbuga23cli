@@ -99,7 +99,7 @@ export class MapComponent implements OnInit {
 
   getIconFromDiscriminator(discriminator: string): L.Icon {
     const iconUrl = `././assets/MapIcons/${discriminator}.png`;
-    const defaultIconUrl = `dist/buga23cli-test/assets/MapIcons/Default.png`;
+    const defaultIconUrl = `././assets/MapIcons/Standard.png`;
 
     if (this.iconsCache[iconUrl]) {
       return this.iconsCache[iconUrl];
