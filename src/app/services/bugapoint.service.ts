@@ -1,10 +1,10 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
 import {DatabaseSaveResponse} from "./DatabaseSaveResponse";
 import {environment} from "../../environments/environment.development";
-
+import {bug} from "ionicons/icons";
 
 
 @Injectable({
@@ -14,7 +14,8 @@ export class BugapointService {
 
   private subPath = '/bugapoint';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * returns all bugapoints
@@ -55,8 +56,8 @@ export class BugapointService {
   saveBugapoint(bugapoint: Bugapoint) {
     return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint)
       .subscribe((data: any) => {
-      console.log(data);
-    });
+        console.log(data);
+      });
   }
 
   /**
@@ -64,6 +65,29 @@ export class BugapointService {
    */
   getDiscriminators(): Observable<string[]> {
     return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
+  }
+
+  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number, newDescription?: string)
+    : Promise<DatabaseSaveResponse> {
+    let response: DatabaseSaveResponse = new class implements DatabaseSaveResponse {
+      message: string;
+      success: boolean;
+    }
+
+    response.success = false
+
+    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
+     &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
+     &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
+     &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
+     &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
+
+    await this.http.put(url, null).subscribe((data: any) => {
+      response = data;
+      console.log(response)
+    });
+
+    return response
   }
 
 }

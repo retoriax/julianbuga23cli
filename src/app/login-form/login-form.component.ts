@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
 import {loginrequest} from "../model/loginrequest";
-import {AuthenticationService} from "../service/authentication.service";
+import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
 
 /** Error when invalid control is dirty, touched, or submitted. */

@@ -3,6 +3,8 @@ import {Bugapoint} from "../../model/bugapoint";
 import {FormControl} from "@angular/forms";
 import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
+import {BugapointService} from "../../services/bugapoint.service";
+import {point} from "leaflet";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -11,10 +13,11 @@ import {AdminService} from "../../services/admin.service";
 })
 export class AdminpanelBugapointpanelComponent implements OnInit {
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private bugapointService: BugapointService) {
   }
 
   admins: Admin[]
+  admin: Admin
 
   @Input()
   point: Bugapoint
@@ -32,13 +35,21 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
     })
 
     await this.adminService.getAdminById(this.point.adminID).subscribe((data: any) => {
-      const admin: Admin = data;
-      console.log(admin);
+      this.admin = data;
+      this.adminForm.setValue(this.admin.emailadress)
     });
 
-    console.log(this.point.adminID);
+    this.descriptionForm.setValue(this.point.description)
+
+    this.latForm.setValue(this.point.latitude + '')
+    this.longForm.setValue(this.point.longitude + '')
+
+
   }
 
+  /**
+   *
+   */
   getGeoLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -46,5 +57,13 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
         this.longForm.setValue(position.coords.longitude + '');
       })
     }
+  }
+
+  /**
+   *
+   */
+  update() {
+    console.log(this.bugapointService.updateBugapoint(this.point, Number(this.latForm.value), Number(this.longForm.value),
+      1, String(this.descriptionForm.value)))
   }
 }
