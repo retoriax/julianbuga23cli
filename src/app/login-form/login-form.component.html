@@ -1,18 +1,19 @@
-<section>
-  <div class="login">
-    <h2>Login</h2>
-    <div class="inputBox">
-      <input type="text" placeholder="Email" id="loginEmail">
-    </div>
-    <div class="inputBox">
-      <input type="password" placeholder="Passwort" id="loginPassword">
-    </div>
-    <div class="inputBox">
-      <input type="submit" value="Einloggen" id="btn" (click)="login()">
-    </div>
-    <div class="group">
-      <a href="#">Passwort vergessen?</a>
-      <a routerLink="/register">Registrieren</a>
-    </div>
-  </div>
-</section>
+<div class="login-container">
+  <h1 class="login-title">Login</h1>
+  <form class="login-form">
+    <mat-form-field class="login-field" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" id="loginEmail" placeholder="email@example.com" [formControl]="email">
+    </mat-form-field>
+
+    <mat-form-field class="login-field" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" id="loginPassword" #loginPassword>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-raised-button class="login-button" color="primary" [disabled]="!email.valid || !loginPassword.value" (click)="login()">Login</button>
+  </form>
+</div>
