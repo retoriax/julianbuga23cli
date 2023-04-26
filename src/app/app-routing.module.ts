@@ -11,16 +11,16 @@ import {LoginFormComponent} from "./login-form/login-form.component";
 
 
 const routes: Routes = [
+  { path: '', redirectTo: ' /map', pathMatch: 'full' },
   { path: 'route-planner', component: RoutePlannerComponent},
-  { path: 'map', component: MapComponent},
   { path: 'map', component: MapComponent},
   { path: 'register', component: RegisterUiComponent},
   { path: 'login', component: LoginFormComponent},
-  { path: 'map', component: MapComponent},
   { path: 'admin/menu', component: AdminpanelMenuComponent},
   { path: 'admin/bugapoints', component: AdminpanelBugapointsComponent},
   { path: 'admin/bugapoints/new', component: AdminpanelNewpointpanelComponent },
-  { path: 'blank', component: BlankComponent}
+  { path: 'blank', component: BlankComponent},
+  { path: '**', redirectTo: '/map' }
 ];
 
 @NgModule({

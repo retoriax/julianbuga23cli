@@ -24,7 +24,6 @@ import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
 import { TokenCheckerComponent } from './UI/register-components/token-checker/token-checker.component';
 import {MatCardModule} from "@angular/material/card";
-import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { AdminpanelMenuComponent } from './admin-components/adminpanel-menu/adminpanel-menu.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatListModule} from "@angular/material/list";
@@ -39,6 +38,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
+import { AdminpanelParksliderComponent } from './adminpanel-parkslider/adminpanel-parkslider.component';
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+
 
 @NgModule({
   declarations: [
@@ -60,7 +62,7 @@ import {MatDividerModule} from "@angular/material/divider";
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
-
+    AdminpanelParksliderComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,12 @@ import {MatDividerModule} from "@angular/material/divider";
     MatExpansionModule,
     MatAutocompleteModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -37,9 +37,6 @@ export class BugapointService {
    * @param discriminators discriminators
    */
   getFilteredBugapoints(discriminators: Set<string>): Observable<Bugapoint[]> {
-    //const discriminatorList = Array.from(discriminators); // Convert Set to array
-    //const discriminatorParams = discriminatorList.join(',');
-
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/filter`, {
       params: {
         discriminators: Array.from(discriminators).join(',')
@@ -56,8 +53,8 @@ export class BugapointService {
   saveBugapoint(bugapoint: Bugapoint) {
     return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint)
       .subscribe((data: any) => {
-      console.log(data);
-    });
+        console.log(data);
+      });
   }
 
   /**
@@ -65,6 +62,48 @@ export class BugapointService {
    */
   getDiscriminators(): Observable<string[]> {
     return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
+  }
+
+  /**
+   * Updates the bugapoint.
+   *
+   * @param bugapoint bugapoint which gets updated
+   * @param newLat new latitude
+   * @param newLong new longitude
+   * @param newAdminId new admin id
+   * @param newDescription new description
+   */
+  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number,
+                        newDescription?: string): Promise<DatabaseSaveResponse> {
+
+    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
+     &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
+     &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
+     &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
+     &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
+
+    try {
+      let response = await this.http.put(url, null).toPromise();
+      return response as DatabaseSaveResponse;
+    } catch (e) {
+      return new class implements DatabaseSaveResponse {
+        message: string;
+        success: boolean = false;
+      }
+    }
+  }
+
+
+  /**
+   * Deletes a bugapoint with the id.
+   *
+   * @param id identifier
+   */
+  deleteBugapointById(id: number) {
+    return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`)
+      .subscribe((data: any) => {
+      console.log(data)
+    });
   }
 
   searchByTitle(searchtitle: string): Observable<Bugapoint[]> {
