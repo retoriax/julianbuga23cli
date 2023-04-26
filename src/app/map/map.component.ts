@@ -110,7 +110,7 @@ export class MapComponent implements OnInit {
     console.warn(iconUrl)
     if (this.iconsCache[iconUrl]) {
       console.warn("erste if");
-      console.warn("!!!!! "+ this.iconsCache[iconUrl])
+      console.warn("!!!!! "+ JSON.stringify(this.iconsCache[iconUrl]))
       return this.iconsCache[iconUrl];
     } else if (this.fileExists(iconUrl)) {
       console.warn("else if");
@@ -136,7 +136,7 @@ export class MapComponent implements OnInit {
     let http = new XMLHttpRequest();
     http.open('HEAD', url, false);
     http.send();
-    console.log(http.status);
+    console.log(http.status + url);
     return http.status == 200;
   }
 
