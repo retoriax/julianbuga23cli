@@ -103,8 +103,14 @@ export class MapComponent implements OnInit {
     const iconUrl = `././assets/MapIcons/${discriminator}.png`;
     const defaultIconUrl = `././assets/MapIcons/Standard.png`;
 
+    /*
+    Wenn der iconURL string als key schon im iconscache vorhanden ist
+    -> dann zugehöriger icon returned
+     */
+    console.warn(iconUrl)
     if (this.iconsCache[iconUrl]) {
       console.warn("erste if");
+      console.warn("!!!!! "+ this.iconsCache[iconUrl])
       return this.iconsCache[iconUrl];
     } else if (this.fileExists(iconUrl)) {
       console.warn("else if");
