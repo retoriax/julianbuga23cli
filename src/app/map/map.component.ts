@@ -128,46 +128,37 @@ export class MapComponent implements OnInit {
   }
 
   getIconFromDiscriminator(discriminator: string): L.Icon {
-    console.warn("test 123");
     const iconUrl = `././assets/MapIcons/${discriminator}.png`;
-    const defaultIconUrl = `././assets/MapIcons/Standard.png`;
+    const defaultIconUrl = `././assets/MapIcons/Default.png`;
 
-    /*
-    Wenn der iconURL string als key schon im iconscache vorhanden ist
-    -> dann zugehöriger icon returned
-     */
-    console.warn(iconUrl)
+    if(!this.iconsCache[defaultIconUrl]) {
+      const defaultIcon = L.icon({
+        iconUrl: defaultIconUrl,
+        iconSize: [32, 32],
+      });
+      this.iconsCache[defaultIconUrl] = defaultIcon;
+    }
     if (this.iconsCache[iconUrl]) {
-      console.warn("erste if");
-      console.warn("!!!!! "+ JSON.stringify(this.iconsCache[iconUrl]))
       return this.iconsCache[iconUrl];
-    } else if (this.fileExists(iconUrl)) {
-      console.warn("else if");
-      const icon = L.icon({
+    }
+
+    if (this.fileExists(iconUrl)) {
+      this.iconsCache[iconUrl] = L.icon({
         iconUrl: iconUrl,
         iconSize: [32, 32],
       });
-      this.iconsCache[iconUrl] = icon;
-      return icon;
-    } else {
-      //console.warn(`Icon file '${iconUrl}' not found. Using default icon.`);
-      console.warn("hallo else")
-      const defaultIcon = L.icon({
-          iconUrl: defaultIconUrl,
-          iconSize: [32, 32],
-      });
-      this.iconsCache[iconUrl] = defaultIcon;
-      return defaultIcon;
-    }
+    } else this.iconsCache[iconUrl] = this.iconsCache[defaultIconUrl];
+    return this.iconsCache[iconUrl];
   }
 
   fileExists(url: string): boolean {
     let http = new XMLHttpRequest();
     http.open('GET', url, false);
     http.send();
-    return !(http.response.toString().charAt(1) == "!"
-      && http.response.toString().charAt(2) == "D"
-      && http.response.toString().charAt(3) == "O");
+    console.log(http.status + " " + url);
+    console.log(http.response);
+    console.log(!(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O"))
+    return !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
   }
 
   saveMapView() {
