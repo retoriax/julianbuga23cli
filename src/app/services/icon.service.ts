@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import * as L from "leaflet";
+import {BugapointService} from "./bugapoint.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class IconService {
   iconsCache: { [key: string]: L.Icon } = {};
-  constructor() { }
+  constructor( private bugapointService: BugapointService) {
+    this.bugapointService.findAll().subscribe(bugapoints => {
+      bugapoints.forEach((bugapoint) => {
+        this.getIconFromDiscriminator(bugapoint.discriminator);
+      })
+    });
+  }
 
   getIconFromDiscriminator(discriminator: string): L.Icon {
     const iconUrl = `././assets/MapIcons/${discriminator}.png`;
