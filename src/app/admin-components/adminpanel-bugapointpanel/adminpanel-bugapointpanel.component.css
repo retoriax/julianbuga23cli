@@ -1,6 +1,11 @@
 mat-expansion-panel {
   display: flex;
   flex-direction: column;
+  background: white;
+}
+
+mat-form-field {
+  display: flex;
 }
 
 .list {
@@ -17,4 +22,28 @@ mat-expansion-panel {
 
 button {
   margin-right: 5vw;
+}
+
+
+
+.success-animation {
+  animation-name: green-background;
+  animation-duration: 2s;
+}
+
+@keyframes green-background {
+  0% { background-color: white; }
+  25% { background-color: lawngreen; }
+  100% { background-color: white; }
+}
+
+.fail-animation {
+  animation-name: red-background;
+  animation-duration: 2s;
+}
+
+@keyframes red-background {
+  0% { background-color: white; }
+  25% { background-color: red; }
+  100% { background-color: white; }
 }

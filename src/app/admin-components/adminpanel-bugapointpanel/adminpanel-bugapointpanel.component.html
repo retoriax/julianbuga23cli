@@ -1,4 +1,5 @@
 <mat-expansion-panel>
+
   <mat-expansion-panel-header>
     {{point.title}}
   </mat-expansion-panel-header>
@@ -44,8 +45,8 @@
 
 
   <div class="buttonBar">
-    <button mat-raised-button color="primary">Update</button>
-    <button mat-raised-button color="warn">Delete</button>
+    <button mat-raised-button color="primary" (click)="update()">Update</button>
+    <button mat-raised-button color="warn" (click)="delete()">Delete</button>
   </div>
 
   <br>

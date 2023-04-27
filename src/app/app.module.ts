@@ -7,18 +7,23 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RoutePlannerComponent } from './route-components/route-planner/route-planner.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { BugapointAutocompleteFieldComponent } from './route-components/bugapoint-autocomplete-field/bugapoint-autocomplete-field.component';
+import { BugapointDragAndDropComponent } from './route-components/bugapoint-drag-and-drop/bugapoint-drag-and-drop.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatButtonModule} from '@angular/material/button';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { MapFilterComponent } from './map-filter/map-filter.component';
-import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatButtonModule} from "@angular/material/button";
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
 import { TokenCheckerComponent } from './UI/register-components/token-checker/token-checker.component';
 import {MatCardModule} from "@angular/material/card";
-import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { AdminpanelMenuComponent } from './admin-components/adminpanel-menu/adminpanel-menu.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatListModule} from "@angular/material/list";
@@ -30,10 +35,11 @@ import { AdminpanelNewpointpanelComponent } from './admin-components/adminpanel-
 import { AdminpanelBugapointpanelComponent } from './admin-components/adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
 import { BlankComponent } from './blank/blank.component';
 import {MatIconModule} from "@angular/material/icon";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
+//import { AdminpanelParksliderComponent } from './adminpanel-parkslider/adminpanel-parkslider.component';
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
 
 @NgModule({
@@ -41,6 +47,9 @@ import {MatDividerModule} from "@angular/material/divider";
     AppComponent,
     MapComponent,
     NavbarComponent,
+    RoutePlannerComponent,
+    BugapointAutocompleteFieldComponent,
+    BugapointDragAndDropComponent,
     LoginFormComponent,
     MapFilterComponent,
     AdminpanelMenuComponent,
@@ -53,7 +62,7 @@ import {MatDividerModule} from "@angular/material/divider";
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
-
+    //AdminpanelParksliderComponent
   ],
   imports: [
     BrowserModule,
@@ -66,8 +75,15 @@ import {MatDividerModule} from "@angular/material/divider";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    MatIconModule,
+    IonicModule.forRoot(),
+    BrowserAnimationsModule,
     MatAutocompleteModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    MatButtonModule,
+    MatIconModule,
+    ScrollingModule,
     MatChipsModule,
     MatDividerModule,
     MatExpansionModule,

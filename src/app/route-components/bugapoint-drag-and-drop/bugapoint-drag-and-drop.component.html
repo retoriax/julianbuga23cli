@@ -1,0 +1,27 @@
+<div class="scrollable-content" cdkScrollable>
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" style="overflow-y: scroll">
+    <div class="routepoint-box" *ngFor="let routeBugapoint of (route |async); let i = index"
+         cdkDrag>
+      <div class="positionDiv" >
+        <mat-icon class="positionIcon" (click)="displayPointOnMap(routeBugapoint)"> location_on</mat-icon>
+        <div class="textDiv">
+          {{routeBugapoint.title}}
+        </div>
+      </div>
+      <div class="sideBySideButtonsAndHandle">
+        <button mat-fab color="primary" aria-label="delete Button" (click)="deleteElement(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div cdkDragHandle class="drag">
+          <mat-icon class="element-handle" style="font-size: 2em;">drag_indicator</mat-icon>
+        </div>
+      </div>
+    </div>
+    <div class="vertical-center">
+      <button  class="routeButton" (click)="goToRoute()" mat-raised-button>Search for Route</button>
+    </div>
+  </div>
+</div>
+
+
+

@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
+import {MapInteractionService} from "../services/map-interaction.service";
 
 @Component({
   selector: 'app-map',
@@ -13,9 +14,9 @@ export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
   iconsCache: { [key: string]: L.Icon } = {};
-  constructor(private cookieService: CookieService) {}
+  constructor(private cookieService: CookieService,
+              private mapInteractionService: MapInteractionService) {}
   ngOnInit() {
-
     /**
      * Map init at given position and zoom level.
      */
@@ -39,6 +40,22 @@ export class MapComponent implements OnInit {
       window.dispatchEvent(new Event("resize"));
     }, 500);
 
+    /**
+     * Displayes one point if there are any changes to the displayedBugapointObservable in the mapInteractionService
+     */
+    this.mapInteractionService.displayedBugapointObservable.subscribe(bugapoint => {
+      this.displayPointCentered(bugapoint, 23);
+    });
+    this.mapInteractionService.hideBugapoint();
+
+    /**
+     * Shows the Route if there are any changes to the displayedBugapointObservable in the mapInteractionService
+     */
+    this.mapInteractionService.routeObservable.subscribe(bugapoints => {
+      this.displayPointCentered(bugapoints[0], 18);
+      this.showRoute(bugapoints);
+    });
+    this.mapInteractionService.clearRoute();
   }
 
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
@@ -53,6 +70,7 @@ export class MapComponent implements OnInit {
    * @param latitude Latitude
    * @param longitude Longitude
    * @param title Title
+   * @param discriminator Discriminator
    */
   showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
     L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.getIconFromDiscriminator(discriminator))
@@ -96,6 +114,17 @@ export class MapComponent implements OnInit {
         profile: 'foot',
       })
     }).addTo(this.map);
+  }
+
+  /**
+   *
+   * @param bugapoint
+   * @param zoom
+   */
+  displayPointCentered(bugapoint: Bugapoint|null|undefined, zoom: number) {
+    if(bugapoint !== null && bugapoint !== undefined) {
+      this.map.setView(new L.LatLng(bugapoint.latitude, bugapoint.longitude), zoom);
+    }
   }
 
   getIconFromDiscriminator(discriminator: string): L.Icon {

@@ -30,4 +30,13 @@ export class AdminService {
     return this.http.get<Admin>(environment.backEndUrl + `${this.subUrl}/id/${adminId}`);
   }
 
+  /**
+   * Returns admin with the given email address
+   *
+   * @param emailaddress email address of the admin
+   */
+  getAdminByEmailadress(emailaddress: string): Observable<Admin> {
+    return this.http.get<Admin>(environment.backEndUrl + `${this.subUrl}/emailaddress/${emailaddress}`);
+  }
+
 }

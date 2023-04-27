@@ -1,5 +1,5 @@
 export class Admin {
-  id: string;
+  id: number;
   firstname: string;
   lastname: string;
   emailadress: string;

@@ -1,0 +1,29 @@
+<form class="bugapoint-form">
+  <mat-form-field class="bugapoint-full-width" appearance="fill">
+    <mat-label>Pick a Buga-Location</mat-label>
+    <input #locationInput
+           type="text"
+           placeholder="Pick one"
+           aria-label="LocationField"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto"
+           [(ngModel)]="newElement"
+           [errorStateMatcher]="routePointErrorStateMatcher">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let bugapoint of filteredBugapoints| async"
+                  [value]="bugapoint">
+        {{bugapoint.title}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="routePointErrorStateMatcher.isErrorState">
+      Location not found
+    </mat-error>
+    <button mat-fab color="primary" aria-label="add" class="add-button" (click)="submit();" >
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
+
+
+

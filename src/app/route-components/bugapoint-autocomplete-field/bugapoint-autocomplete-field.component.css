@@ -1,0 +1,65 @@
+.bugapoint-form {
+  min-width: 100px;
+  max-width: 100vw;
+  width: 100vw;
+  position: relative;
+  align-items: center;
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.bugapoint-form button{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  margin-right: 10px;
+}
+
+.bugapoint-full-width {
+  width: 100%;
+  height: 85px;
+  font-size: 1.2em;
+}
+
+.add-button {
+  margin-top: 4px;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
+.routeButton {
+  width: 500px;
+}
+
+
+mat-option {
+  font-size: 1.2em;
+}
+/* Font size for screens smaller than 768px */
+@media (max-width: 500px) {
+  mat-option {
+    font-size: 1em;
+  }
+  .bugapoint-full-width {
+    font-size: 1.1em;
+  }
+}
+
+/* Font size for screens smaller than 576px */
+@media (max-width: 350px) {
+  mat-option {
+    font-size: 0.9em;
+  }
+  .bugapoint-full-width {
+    font-size: 1em;
+  }
+}
+
