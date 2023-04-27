@@ -16,9 +16,9 @@ export class AuthenticationService {
   private loginStatusUrl: string;
 
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
-    this.registerUrl = "https://bugamapspringboot-production.up.railway.app/api/v1/auth/register";
-    this.loginUrl = "https://bugamapspringboot-production.up.railway.app/api/v1/auth/authenticate"
-    this.loginStatusUrl = "https://bugamapspringboot-production.up.railway.app/api/v1/auth/checkToken"
+    this.registerUrl = "http://localhost:8080/api/v1/auth/register";
+    this.loginUrl = "http://localhost:8080/api/v1/auth/authenticate"
+    this.loginStatusUrl = "http://localhost:8080/api/v1/auth/checkToken"
 
   }
 
