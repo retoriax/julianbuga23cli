@@ -20,12 +20,12 @@
   justify-content: space-between;
   box-sizing: border-box;
   background: white;
-  font-size: 21px;
+  font-size: 1em;
 }
 /* Font size for screens smaller than 768px */
 @media (max-width: 500px) {
   .routepoint-box {
-    font-size: 19px;
+    font-size: 0.9em;
   }
   .routeButton {
     font-size: 14px;
@@ -35,7 +35,7 @@
 /* Font size for screens smaller than 576px */
 @media (max-width: 350px) {
   .routepoint-box {
-    font-size: 17px;
+    font-size: 0.8em;
   }
   .routeButton {
     font-size: 12px;
@@ -75,10 +75,17 @@
 }
 
 .element-handle {
+  font-size: 24px; /* increase the font size to make the handle bigger */
   width: auto;
-  margin-right: 10px;
+  margin-right: 8px;
   cursor: move;
 }
+
+.drag {
+  width: 40px;
+  height: 40px;
+}
+
 .vertical-center {
   display: flex;
   justify-content: center;
@@ -117,11 +124,11 @@ button[aria-label="delete Button"],
   margin-left: 3px;
 }
 
-.addHighlight {
-  animation: addGlow 1s;
+.mergeHighlight {
+  animation: mergeGlow 1s;
 }
 
-@keyframes addGlow {
+@keyframes mergeGlow {
   0% {
     background: chartreuse;
   }

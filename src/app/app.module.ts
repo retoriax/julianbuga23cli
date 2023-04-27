@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoutePlannerComponent } from './route-components/route-planner/route-planner.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { BugapointAutocompleteFieldComponent } from './route-components/./bugapoint-autocomplete-field/bugapoint-autocomplete-field.component';
+import { BugapointAutocompleteFieldComponent } from './route-components/bugapoint-autocomplete-field/bugapoint-autocomplete-field.component';
 import { BugapointDragAndDropComponent } from './route-components/bugapoint-drag-and-drop/bugapoint-drag-and-drop.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatButtonModule} from '@angular/material/button';
@@ -38,7 +38,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
-import { AdminpanelParksliderComponent } from './adminpanel-parkslider/adminpanel-parkslider.component';
+//import { AdminpanelParksliderComponent } from './adminpanel-parkslider/adminpanel-parkslider.component';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
 
@@ -62,7 +62,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
-    AdminpanelParksliderComponent,
+    //AdminpanelParksliderComponent
   ],
   imports: [
     BrowserModule,

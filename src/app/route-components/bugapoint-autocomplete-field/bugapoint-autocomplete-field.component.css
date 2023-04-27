@@ -6,6 +6,7 @@
   align-items: center;
   display: flex;
   margin-top: 20px;
+  margin-bottom: 0;
 }
 .bugapoint-form button{
   position: absolute;
@@ -17,9 +18,12 @@
 
 .bugapoint-full-width {
   width: 100%;
+  height: 85px;
+  font-size: 1.2em;
 }
 
 .add-button {
+  margin-top: 4px;
 }
 
 .vertical-center {
@@ -37,19 +41,25 @@
 
 
 mat-option {
-  font-size: 19px;
+  font-size: 1.2em;
 }
 /* Font size for screens smaller than 768px */
 @media (max-width: 500px) {
   mat-option {
-    font-size: 17px;
+    font-size: 1em;
+  }
+  .bugapoint-full-width {
+    font-size: 1.1em;
   }
 }
 
 /* Font size for screens smaller than 576px */
 @media (max-width: 350px) {
   mat-option {
-    font-size: 15px;
+    font-size: 0.9em;
+  }
+  .bugapoint-full-width {
+    font-size: 1em;
   }
 }
 

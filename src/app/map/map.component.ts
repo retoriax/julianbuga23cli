@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
-import {MapInteractionService} from "../service/map-interaction.service";
 import {CookieService} from "ngx-cookie-service";
+import {MapInteractionService} from "../services/map-interaction.service";
 
 @Component({
   selector: 'app-map',
@@ -44,7 +44,7 @@ export class MapComponent implements OnInit {
      * Displayes one point if there are any changes to the displayedBugapointObservable in the mapInteractionService
      */
     this.mapInteractionService.displayedBugapointObservable.subscribe(bugapoint => {
-      this.displayPointCentered(bugapoint);
+      this.displayPointCentered(bugapoint, 23);
     });
     this.mapInteractionService.hideBugapoint();
 
@@ -52,6 +52,7 @@ export class MapComponent implements OnInit {
      * Shows the Route if there are any changes to the displayedBugapointObservable in the mapInteractionService
      */
     this.mapInteractionService.routeObservable.subscribe(bugapoints => {
+      this.displayPointCentered(bugapoints[0], 18);
       this.showRoute(bugapoints);
     });
     this.mapInteractionService.clearRoute();
@@ -69,6 +70,7 @@ export class MapComponent implements OnInit {
    * @param latitude Latitude
    * @param longitude Longitude
    * @param title Title
+   * @param discriminator Discriminator
    */
   showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
     L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.getIconFromDiscriminator(discriminator))
@@ -114,12 +116,13 @@ export class MapComponent implements OnInit {
   }
 
   /**
-   * Method to display one Bugapoint centered.
-   * @param bugapoint Point
+   *
+   * @param bugapoint
+   * @param zoom
    */
-  displayPointCentered(bugapoint: Bugapoint|null) {
-    if(bugapoint !== null) {
-      this.map.setView(new L.LatLng(bugapoint.latitude, bugapoint.longitude), 23);
+  displayPointCentered(bugapoint: Bugapoint|null|undefined, zoom: number) {
+    if(bugapoint !== null && bugapoint !== undefined) {
+      this.map.setView(new L.LatLng(bugapoint.latitude, bugapoint.longitude), zoom);
     }
   }
 

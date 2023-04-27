@@ -3,32 +3,50 @@ import {FormControl} from '@angular/forms';
 import {filter, mergeAll, Observable, take} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {Bugapoint} from "../../model/bugapoint";
-import {RoutepointService} from "../../service/routepoint.service";
 import {RoutepointErrorstateMatcher} from "./RoutepointErrorstateMatcher";
 import {BugapointService} from "../../services/bugapoint.service";
+import {RoutepointService} from "../../services/routepoint.service";
 
 @Component({
   selector: 'app-bugapoint-autocomplete-field',
   templateUrl: './bugapoint-autocomplete-field.component.html',
   styleUrls: ['./bugapoint-autocomplete-field.component.css']
 })
+/**
+ * This Component consist of an Autocomplete field with all
+ * Bugapoints from the Database as options and a button to add them to the route
+ */
 export class BugapointAutocompleteFieldComponent implements OnInit {
+  //content of the autocompletefield
   myControl = new FormControl<string | Bugapoint>('');
   filteredBugapoints: Observable<Bugapoint[]>;
+  datbaseBugapoints: Observable<Bugapoint[]>;
   newElement: (Bugapoint|string);
   routePointErrorStateMatcher = new RoutepointErrorstateMatcher();
-  highlightIndex:number = 2;
 
 
+  /**
+   * Constructor with the Service that makes calls to the database
+   * and a Service that stores adds, moves, and delets Points in your route.
+   * @param bugapointservice
+   * @param routepointservice
+   */
  constructor(private bugapointservice: BugapointService,
              private routepointservice: RoutepointService) {
  }
 
-  lookup(value: string): Observable<Bugapoint[]> {
-    return this.bugapointservice.searchByTitle(value);
+  /**
+   *
+   * @param searchtitle
+   */
+  lookup(searchtitle: string): Observable<Bugapoint[]> {
+    return this.datbaseBugapoints.pipe(map(value =>
+      value.filter(value1 =>
+        value1.title.toLowerCase().trim().includes(searchtitle.toLowerCase().trim()))));
   }
 
   ngOnInit() {
+    this.datbaseBugapoints = this.bugapointservice.findAll();
     this.filteredBugapoints = this.myControl.valueChanges.pipe(
       startWith(''),
       // delay emits
@@ -57,7 +75,11 @@ export class BugapointAutocompleteFieldComponent implements OnInit {
     }
 
 
-    findBugapointByTitle(searchString: string) {
+  /**
+   *
+   * @param searchString
+   */
+  findBugapointByTitle(searchString: string) {
       const searchByString: Observable<Bugapoint|undefined> = this.filteredBugapoints.pipe(
         // filter the array to find the first element of type MyType
         filter((arr: Bugapoint[]) => arr.some((item: Bugapoint) => item.title === searchString)),
@@ -65,6 +87,7 @@ export class BugapointAutocompleteFieldComponent implements OnInit {
         map((arr: Bugapoint[]) => arr.find((item: Bugapoint) => item.title === searchString)),
         take(1)
       );
+      //
       searchByString.subscribe((item: Bugapoint | undefined) => {
         if (item === undefined) {
           console.log("myFilteredObservable contains an undefined value");

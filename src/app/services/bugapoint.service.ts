@@ -4,9 +4,6 @@ import {Observable} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
 import {DatabaseSaveResponse} from "./DatabaseSaveResponse";
 import {environment} from "../../environments/environment.development";
-import {map} from "rxjs/operators";
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -104,11 +101,6 @@ export class BugapointService {
       .subscribe((data: any) => {
       console.log(data)
     });
-  }
-
-  searchByTitle(searchtitle: string): Observable<Bugapoint[]> {
-    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`)
-      .pipe(map(value => value.filter(value1 => value1.title.toLowerCase().trim().includes(searchtitle.toLowerCase().trim()))));
   }
 
 }
