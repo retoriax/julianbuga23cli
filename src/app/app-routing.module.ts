@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'admin/bugapoints', component: AdminpanelBugapointsComponent},
   { path: 'admin/bugapoints/new', component: AdminpanelNewpointpanelComponent },
   { path: 'blank', component: BlankComponent},
-  { path: '**', redirectTo: ''},
+  { path: '**', redirectTo: '/map'},
 ];
 
 @NgModule({
