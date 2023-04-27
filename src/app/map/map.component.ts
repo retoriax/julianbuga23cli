@@ -89,7 +89,6 @@ export class MapComponent implements OnInit {
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
       this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.discriminator);
-      console.warn("loop")
     }
   }
 
@@ -155,9 +154,6 @@ export class MapComponent implements OnInit {
     let http = new XMLHttpRequest();
     http.open('GET', url, false);
     http.send();
-    console.log(http.status + " " + url);
-    console.log(http.response);
-    console.log(!(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O"))
     return !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
   }
 
@@ -166,6 +162,4 @@ export class MapComponent implements OnInit {
     const zoom = this.map.getZoom();
     this.cookieService.set('mapView', JSON.stringify({ center, zoom }));
   }
-
-
 }
