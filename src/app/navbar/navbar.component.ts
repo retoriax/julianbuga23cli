@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from "../services/authentication.service";
-import { CookieService } from 'ngx-cookie-service';
-
+import {CookieService} from 'ngx-cookie-service';
+import {NavigationService} from "../services/navigation.service";
+import {Navigation} from "../services/navigation";
 
 
 @Component({
@@ -13,29 +14,44 @@ import { CookieService } from 'ngx-cookie-service';
 export class NavbarComponent implements OnInit{
 
 
-  constructor(private router: Router, private authservice: AuthenticationService, private cookieService: CookieService) {
+  constructor(private navigationService: NavigationService, private router: Router, private authservice: AuthenticationService, private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
     const list = document.querySelectorAll('.list');
     const self = this;
     function activeLink(this: HTMLElement){
-        list.forEach((item) =>
+        setActive(this);
+    }
+    function setActive(element: HTMLElement) {
+      list.forEach((item) =>
         item.classList.remove("active"));
-        this.classList.add("active");
-        self.cookieService.set('activeItem', this.id);
+      element.classList.add("active");
+      self.cookieService.set('activeItem', element.id);
     }
 
-    let active = document.getElementById(this.cookieService.get('activeItem'));
-    list.forEach((item) => {
-      item.classList.remove("active");
-      active?.classList.add("active");
-    });
-
+    if (this.cookieService.check('activeItem')) {
+      let active = document.getElementById(this.cookieService.get('activeItem'));
+      list.forEach((item) => {
+        item.classList.remove("active");
+        active?.classList.add("active");
+      });
+    }
 
     list.forEach((item) => {
       item.addEventListener('click', activeLink);
     });
+
+    this.navigationService.navigationEvent.subscribe((path: string) => {
+        switch (path) {
+          case Navigation.RoutePlanner: setActive(list.item(0) as HTMLElement); break;
+          case Navigation.Blank: setActive(list.item(1) as HTMLElement); break;
+          case Navigation.Map: setActive(list.item(2) as HTMLElement); break;
+          case Navigation.Blank: setActive(list.item(3) as HTMLElement); break;
+          case Navigation.Login || Navigation.Register: setActive(list.item(4) as HTMLElement); break;
+        }
+      });
+
   }
 
   /**

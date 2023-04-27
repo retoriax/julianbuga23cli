@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Bugapoint} from "../model/bugapoint";
-import {Router} from "@angular/router";
+import {NavigationService} from "./navigation.service";
+import {Navigation} from "./navigation";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,11 @@ export class MapInteractionService {
   private displayedBugapointSubject = new BehaviorSubject<Bugapoint|null>(null);
   displayedBugapointObservable = this.displayedBugapointSubject.asObservable();
 
-  constructor(private router: Router) { }
+  constructor(private navigationService: NavigationService) { }
 
   showBugapoint(bugapoint: Bugapoint|null) {
     this.displayedBugapointSubject.next(bugapoint);
-    this.router.navigate(['/map']);
+    this.navigationService.navigate(Navigation.Map);
   }
 
   hideBugapoint() {
@@ -28,7 +29,7 @@ export class MapInteractionService {
 
   callMapRouting(bugapoints: Bugapoint[]) {
     this.routeSubject.next(bugapoints);
-    this.router.navigate(['/map']);
+    this.navigationService.navigate(Navigation.Map);
   }
 
   clearRoute() {
