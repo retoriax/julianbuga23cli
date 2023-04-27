@@ -4,6 +4,7 @@ import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
 import {MapInteractionService} from "../services/map-interaction.service";
+import {IconService} from "../services/icon.service";
 
 @Component({
   selector: 'app-map',
@@ -13,9 +14,10 @@ import {MapInteractionService} from "../services/map-interaction.service";
 export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
-  iconsCache: { [key: string]: L.Icon } = {};
+
   constructor(private cookieService: CookieService,
-              private mapInteractionService: MapInteractionService) {}
+              private mapInteractionService: MapInteractionService,
+              private iconService: IconService) {}
   ngOnInit() {
     /**
      * Map init at given position and zoom level.
@@ -73,7 +75,7 @@ export class MapComponent implements OnInit {
    * @param discriminator Discriminator
    */
   showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.getIconFromDiscriminator(discriminator))
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.iconService.getIconFromDiscriminator(discriminator))
   }
 
   /**
@@ -124,37 +126,6 @@ export class MapComponent implements OnInit {
     if(bugapoint !== null && bugapoint !== undefined) {
       this.map.setView(new L.LatLng(bugapoint.latitude, bugapoint.longitude), zoom);
     }
-  }
-
-  getIconFromDiscriminator(discriminator: string): L.Icon {
-    const iconUrl = `././assets/MapIcons/${discriminator}.png`;
-    const defaultIconUrl = `././assets/MapIcons/Default.png`;
-
-    if(!this.iconsCache[defaultIconUrl]) {
-      const defaultIcon = L.icon({
-        iconUrl: defaultIconUrl,
-        iconSize: [32, 32],
-      });
-      this.iconsCache[defaultIconUrl] = defaultIcon;
-    }
-    if (this.iconsCache[iconUrl]) {
-      return this.iconsCache[iconUrl];
-    }
-
-    if (this.fileExists(iconUrl)) {
-      this.iconsCache[iconUrl] = L.icon({
-        iconUrl: iconUrl,
-        iconSize: [32, 32],
-      });
-    } else this.iconsCache[iconUrl] = this.iconsCache[defaultIconUrl];
-    return this.iconsCache[iconUrl];
-  }
-
-  fileExists(url: string): boolean {
-    let http = new XMLHttpRequest();
-    http.open('GET', url, false);
-    http.send();
-    return !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
   }
 
   saveMapView() {
