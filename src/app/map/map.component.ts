@@ -163,10 +163,11 @@ export class MapComponent implements OnInit {
 
   fileExists(url: string): boolean {
     let http = new XMLHttpRequest();
-    http.open('HEAD',url, false);
+    http.open('GET', url, false);
     http.send();
-    console.log(http.status + url);
-    return http.status == 200;
+    return !(http.response.toString().charAt(1) == "!"
+      && http.response.toString().charAt(2) == "D"
+      && http.response.toString().charAt(3) == "O");
   }
 
   saveMapView() {
