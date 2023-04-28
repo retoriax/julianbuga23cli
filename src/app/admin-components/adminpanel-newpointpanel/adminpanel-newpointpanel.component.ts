@@ -6,8 +6,6 @@ import {Bugapoint} from "../../model/bugapoint";
 import {Admin} from "../../model/admin";
 import {Park} from "../../model/park";
 import {ParkService} from "../../services/park.service";
-import {bug} from "ionicons/icons";
-import {HttpParams} from "@angular/common/http";
 import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
 
 @Component({

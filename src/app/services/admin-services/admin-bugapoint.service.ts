@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Bugapoint} from "../../model/bugapoint";
 import {DatabaseSaveResponse} from "../DatabaseSaveResponse";
-import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment.development";
 
 @Injectable({

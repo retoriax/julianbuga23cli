@@ -70,7 +70,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   async update() {
     try {
       const admin = await new Promise<Admin>((resolve, reject) => {
-        const adminResponse: Subscription = this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
+        this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
           (data: Admin) => {
             resolve(data);
           },
