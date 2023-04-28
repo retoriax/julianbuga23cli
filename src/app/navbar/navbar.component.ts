@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit{
       list.forEach((item) =>
         item.classList.remove("active"));
       element.classList.add("active");
+      if (self.cookieService.check('activeItem')) self.cookieService.delete('activeItem');
       self.cookieService.set('activeItem', element.id);
     }
 

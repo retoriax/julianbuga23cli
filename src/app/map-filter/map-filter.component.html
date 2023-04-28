@@ -1,6 +1,6 @@
 <div class="filter-list">
     <mat-chip-list #chipList>
-      <mat-chip-option [selected]="alleSelected" s (click)="alleAuswaehlen()">Alle auswählen</mat-chip-option>
+      <mat-chip-option [selected]="alleSelected" id="alleSelectedChip" (click)="alleAuswaehlen()">Alle auswählen</mat-chip-option>
       <mat-chip-option *ngFor="let discriminator of discriminatorSet" [selected]="selectedDiscriminators.has(discriminator)" [selectable]="true" [removable]="false"
                        (click)="toggleSelection(discriminator); $event.stopPropagation()">
         {{discriminator}}

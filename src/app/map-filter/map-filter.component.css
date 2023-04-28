@@ -55,3 +55,8 @@ mat-chip-option {
   font-size: 110%;
 }
 
+#alleSelectedChip {
+  height: 6vh;
+  font-size: 130%;
+}
+

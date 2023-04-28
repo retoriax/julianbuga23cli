@@ -22,12 +22,13 @@ export class MapComponent implements OnInit {
     /**
      * Map init at given position and zoom level.
      */
-    this.map = L.map('map').setView([49.495, 8.5], 15);
-    const savedView = this.cookieService.get('mapView');
-    if (savedView) {
+    this.map = L.map('map');
+    if (this.cookieService.check('mapView')) {
+      const savedView = this.cookieService.get('mapView');
       const { center, zoom } = JSON.parse(savedView);
       this.map.setView(center, zoom);
-    }
+    } else this.map.setView([49.495, 8.5], 15);
+
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       minZoom:10,

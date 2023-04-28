@@ -64,6 +64,7 @@ export class MapFilterComponent implements OnInit {
 
       if (this.cookieService.check("selectedDiscriminators")) {
           this.selectedDiscriminators = new Set<string>(this.cookieService.get("selectedDiscriminators").split(",").filter(value => value !== ""));
+          this.cookieService.delete("selectedDiscriminators");
           if (this.selectedDiscriminators.size != this.discriminatorSet.size) {
             this.alleSelected = false;
           }
