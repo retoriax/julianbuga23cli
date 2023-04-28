@@ -5,7 +5,6 @@ import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
-import {Subscription} from "rxjs";
 import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
 
 @Component({
