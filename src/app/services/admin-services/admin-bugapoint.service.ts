@@ -29,12 +29,7 @@ export class AdminBugapointService {
       });
   }
 
-  /**
-   * Returns all discriminators.
-   */
-  getDiscriminators(): Observable<string[]> {
-    return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
-  }
+
 
   /**
    * Updates the bugapoint.

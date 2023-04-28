@@ -6,6 +6,7 @@ import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
 import {Subscription} from "rxjs";
+import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -15,7 +16,8 @@ import {Subscription} from "rxjs";
 export class AdminpanelBugapointpanelComponent implements OnInit {
 
   constructor(private adminService: AdminService, private bugapointService: BugapointService,
-              private elementRef: ElementRef, private renderer: Renderer2) {
+              private elementRef: ElementRef, private renderer: Renderer2,
+              private adminBugapointService: AdminBugapointService) {
   }
 
   admins: Admin[]
@@ -78,7 +80,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
         );
       });
 
-      const bugaPointResponse: DatabaseSaveResponse = await this.bugapointService.updateBugapoint(
+      const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
         this.point,
         Number(this.latForm.value),
         Number(this.longForm.value),
@@ -103,7 +105,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    * Deletes this bugapoint.
    */
   delete() {
-    this.bugapointService.deleteBugapointById(this.point.id);
+    this.adminBugapointService.deleteBugapointById(this.point.id);
     window.location.reload()
   }
 }

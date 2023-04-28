@@ -24,6 +24,13 @@ export class BugapointService {
   }
 
   /**
+   * Returns all discriminators.
+   */
+  getDiscriminators(): Observable<string[]> {
+    return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
+  }
+
+  /**
    * returns all bugapoints
    */
   getBugapoints(): Observable<Bugapoint[]> {
