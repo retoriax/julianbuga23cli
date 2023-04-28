@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Bugapoint} from "../../model/bugapoint";
 import {DatabaseSaveResponse} from "../DatabaseSaveResponse";
 import {environment} from "../../../environments/environment.development";
+import {AuthenticationService} from "../authentication.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AdminBugapointService {
 
   private subPath = '/api/v1/admin/bugapoint';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
 
 
@@ -21,7 +22,11 @@ export class AdminBugapointService {
    * @param bugapoint
    */
   saveBugapoint(bugapoint: Bugapoint) {
-    // @ts-ignore
+    this.authService.checkIfLoggedIn((success: boolean) => {
+      if (!success)
+        return;
+    })
+
     return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint)
       .subscribe((data: any) => {
         console.log(data);
@@ -41,6 +46,10 @@ export class AdminBugapointService {
    */
   async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number,
                         newDescription?: string): Promise<DatabaseSaveResponse> {
+    this.authService.checkIfLoggedIn((success: boolean) => {
+      if (!success)
+        return;
+    })
 
     const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
      &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
@@ -66,6 +75,11 @@ export class AdminBugapointService {
    * @param id identifier
    */
   deleteBugapointById(id: number) {
+    this.authService.checkIfLoggedIn((success: boolean) => {
+      if (!success)
+        return;
+    })
+
     return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`)
       .subscribe((data: any) => {
         console.log(data)
