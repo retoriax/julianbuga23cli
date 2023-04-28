@@ -86,8 +86,6 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
         String(this.descriptionForm.value).trim()
       );
 
-      console.log("\"" + String(this.descriptionForm.value).trim() + "\"")
-
       const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
       if (bugaPointResponse.success) {
