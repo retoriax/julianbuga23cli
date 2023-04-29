@@ -35,10 +35,15 @@ export class MapComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
 
-    //saves the current View in Cookie
+    /**
+     * Saves the current map view.
+     */
     this.map.on('moveend', () => this.saveMapView());
 
-    //reloads the Map, if not fully loaded
+    /**
+     * Resizes the map after 500ms of showing the map.
+     * Needed to fix the map not loading bug.
+     */
     setTimeout(function () {
       window.dispatchEvent(new Event("resize"));
     }, 500);
@@ -61,6 +66,10 @@ export class MapComponent implements OnInit {
     this.mapInteractionService.clearRoute();
   }
 
+  /**
+   * Method to receive the currently selected bugapoints from the filter.
+   * @param filteredBugapoints, the array of the currently selected bugapoints.
+   */
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
     this.bugapoints = filteredBugapoints;
     this.updateMarkers();
@@ -80,7 +89,7 @@ export class MapComponent implements OnInit {
   }
 
   /**
-   *   Method to update the markers on the map
+   *   Method to update the markers on the map.
    */
   updateMarkers() {
     // Remove all existing markers from the map
@@ -129,6 +138,9 @@ export class MapComponent implements OnInit {
     }
   }
 
+  /**
+   * Method to save the current view of the map to the browser cookies.
+   */
   saveMapView() {
     const center = this.map.getCenter();
     const zoom = this.map.getZoom();

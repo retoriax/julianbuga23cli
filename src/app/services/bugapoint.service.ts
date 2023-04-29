@@ -17,6 +17,9 @@ export class BugapointService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Clears the caches.
+   */
   forceReload() {
     this.reload$.next(null);
     this.discriminatorCache$ = null;

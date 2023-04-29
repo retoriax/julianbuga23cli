@@ -13,16 +13,16 @@ import {Navigation} from "../services/navigation";
 })
 export class NavbarComponent implements OnInit{
 
-
-  constructor(private navigationService: NavigationService, private router: Router, private authservice: AuthenticationService, private cookieService: CookieService) {
-  }
+  constructor(private navigationService: NavigationService, private router: Router, private authservice: AuthenticationService, private cookieService: CookieService) {}
 
   ngOnInit(): void {
     const list = document.querySelectorAll('.list');
     const self = this;
-    function activeLink(this: HTMLElement){
-        setActive(this);
-    }
+
+    /**
+     * Adds the class "active" to an element to move the indicator to that element.
+     * @param element Element
+     */
     function setActive(element: HTMLElement) {
       list.forEach((item) =>
         item.classList.remove("active"));
@@ -31,6 +31,9 @@ export class NavbarComponent implements OnInit{
       self.cookieService.set('activeItem', element.id);
     }
 
+    /**
+     * Checks the cookies for a current selection after site refresh.
+     */
     if (this.cookieService.check('activeItem')) {
       let active = document.getElementById(this.cookieService.get('activeItem'));
       list.forEach((item) => {
@@ -39,10 +42,20 @@ export class NavbarComponent implements OnInit{
       });
     }
 
+    /**
+     * Adds an event listener to every item of the navbar.
+     */
     list.forEach((item) => {
       item.addEventListener('click', activeLink);
     });
 
+    function activeLink(this: HTMLElement){
+      setActive(this);
+    }
+
+    /**
+     * Sets the indicator to an element if there is a navigation event.
+     */
     this.navigationService.navigationEvent.subscribe((path: string) => {
         switch (path) {
           case Navigation.RoutePlanner: setActive(list.item(0) as HTMLElement); break;

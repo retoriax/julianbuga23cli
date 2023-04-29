@@ -7,6 +7,11 @@ import {Router} from "@angular/router";
 export class NavigationService {
   navigationEvent = new EventEmitter<string>();
   constructor(private router: Router) { }
+
+  /**
+   * Method to navigate to a path and update the navbar.
+   * @param path Path
+   */
   navigate(path: string) {
     // Navigation logic here
     this.navigationEvent.emit(path);
