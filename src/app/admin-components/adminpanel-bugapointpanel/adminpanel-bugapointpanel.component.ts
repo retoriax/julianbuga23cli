@@ -105,6 +105,6 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    */
   delete() {
     this.adminBugapointService.deleteBugapointById(this.point.id);
-    window.location.reload()
+    //window.location.reload()
   }
 }
