@@ -6,6 +6,9 @@ import {environment} from "../../../environments/environment.development";
 import {AuthenticationService} from "../authentication.service";
 import {LoginStatusrequest} from "../../model/login-statusrequest";
 import {CookieService} from "ngx-cookie-service";
+import {headset} from "ionicons/icons";
+import {Data} from "@angular/router";
+import {Observable, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +31,8 @@ export class AdminBugapointService {
     statusrequest.token = this.cookieService.get('token');
 
 
-    return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint)
-      .subscribe((data: any) => {
+    return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint,
+      this.authService.getAuthheader()).subscribe((data: any) => {
         console.log(data);
       });
   }
@@ -45,9 +48,7 @@ export class AdminBugapointService {
    * @param newAdminId new admin id
    * @param newDescription new description
    */
-  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number,
-                        newDescription?: string): Promise<DatabaseSaveResponse> {
-
+  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number, newDescription?: string): Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
@@ -57,15 +58,8 @@ export class AdminBugapointService {
      &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
      &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
 
-    try {
-      let response = await this.http.put(url, null, {headers: this.getauthCookie()}).subscribe();
-      return response as unknown as DatabaseSaveResponse;
-    } catch (e) {
-      return new class implements DatabaseSaveResponse {
-        message: string;
-        success: boolean = false;
-      }
-    }
+    // @ts-ignore
+    return this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()).toPromise();
   }
 
 
@@ -75,17 +69,12 @@ export class AdminBugapointService {
    * @param id identifier
    */
   deleteBugapointById(id: number) {
-    return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`)
+    return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`, this.authService.getAuthheader())
       .subscribe((data: any) => {
         console.log(data)
       });
   }
 
 
-  getauthCookie(){
-    let a: string = this.cookieService.get('token');
-    let bearer: string = "Bearer " + a;
-    return new HttpHeaders({'Authorization': bearer})
-  }
 
 }

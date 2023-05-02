@@ -6,6 +6,7 @@ import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -67,6 +68,9 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    * Updates the bugapoint with the values in the form controls
    */
   async update() {
+
+    const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
+
     try {
       const admin = await new Promise<Admin>((resolve, reject) => {
         this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
@@ -87,15 +91,16 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
         String(this.descriptionForm.value).trim()
       );
 
-      const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
       if (bugaPointResponse.success) {
         this.renderer.addClass(elem, "success-animation");
+        console.log("Update successful")
       } else {
         this.renderer.addClass(elem, "fail-animation");
+        console.log("something went wrong")
       }
     } catch (error) {
-      console.error(error);
+      this.renderer.addClass(elem, "fail-animation");
     }
   }
 
