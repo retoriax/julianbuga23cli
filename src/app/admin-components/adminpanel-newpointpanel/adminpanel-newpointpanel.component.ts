@@ -6,8 +6,7 @@ import {Bugapoint} from "../../model/bugapoint";
 import {Admin} from "../../model/admin";
 import {Park} from "../../model/park";
 import {ParkService} from "../../services/park.service";
-import {bug} from "ionicons/icons";
-import {HttpParams} from "@angular/common/http";
+import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
 
 @Component({
   selector: 'app-admin-components-newpointpanel',
@@ -31,7 +30,7 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
 
 
   constructor(private adminService: AdminService, private bugapointService: BugapointService,
-              private parkService: ParkService) {
+              private parkService: ParkService, private adminBugapointService: AdminBugapointService) {
   }
 
   ngOnInit(): void {
@@ -89,7 +88,7 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
 
     console.log(bugaPoint)
 
-    this.bugapointService.saveBugapoint(bugaPoint);
+    this.adminBugapointService.saveBugapoint(bugaPoint);
     /*this.bugapointService.addBugapoint(bugaPoint.parkID, bugaPoint.adminID, bugaPoint.title, bugaPoint.latitude,
       bugaPoint.longitude, bugaPoint.discriminator, bugaPoint.description);*/
   }

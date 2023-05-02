@@ -5,7 +5,8 @@ import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
-import {Subscription} from "rxjs";
+import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -15,7 +16,8 @@ import {Subscription} from "rxjs";
 export class AdminpanelBugapointpanelComponent implements OnInit {
 
   constructor(private adminService: AdminService, private bugapointService: BugapointService,
-              private elementRef: ElementRef, private renderer: Renderer2) {
+              private elementRef: ElementRef, private renderer: Renderer2,
+              private adminBugapointService: AdminBugapointService) {
   }
 
   admins: Admin[]
@@ -66,9 +68,12 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    * Updates the bugapoint with the values in the form controls
    */
   async update() {
+
+    const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
+
     try {
       const admin = await new Promise<Admin>((resolve, reject) => {
-        const adminResponse: Subscription = this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
+        this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
           (data: Admin) => {
             resolve(data);
           },
@@ -78,7 +83,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
         );
       });
 
-      const bugaPointResponse: DatabaseSaveResponse = await this.bugapointService.updateBugapoint(
+      const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
         this.point,
         Number(this.latForm.value),
         Number(this.longForm.value),
@@ -86,17 +91,16 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
         String(this.descriptionForm.value).trim()
       );
 
-      console.log("\"" + String(this.descriptionForm.value).trim() + "\"")
-
-      const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
       if (bugaPointResponse.success) {
         this.renderer.addClass(elem, "success-animation");
+        console.log("Update successful")
       } else {
         this.renderer.addClass(elem, "fail-animation");
+        console.log("something went wrong")
       }
     } catch (error) {
-      console.error(error);
+      this.renderer.addClass(elem, "fail-animation");
     }
   }
 
@@ -105,7 +109,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    * Deletes this bugapoint.
    */
   delete() {
-    this.bugapointService.deleteBugapointById(this.point.id);
-    window.location.reload()
+    this.adminBugapointService.deleteBugapointById(this.point.id);
+    //window.location.reload()
   }
 }

@@ -1,0 +1,80 @@
+import { Injectable } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Bugapoint} from "../../model/bugapoint";
+import {DatabaseSaveResponse} from "../DatabaseSaveResponse";
+import {environment} from "../../../environments/environment.development";
+import {AuthenticationService} from "../authentication.service";
+import {LoginStatusrequest} from "../../model/login-statusrequest";
+import {CookieService} from "ngx-cookie-service";
+import {lastValueFrom} from "rxjs";
+
+/**
+ * Bugapoint service for admins.
+ */
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminBugapointService {
+
+  private subPath = '/api/v1/admin/bugapoint';
+
+  constructor(private http: HttpClient, private authService: AuthenticationService, private cookieService:CookieService)
+  { }
+
+
+  /**
+   * Sends a post request to the server to add a new bugapoint to the database.
+   *
+   * @param bugapoint
+   */
+  saveBugapoint(bugapoint: Bugapoint) {
+    const statusrequest: LoginStatusrequest = new LoginStatusrequest();
+    statusrequest.token = this.cookieService.get('token');
+
+
+    return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint,
+      this.authService.getAuthheader()).subscribe((data: any) => {
+        console.log(data);
+      });
+  }
+
+
+
+  /**
+   * Updates the bugapoint.
+   *
+   * @param bugapoint bugapoint which gets updated
+   * @param newLat new latitude
+   * @param newLong new longitude
+   * @param newAdminId new admin id
+   * @param newDescription new description
+   */
+  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number, newDescription?: string): Promise<DatabaseSaveResponse> {
+    const statusrequest: LoginStatusrequest = new LoginStatusrequest();
+    statusrequest.token = this.cookieService.get('token');
+
+    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
+     &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
+     &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
+     &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
+     &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
+
+    return lastValueFrom(this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()));
+  }
+
+
+  /**
+   * Deletes a bugapoint with the id.
+   *
+   * @param id identifier
+   */
+  deleteBugapointById(id: number) {
+    return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`, this.authService.getAuthheader())
+      .subscribe((data: any) => {
+        console.log(data)
+      });
+  }
+
+
+
+}
