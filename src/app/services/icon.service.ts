@@ -31,7 +31,7 @@ export class IconService {
     if(!this.iconsCache[defaultIconUrl]) {
       const defaultIcon = L.icon({
         iconUrl: defaultIconUrl,
-        iconSize: [32, 32],
+        iconSize: [48, 48],
       });
       this.iconsCache[defaultIconUrl] = defaultIcon;
     }
@@ -44,7 +44,7 @@ export class IconService {
       console.log(this.merge(iconUrl))
       this.iconsCache[iconUrl] = L.icon({
         iconUrl: await this.merge(iconUrl),
-        iconSize: [64 , 64],
+        iconSize: [48 , 48],
       });
     } else this.iconsCache[iconUrl] = this.iconsCache[defaultIconUrl];
     return this.iconsCache[iconUrl];
