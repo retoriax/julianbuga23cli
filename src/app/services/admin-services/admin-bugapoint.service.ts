@@ -8,6 +8,9 @@ import {LoginStatusrequest} from "../../model/login-statusrequest";
 import {CookieService} from "ngx-cookie-service";
 import {lastValueFrom} from "rxjs";
 
+/**
+ * Bugapoint service for admins.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -55,7 +58,7 @@ export class AdminBugapointService {
      &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
      &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
      &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
-    
+
     return lastValueFrom(this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()));
   }
 
