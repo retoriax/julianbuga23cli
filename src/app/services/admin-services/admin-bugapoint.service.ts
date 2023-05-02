@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Bugapoint} from "../../model/bugapoint";
 import {DatabaseSaveResponse} from "../DatabaseSaveResponse";
 import {environment} from "../../../environments/environment.development";
 import {AuthenticationService} from "../authentication.service";
 import {LoginStatusrequest} from "../../model/login-statusrequest";
 import {CookieService} from "ngx-cookie-service";
-import {headset} from "ionicons/icons";
-import {Data} from "@angular/router";
-import {Observable, Subscription} from "rxjs";
+import {lastValueFrom} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -57,9 +55,8 @@ export class AdminBugapointService {
      &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
      &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
      &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
-
-    // @ts-ignore
-    return this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()).toPromise();
+    
+    return lastValueFrom(this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()));
   }
 
 
