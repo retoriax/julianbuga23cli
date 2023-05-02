@@ -6,7 +6,6 @@ import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -110,6 +109,6 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    */
   delete() {
     this.adminBugapointService.deleteBugapointById(this.point.id);
-    //window.location.reload()
+    window.location.reload()
   }
 }
