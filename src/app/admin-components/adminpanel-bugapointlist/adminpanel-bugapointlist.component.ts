@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Bugapoint} from "../../model/bugapoint";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {BugapointService} from "../../services/bugapoint.service";
+import {Admin} from "../../model/admin";
+import {AdminService} from "../../services/admin.service";
 
 @Component({
   selector: 'app-admin-components-bugapointlist',
@@ -12,28 +14,25 @@ export class AdminpanelBugapointlistComponent implements OnInit {
 
   formGroup: FormGroup;
   points: Bugapoint[];
+  admins: Admin[];
 
   lats: FormControl[];
   longs: FormControl[];
 
-  constructor(private bugapointservice: BugapointService, private fb: FormBuilder) {
-    this.formGroup = this.fb.group({
-      inputcontrol: new FormControl()
-    })
+  constructor(private bugapointservice: BugapointService, private adminservice: AdminService) {
+
   }
 
   ngOnInit(): void {
+    this.adminservice.findAll().subscribe((data: Admin[]) => {
+      this.admins = data;
+      console.log(this.admins)
+    })
+
     this.bugapointservice.findAll().subscribe((data: Bugapoint[]) => {
       this.points = data;
-      this.lats = new Array(this.points.length);
-      this.longs = new Array(this.points.length);
-      let i = 0;
-      for (let point of this.points) {
-        this.lats[i] = new FormControl('');
-        this.longs[i] = new FormControl('');
-        i++;
-      }
     });
+
   }
 
 

@@ -19,8 +19,8 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
               private adminBugapointService: AdminBugapointService) {
   }
 
+  @Input()
   admins: Admin[]
-  admin: Admin
 
   @Input()
   point: Bugapoint
@@ -34,21 +34,14 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   backgroundClass: String = "mat-expansion-panel";
 
   async ngOnInit(): Promise<void> {
-    this.adminService.findAll().subscribe((data: any) => {
-      this.admins = data;
-    })
+    let pAdmin: Admin = this.admins.find((p: Admin) => p.id === this.point.adminID)!;
 
-    await this.adminService.getAdminById(this.point.adminID).subscribe((data: any) => {
-      this.admin = data;
-      this.adminForm.setValue(this.admin.emailadress)
-    });
+    this.adminForm.setValue(pAdmin.emailadress)
 
     this.descriptionForm.setValue(this.point.description)
 
     this.latForm.setValue(this.point.latitude + '')
     this.longForm.setValue(this.point.longitude + '')
-
-
   }
 
   /**
@@ -71,32 +64,19 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
     const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
     try {
-      const admin = await new Promise<Admin>((resolve, reject) => {
-        this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
-          (data: Admin) => {
-            resolve(data);
-          },
-          (error: any) => {
-            reject(error);
-          }
-        );
-      });
-
       const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
         this.point,
         Number(this.latForm.value),
         Number(this.longForm.value),
-        admin.id,
+        String(this.adminForm.value),
         String(this.descriptionForm.value).trim()
       );
 
 
       if (bugaPointResponse.success) {
         this.renderer.addClass(elem, "success-animation");
-        console.log("Update successful")
       } else {
         this.renderer.addClass(elem, "fail-animation");
-        console.log("something went wrong")
       }
     } catch (error) {
       this.renderer.addClass(elem, "fail-animation");
