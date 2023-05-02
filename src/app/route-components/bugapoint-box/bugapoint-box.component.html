@@ -1,0 +1,19 @@
+<div class="routepoint-box" [class.unableToAddHighlight]="unableToAddHighlight"  [class.mergeHighlight]="mergeHighlight">
+  <div class="positionDiv" >
+    <mat-icon class="positionIcon" (click)="displayPointOnMap(point)"> location_on</mat-icon>
+    <div class="textDiv">
+      {{point.title}}
+    </div>
+  </div>
+  <div class="sideBySideButtonsAndHandle">
+    <button mat-fab color="primary" aria-label="delete Button" (click)="deleteElement(index)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <div cdkDragHandle class="drag">
+      <mat-icon class="element-handle" style="font-size: 2em;">drag_indicator</mat-icon>
+    </div>
+  </div>
+</div>
+
+
+

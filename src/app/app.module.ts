@@ -40,6 +40,7 @@ import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
 //import { AdminpanelParksliderComponent } from './adminpanel-parkslider/adminpanel-parkslider.component';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import { BugapointBoxComponent } from './route-components/bugapoint-box/bugapoint-box.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
+    BugapointBoxComponent,
     //AdminpanelParksliderComponent
   ],
   imports: [

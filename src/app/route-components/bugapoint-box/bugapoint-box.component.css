@@ -1,0 +1,152 @@
+.example-list {
+  width: 100vw;
+  max-width: 100%;
+  border: solid 1px #ccc;
+  min-height: 60px;
+  max-height: border-box;
+  display: block;
+  background: white;
+  border-radius: 4px;
+  font-size: 20px;
+}
+
+.routepoint-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: white;
+  font-size: 1em;
+}
+/* Font size for screens smaller than 768px */
+@media (max-width: 500px) {
+  .routepoint-box {
+    font-size: 0.9em;
+  }
+  .routeButton {
+    font-size: 14px;
+  }
+}
+
+/* Font size for screens smaller than 576px */
+@media (max-width: 350px) {
+  .routepoint-box {
+    font-size: 0.8em;
+  }
+  .routeButton {
+    font-size: 12px;
+  }
+}
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.scrollable-content {
+  height: calc(100vh - 160px);
+  overflow: auto;
+  overflow-y: scroll;
+
+}
+
+.element-handle {
+  font-size: 24px; /* increase the font size to make the handle bigger */
+  width: auto;
+  margin-right: 8px;
+  cursor: move;
+}
+
+.drag {
+  width: 40px;
+  height: 40px;
+}
+
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.routeButton {
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+.sideBySideButtonsAndHandle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+button[aria-label="delete Button"],
+.cdkDragHandle {
+  margin-right: 25px;
+}
+
+.positionDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1px;
+
+}
+
+.positionIcon {
+  margin-right: 3px;
+  flex-shrink: 0;
+}
+
+.textDiv{
+  flex: 1;
+  margin-left: 3px;
+}
+
+.routepoint-box.mergeHighlight {
+  animation: mergeGlow 1s;
+}
+
+@keyframes mergeGlow {
+  0% {
+    background: chartreuse;
+  }
+  100% {
+    background: white;
+  }
+}
+
+.routepoint-box.unableToAddHighlight {
+  animation: unableToAddGlow 1s;
+}
+
+@keyframes unableToAddGlow {
+  0% {
+    background: red;
+  }
+  100% {
+    background: white;
+  }
+}
+

@@ -97,9 +97,7 @@ export class BugapointAutocompleteFieldComponent implements OnInit {
           this.newElement = "";
         }
       });
-
     }
-
 }
 
 

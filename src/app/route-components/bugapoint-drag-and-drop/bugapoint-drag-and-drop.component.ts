@@ -54,26 +54,10 @@ export class BugapointDragAndDropComponent implements OnInit{
     this.routePointService.moveRoutePointInRoute(event.previousIndex, event.currentIndex);
   }
 
-  /**
-   * Deletes a Bugapoint from the route by its index in the route
-   * @param index Index of Bugapoint
-   */
-  deleteElement(index: number) {
-    this.routePointService.deleteRoutePointByIndex(index);
-  }
 
   /**
-   * Navigates to the /map site and displays a certain bugapoint,
-   * if the location icon for a point of the route is clicked
-   * @param bugapoint Displayed Bugapoint
-   */
-  displayPointOnMap(bugapoint: Bugapoint) {
-    this.mapInteractionService.showBugapoint(bugapoint);
-  }
-
-  /**
-   * Highlights when its not possible to add the same point twice in red
-   * @param routeBugapointIndex
+   * Highlights when it is not possible to add the same point twice in red
+   * @param routeBugapointIndex Index of the "unable to add point"
    */
   unableToAddHighlightRouteBugapoint(routeBugapointIndex: number) {
     const element = document.querySelector(`.example-list .routepoint-box:nth-child(${routeBugapointIndex + 1})`);
