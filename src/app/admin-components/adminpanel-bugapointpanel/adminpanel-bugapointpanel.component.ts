@@ -31,8 +31,6 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   longForm = new FormControl('')
 
   descriptionForm = new FormControl('')
-  backgroundClass: String = "mat-expansion-panel";
-
   async ngOnInit(): Promise<void> {
     let pAdmin: Admin = this.admins.find((p: Admin) => p.id === this.point.adminID)!;
 
