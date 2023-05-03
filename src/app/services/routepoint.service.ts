@@ -74,9 +74,11 @@ export class RoutepointService {
 
   updateMergedRoutepointIndex() {
     this.mergedRoutepointIndexSubject.next(this.mergedRoutepointIndex);
+    this.mergedRoutepointIndexSubject.next(-1);
   }
   updateunableToAddRoutepointIndex() {
     this.unableToAddRoutepointIndexSubject.next(this.unableToAddRoutepointIndex);
+    this.unableToAddRoutepointIndexSubject.next(-1);
   }
 
 }
