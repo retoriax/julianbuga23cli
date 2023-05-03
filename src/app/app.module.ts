@@ -39,6 +39,8 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import { AdminpanelSavedialogComponent } from './admin-components/adminpanel-savedialog/adminpanel-savedialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -61,6 +63,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
+    AdminpanelSavedialogComponent,
     //AdminpanelParksliderComponent
   ],
   imports: [
@@ -92,6 +95,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    MatDialogModule,
   ],
   exports: [
     MapFilterComponent,
