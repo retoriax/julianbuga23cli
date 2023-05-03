@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Bugapoint} from "../../model/bugapoint";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BugapointService} from "../../services/bugapoint.service";
+import {Admin} from "../../model/admin";
+import {AdminService} from "../../services/admin.service";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointlist',
@@ -10,45 +12,16 @@ import {BugapointService} from "../../services/bugapoint.service";
 })
 export class AdminpanelBugapointlistComponent implements OnInit {
 
-  formGroup: FormGroup;
   points: Bugapoint[];
+  admins: Admin[];
 
-  lats: FormControl[];
-  longs: FormControl[];
+  constructor(private bugapointservice: BugapointService, private adminservice: AdminService) {
 
-  constructor(private bugapointservice: BugapointService, private fb: FormBuilder) {
-    this.formGroup = this.fb.group({
-      inputcontrol: new FormControl()
-    })
   }
 
-  ngOnInit(): void {
-    this.bugapointservice.findAll().subscribe((data: Bugapoint[]) => {
-      this.points = data;
-      this.lats = new Array(this.points.length);
-      this.longs = new Array(this.points.length);
-      let i = 0;
-      for (let point of this.points) {
-        this.lats[i] = new FormControl('');
-        this.longs[i] = new FormControl('');
-        i++;
-      }
-    });
-  }
-
-
-  /**
-   * Fills location input fields with present user location.
-   *
-   * @param i Index to find the right input fields
-   */
-  getGeoLocation(i: number) {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.lats[i].setValue(position.coords.latitude + '');
-        this.longs[i].setValue(position.coords.longitude + '');
-      })
-    }
+  async ngOnInit() {
+    this.admins = await lastValueFrom(this.adminservice.findAll())
+    this.points = await lastValueFrom(this.bugapointservice.findAll())
   }
 
 }

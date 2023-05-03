@@ -41,6 +41,13 @@ export class BugapointService {
   }
 
   /**
+   * Returns all discriminators.
+   */
+  getDiscriminators(): Observable<string[]> {
+    return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
+  }
+
+  /**
    * returns all bugapoints
    */
   getBugapoints(): Observable<Bugapoint[]> {
@@ -61,73 +68,6 @@ export class BugapointService {
   }
 
 
-  /**
-   * Sends a post request to the server to add a new bugapoint to the database.
-   *
-   * @param bugapoint
-   */
-  saveBugapoint(bugapoint: Bugapoint) {
-    return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.forceReload();
-      });
-  }
 
-  /**
-   * Returns all discriminators.
-   */
-  getDiscriminators(): Observable<string[]> {
-    if (!this.discriminatorCache$) {
-      //Cache
-      this.discriminatorCache$ = this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`).pipe(takeUntil(this.reload$), shareReplay(1));
-    }
-    return this.discriminatorCache$;
-  }
-
-  /**
-   * Updates the bugapoint.
-   *
-   * @param bugapoint bugapoint which gets updated
-   * @param newLat new latitude
-   * @param newLong new longitude
-   * @param newAdminId new admin id
-   * @param newDescription new description
-   */
-  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminId?: number,
-                        newDescription?: string): Promise<DatabaseSaveResponse> {
-
-    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
-     &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
-     &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
-     &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
-     &newAdminId=${newAdminId !== undefined ? newAdminId : bugapoint.adminID}`;
-
-    try {
-      let response = await this.http.put(url, null).toPromise();
-      this.forceReload();
-      return response as DatabaseSaveResponse;
-    } catch (e) {
-      this.forceReload();
-      return new class implements DatabaseSaveResponse {
-        message: string;
-        success: boolean = false;
-      }
-    }
-  }
-
-
-  /**
-   * Deletes a bugapoint with the id.
-   *
-   * @param id identifier
-   */
-  deleteBugapointById(id: number) {
-    return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.forceReload();
-    });
-  }
 
 }

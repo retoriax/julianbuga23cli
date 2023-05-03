@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {Bugapoint} from "../../model/bugapoint";
 import {Admin} from "../../model/admin";
 import {Park} from "../../model/park";
 import {ParkService} from "../../services/park.service";
-import {bug} from "ionicons/icons";
-import {HttpParams} from "@angular/common/http";
+import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
+import {MatDialog} from "@angular/material/dialog";
+import {AdminpanelSavedialogComponent} from "../adminpanel-savedialog/adminpanel-savedialog.component";
+import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
 
 @Component({
   selector: 'app-admin-components-newpointpanel',
@@ -21,17 +23,21 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
 
   parks: Park[]
 
-  pTitle = new FormControl('');
-  type = new FormControl('');
-  description = new FormControl('');
-  park = new FormControl('');
-  longitude = new FormControl('');
-  latitude = new FormControl('');
-  admin = new FormControl('');
+  formular = new FormGroup({
+    title: new FormControl(''),
+    type: new FormControl(''),
+    description: new FormControl(''),
+    park: new FormControl(''),
+    longitude: new FormControl(''),
+    latitude: new FormControl(''),
+    admin: new FormControl('')
+  })
+
 
 
   constructor(private adminService: AdminService, private bugapointService: BugapointService,
-              private parkService: ParkService) {
+              private parkService: ParkService, private adminBugapointService: AdminBugapointService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -60,8 +66,8 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
   getGeoLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude.setValue(position.coords.latitude + '');
-        this.longitude.setValue(position.coords.longitude + '');
+        this.formular.get('latitude')?.setValue(position.coords.latitude + '');
+        this.formular.get('longitude')?.setValue(position.coords.longitude + '');
       })
     }
   }
@@ -69,30 +75,61 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
   /**
    * Saves the inputs as a bugapoint.
    */
-  saveBugapoint() {
+  async saveBugapoint() {
+    let bugaPoint = new Bugapoint(Number(this.formular.get('latitude')?.value), Number(this.formular.get('longitude')?.value));
 
-    let bugaPoint = new Bugapoint(Number(this.latitude.value), Number(this.longitude.value));
+    bugaPoint.adminID = 0;
+    bugaPoint.parkID = 0;
 
-    const foundAdmin = this.admins.find(pAdmin => pAdmin.emailadress == this.admin.value)
-    // @ts-ignore
-    bugaPoint.adminID = Number(foundAdmin.id);
+    try {
+      const foundAdmin = this.admins.find(pAdmin => pAdmin.emailadress == this.formular.get('admin')?.value)
+      // @ts-ignore
+      bugaPoint.adminID = Number(foundAdmin.id);
 
-    const foundPark = this.parks.find(pPark => pPark.title == this.park.value)
-    // @ts-ignore
-    bugaPoint.parkID = Number(foundPark.id);
+      const foundPark = this.parks.find(pPark => pPark.title == this.formular.get('park')?.value)
+      // @ts-ignore
+      bugaPoint.parkID = Number(foundPark.id);
+    } catch (e) {
 
-    bugaPoint.description = String(this.description.value);
-    bugaPoint.discriminator = String(this.type.value);
-    bugaPoint.latitude = Number(this.latitude.value);
-    bugaPoint.longitude = Number(this.longitude.value);
-    bugaPoint.title = String(this.pTitle.value);
+    }
 
-    console.log(bugaPoint)
+    bugaPoint.description = String(this.formular.get('description')?.value);
+    bugaPoint.discriminator = String(this.formular.get('type')?.value);
+    bugaPoint.latitude = Number(this.formular.get('latitude')?.value);
+    bugaPoint.longitude = Number(this.formular.get('longitude')?.value);
+    bugaPoint.title = String(this.formular.get('title')?.value);
 
-    this.bugapointService.saveBugapoint(bugaPoint);
-    /*this.bugapointService.addBugapoint(bugaPoint.parkID, bugaPoint.adminID, bugaPoint.title, bugaPoint.latitude,
-      bugaPoint.longitude, bugaPoint.discriminator, bugaPoint.description);*/
+    const response: DatabaseSaveResponse = await this.adminBugapointService.saveBugapoint(bugaPoint);
+
+
+    if (response.success) {
+      this.dialog.open(AdminpanelSavedialogComponent, {data:
+          {
+            message: 'Gespeichert!'
+          }
+      })
+
+      this.clearForms()
+    } else {
+      this.dialog.open(AdminpanelSavedialogComponent, {data:
+          {
+            message: 'Neuer Punkt konnte nicht gespeichert werden.'
+          }
+      })
+    }
+
   }
+
+  clearForms() {
+    this.formular.get('title')?.setValue('')
+    this.formular.get('type')?.setValue('')
+    this.formular.get('description')?.setValue('')
+    this.formular.get('park')?.setValue('')
+    this.formular.get('latitude')?.setValue('')
+    this.formular.get('longitude')?.setValue('')
+    this.formular.get('admin')?.setValue('')
+  }
+
 
 
 

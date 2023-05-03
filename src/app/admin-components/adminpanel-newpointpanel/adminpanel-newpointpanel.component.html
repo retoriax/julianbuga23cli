@@ -2,17 +2,17 @@
 
 <br>
 
-<div class="bugapointformular">
+<form class="bugapointformular" [formGroup]="formular">
 
 
   <mat-form-field class="inputfield">
     <mat-label>Title of new point</mat-label>
-    <input matInput placeholder="Title" [formControl]="pTitle">
+    <input matInput placeholder="Title" formControlName="title">
   </mat-form-field>
 
   <mat-form-field class="inputfield">
     <mat-label>Type</mat-label>
-    <input matInput placeholder="Select/type the type" [matAutocomplete]="typeAuto" [formControl]="type">
+    <input matInput placeholder="Select/type the type" [matAutocomplete]="typeAuto" formControlName="type">
     <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
       <mat-option *ngFor="let type of this.discriminators" [value]="type">
         {{type}}
@@ -22,12 +22,12 @@
 
   <mat-form-field class="inputfield">
     <mat-label>Description</mat-label>
-    <textarea matInput placeholder="Enter description for this Bugapoint here" [formControl]="description"></textarea>
+    <textarea matInput placeholder="Enter description for this Bugapoint here" formControlName="description"></textarea>
   </mat-form-field>
 
   <mat-form-field class="inputfield">
     <mat-label>Park</mat-label>
-    <input matInput placeholder="Select park" [matAutocomplete]="parkAuto" [formControl]="park">
+    <input matInput placeholder="Select park" [matAutocomplete]="parkAuto" formControlName="park">
     <mat-autocomplete autoActiveFirstOption #parkAuto="matAutocomplete">
       <mat-option *ngFor="let type of this.parks" [value]="type.title">
         {{type.title}}
@@ -37,12 +37,12 @@
 
   <mat-form-field class="inputfield">
     <mat-label>Latitude</mat-label>
-    <input matInput placeholder="Enter latitude here" [formControl]="latitude">
+    <input matInput placeholder="Enter latitude here" formControlName="latitude" type="number">
   </mat-form-field>
 
   <mat-form-field class="inputfield">
     <mat-label>Longitude</mat-label>
-    <input matInput placeholder="Enter longitude here" [formControl]="longitude">
+    <input matInput placeholder="Enter longitude here" formControlName="longitude" type="number">
   </mat-form-field>
 
   <button mat-raised-button class="button" color="primary" (click)="getGeoLocation()">Use my location</button>
@@ -51,7 +51,7 @@
   <mat-form-field>
     <mat-label>Admin</mat-label>
     <input matInput placeholder="Select admin accountable for this Bugapoint" [matAutocomplete]="adminAuto"
-           [formControl]="admin">
+           formControlName="admin">
     <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
       <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
         {{admin.emailadress}}
@@ -62,4 +62,4 @@
 
   <button mat-raised-button class="button" color="primary" (click)="saveBugapoint()">Save</button>
 
-</div>
+</form>

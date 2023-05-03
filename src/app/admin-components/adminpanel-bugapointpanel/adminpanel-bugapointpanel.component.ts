@@ -5,7 +5,7 @@ import {Admin} from "../../model/admin";
 import {AdminService} from "../../services/admin.service";
 import {BugapointService} from "../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
-import {Subscription} from "rxjs";
+import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -15,11 +15,12 @@ import {Subscription} from "rxjs";
 export class AdminpanelBugapointpanelComponent implements OnInit {
 
   constructor(private adminService: AdminService, private bugapointService: BugapointService,
-              private elementRef: ElementRef, private renderer: Renderer2) {
+              private elementRef: ElementRef, private renderer: Renderer2,
+              private adminBugapointService: AdminBugapointService) {
   }
 
+  @Input()
   admins: Admin[]
-  admin: Admin
 
   @Input()
   point: Bugapoint
@@ -30,24 +31,15 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
   longForm = new FormControl('')
 
   descriptionForm = new FormControl('')
-  backgroundClass: String = "mat-expansion-panel";
-
   async ngOnInit(): Promise<void> {
-    this.adminService.findAll().subscribe((data: any) => {
-      this.admins = data;
-    })
+    let pAdmin: Admin = this.admins.find((p: Admin) => p.id === this.point.adminID)!;
 
-    await this.adminService.getAdminById(this.point.adminID).subscribe((data: any) => {
-      this.admin = data;
-      this.adminForm.setValue(this.admin.emailadress)
-    });
+    this.adminForm.setValue(pAdmin.emailadress)
 
     this.descriptionForm.setValue(this.point.description)
 
     this.latForm.setValue(this.point.latitude + '')
     this.longForm.setValue(this.point.longitude + '')
-
-
   }
 
   /**
@@ -66,29 +58,18 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    * Updates the bugapoint with the values in the form controls
    */
   async update() {
-    try {
-      const admin = await new Promise<Admin>((resolve, reject) => {
-        const adminResponse: Subscription = this.adminService.getAdminByEmailadress(String(this.adminForm.value)).subscribe(
-          (data: Admin) => {
-            resolve(data);
-          },
-          (error: any) => {
-            reject(error);
-          }
-        );
-      });
 
-      const bugaPointResponse: DatabaseSaveResponse = await this.bugapointService.updateBugapoint(
+    const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
+
+    try {
+      const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
         this.point,
         Number(this.latForm.value),
         Number(this.longForm.value),
-        admin.id,
+        String(this.adminForm.value),
         String(this.descriptionForm.value).trim()
       );
 
-      console.log("\"" + String(this.descriptionForm.value).trim() + "\"")
-
-      const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
       if (bugaPointResponse.success) {
         this.renderer.addClass(elem, "success-animation");
@@ -96,7 +77,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
         this.renderer.addClass(elem, "fail-animation");
       }
     } catch (error) {
-      console.error(error);
+      this.renderer.addClass(elem, "fail-animation");
     }
   }
 
@@ -105,7 +86,7 @@ export class AdminpanelBugapointpanelComponent implements OnInit {
    * Deletes this bugapoint.
    */
   delete() {
-    this.bugapointService.deleteBugapointById(this.point.id);
+    this.adminBugapointService.deleteBugapointById(this.point.id);
     window.location.reload()
   }
 }
