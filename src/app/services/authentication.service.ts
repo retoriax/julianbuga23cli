@@ -6,7 +6,8 @@ import {loginrequest} from "../model/loginrequest";
 import {LoginStatusrequest} from "../model/login-statusrequest";
 import {Router} from '@angular/router';
 import {environment} from "../../environments/environment.development";
-
+import {NavigationService} from "./navigation.service";
+import {Navigation} from "./navigation";
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class AuthenticationService {
   private loginUrl: string;
   private loginStatusUrl: string;
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router,
+              private navigation:NavigationService) {
     this.registerUrl = environment.backEndUrl + "/api/v1/auth/register";
     this.loginUrl = environment.backEndUrl + "/api/v1/auth/authenticate"
     this.loginStatusUrl = environment.backEndUrl + "/api/v1/auth/checkToken"
@@ -86,6 +88,11 @@ export class AuthenticationService {
     });
   }
 
+  public logout(){
+    this.cookieService.delete("token");
+    this.navigation.navigate(Navigation.Login);
+  }
+
   // UTC time zone
   getExpirationDate() {
     // 1 hour = 60 minutes * 60 seconds * 1000 milliseconds
@@ -95,11 +102,10 @@ export class AuthenticationService {
   }
 
   getAuthheader() {
-    let a: string = this.cookieService.get('token');
-    let bearer: string = "Bearer " + a;
+    let token: string = this.cookieService.get('token');
     return {
       headers: new HttpHeaders({
-        'Authorization': bearer
+        'Authorization': token
       })
     };
   }
