@@ -8,8 +8,4 @@ import {Component, OnInit} from '@angular/core';
 export class AdminpanelBugapointsComponent implements OnInit {
   ngOnInit(): void {
   }
-
-
-
-
 }

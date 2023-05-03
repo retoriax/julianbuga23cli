@@ -1,7 +1,7 @@
 <div class="welcome-text-field">
   <a class="welcome-text">
     Hallo,<br>
-    <var>adminname</var>!
+    <var> {{adminName}}</var>!
   </a>
 </div>
 
@@ -10,4 +10,5 @@
 <div class="menu-button-list">
   <button mat-raised-button class="menu-button" routerLink="/admin/bugapoints">Manage BuGa-Points</button>
   <button mat-raised-button class="menu-button">Report</button>
+  <button mat-raised-button class="menu-button" (click)="logout()">Logout</button>
 </div>
