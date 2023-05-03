@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Bugapoint} from "../../model/bugapoint";
 import {DatabaseSaveResponse} from "../DatabaseSaveResponse";
 import {environment} from "../../../environments/environment.development";
 import {AuthenticationService} from "../authentication.service";
 import {LoginStatusrequest} from "../../model/login-statusrequest";
 import {CookieService} from "ngx-cookie-service";
-import {lastValueFrom} from "rxjs";
+import {catchError, lastValueFrom, of, throwError} from "rxjs";
 
 /**
  * Bugapoint service for admins.
@@ -27,15 +27,20 @@ export class AdminBugapointService {
    *
    * @param bugapoint
    */
-  saveBugapoint(bugapoint: Bugapoint) {
+  saveBugapoint(bugapoint: Bugapoint) : Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
-
-    return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint,
-      this.authService.getAuthheader()).subscribe((data: any) => {
-        console.log(data);
-      });
+    return lastValueFrom(this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint,
+      this.authService.getAuthheader())
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          const dbErrorResponse: DatabaseSaveResponse = {
+            success: false,
+            message: error.error.message
+          };
+          return of(dbErrorResponse)
+        })))
   }
 
 
