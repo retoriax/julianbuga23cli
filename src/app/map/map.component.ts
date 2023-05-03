@@ -85,8 +85,8 @@ export class MapComponent implements OnInit {
    * @param title Title
    * @param discriminator Discriminator
    */
-  showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.iconService.getIconFromDiscriminator(discriminator))
+  async showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(await this.iconService.getIconFromDiscriminator(discriminator))
   }
 
   /**
@@ -162,7 +162,7 @@ export class MapComponent implements OnInit {
       addWaypoints: false,
       plan: L.Routing.plan(waypoints, {draggableWaypoints: false, addWaypoints: false, language: 'de'}),
       router: L.Routing.osrmv1({
-        serviceUrl: 'http://localhost:5000/route/v1',
+        serviceUrl: 'http://hjetter.ddns.net:5000/route/v1',
         profile: 'foot',
       })
     }).addTo(this.map);
