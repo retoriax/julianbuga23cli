@@ -9,10 +9,10 @@
            [formControl]="myControl"
            [matAutocomplete]="auto"
            [(ngModel)]="newElement"
-           [errorStateMatcher]="routePointErrorStateMatcher">
+           [errorStateMatcher]="routePointErrorStateMatcher" (keyup.enter)="submit()">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let bugapoint of filteredBugapoints| async"
-                  [value]="bugapoint">
+                  [value]="bugapoint" (click)="submit()">
         {{bugapoint.title}}
       </mat-option>
     </mat-autocomplete>

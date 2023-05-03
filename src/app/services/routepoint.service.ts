@@ -66,10 +66,10 @@ export class RoutepointService {
         i++;
       }
     }
-    this.routepointsSubject.next([...this.routepoints]);
     if(formerLength !== this.routepoints.length) {
       this.updateMergedRoutepointIndex();
     }
+    this.routepointsSubject.next([...this.routepoints]);
   }
 
   updateMergedRoutepointIndex() {

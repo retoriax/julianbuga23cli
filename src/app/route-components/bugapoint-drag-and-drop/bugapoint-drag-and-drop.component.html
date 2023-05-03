@@ -1,7 +1,6 @@
 <div class="scrollable-content" cdkScrollable>
   <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-    <div *ngFor="let i = index; let routeBugapoint of (route |async)"
-         cdkDrag>
+    <div *ngFor="let i = index; let routeBugapoint of (route |async)">
       <app-bugapoint-box [point]= "routeBugapoint" [index]="i" ></app-bugapoint-box>
     </div>
     <div class="vertical-center">

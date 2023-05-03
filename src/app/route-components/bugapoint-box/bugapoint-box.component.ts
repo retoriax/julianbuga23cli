@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Bugapoint} from "../../model/bugapoint";
 import {RoutepointService} from "../../services/routepoint.service";
 import {MapInteractionService} from "../../services/map-interaction.service";
@@ -9,7 +9,7 @@ import {MapInteractionService} from "../../services/map-interaction.service";
   templateUrl: './bugapoint-box.component.html',
   styleUrls: ['./bugapoint-box.component.css']
 })
-export class BugapointBoxComponent {
+export class BugapointBoxComponent implements OnChanges{
   @Input()
   point: Bugapoint;
   @Input()
@@ -26,6 +26,15 @@ export class BugapointBoxComponent {
    */
   constructor(private routePointService: RoutepointService,
               private mapInteractionService: MapInteractionService) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    //updates the points that are merged together
+    this.routePointService.mergedRoutepointIndexObservable.
+    subscribe(value => {
+      if (value === this.index) {
+        this.mergeHighlightRouteBugapoint();
+      }});
+  }
 
   ngOnInit() {
     //updates the points that are merged together
