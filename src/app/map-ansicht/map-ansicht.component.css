@@ -1,0 +1,43 @@
+.map-ansicht {
+  position: absolute;
+  bottom: 65px;
+  right: 10px;
+}
+
+.ansicht-button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 7px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.ansicht-popup {
+  position: absolute;
+  top: -100px;
+  right: 0;
+  width: 150px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 5px;
+}
+
+.radio-row {
+  display: flex;
+  align-items: center;
+}
+
+.radio-row input[type="radio"] {
+  margin-right: 5px;
+  transform: translateY(-3px);
+
+}
+
+.radio-row label {
+  font-size: 14px;
+}

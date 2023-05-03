@@ -18,6 +18,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MapAnsichtComponent } from './map-ansicht/map-ansicht.component';
 import {MatButtonModule} from "@angular/material/button";
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
@@ -65,6 +66,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     TokenCheckerComponent,
     AdminpanelSavedialogComponent,
     //AdminpanelParksliderComponent
+    MapAnsichtComponent,
   ],
   imports: [
     BrowserModule,
