@@ -9,22 +9,15 @@ import {CookieService} from "ngx-cookie-service";
   styleUrls: ['./map-filter.component.css']
 })
 export class MapFilterComponent implements OnInit {
-  // Event, welches die gefilterten Bugapoints an die Parent-Komponente sendet
   @Output() filteredBugapointsChange = new EventEmitter<Bugapoint[]>();
-  // Referenz zur MatChipList
   @ViewChild('chipList') chipList: any;
-  // Flag, ob alle Chip-Optionen ausgewählt sind
   alleSelected = true;
 
 
-  // Set, welches alle möglichen Diskriminatoren enthält
   discriminatorSet = new Set<string>();
-  // Set, welches alle aktuell ausgewählten Diskriminatoren enthält
   selectedDiscriminators = new Set<string>();
 
   bugapoints: Bugapoint[];
-  filteredBugapoints: Bugapoint[];
-
 
   constructor(private bugapointservice: BugapointService, private cookieService: CookieService) {}
 
@@ -56,14 +49,20 @@ export class MapFilterComponent implements OnInit {
       }
     });
 
+    /**
+     * Get bugapoints from database.
+     */
     this.updateBugapoints();
 
-    // Abfrage aller möglichen Diskriminatoren von der Datenbank
+    /**
+     * Get Discriminators form database..
+     */
     this.bugapointservice.getDiscriminators().subscribe((data: any) => {
       this.discriminatorSet = new Set<string>(data);
 
       if (this.cookieService.check("selectedDiscriminators")) {
           this.selectedDiscriminators = new Set<string>(this.cookieService.get("selectedDiscriminators").split(",").filter(value => value !== ""));
+          this.cookieService.delete("selectedDiscriminators");
           if (this.selectedDiscriminators.size != this.discriminatorSet.size) {
             this.alleSelected = false;
           }
@@ -73,7 +72,10 @@ export class MapFilterComponent implements OnInit {
     });
   }
 
-  // Funktion, um die Auswahl eines Diskriminators zu toggeln
+  /**
+   * Method to handle clicks on the chips
+   * @param discriminator is the Chip that is currently triggered
+   */
   toggleSelection(discriminator: string): void {
     if (this.selectedDiscriminators.has(discriminator)) {
       this.selectedDiscriminators.delete(discriminator);
@@ -81,21 +83,18 @@ export class MapFilterComponent implements OnInit {
       this.selectedDiscriminators.add(discriminator);
     }
 
-    // Überprüfung, ob alle Optionen ausgewählt sind
-    if (this.selectedDiscriminators.size == this.discriminatorSet.size) {
-      this.alleSelected = true;
-    } else {
-      this.alleSelected = false;
-    }
+    // Überprüfung ob alle Chips ausgewählt sind
+    this.alleSelected = this.selectedDiscriminators.size == this.discriminatorSet.size;
 
     // Ausführen des Filters
     this.filterBugapoints();
   }
 
-  // Funktion, um die Bugapoints entsprechend der ausgewählten Diskriminatoren zu filtern
+  /**
+   * Method to filter and emit the bugapoints, according to the selectedDiscriminators.
+   */
   filterBugapoints(): void {
     if (this.bugapoints != null && this.discriminatorSet != null) {
-      //Push selectedDiscriminators to Cookie
       const selectedDiscriminatorsString = Array.from(this.selectedDiscriminators).join(",");
       if (selectedDiscriminatorsString) {
         this.cookieService.set("selectedDiscriminators", selectedDiscriminatorsString);
@@ -108,7 +107,9 @@ export class MapFilterComponent implements OnInit {
     }
   }
 
-  // Funktion, um alle Chip-Optionen auszuwählen
+  /**
+   * Method to manage what happens when the "Alle Auswählen" Chip is triggered.
+   */
   alleAuswaehlen() {
     if (this.alleSelected) {
       this.alleSelected = false;
@@ -121,6 +122,9 @@ export class MapFilterComponent implements OnInit {
     this.filterBugapoints();
   }
 
+  /**
+   * Method to get the bugapoints from the database.
+   */
   updateBugapoints() {
     this.bugapointservice.findAll().subscribe((bugapoints: Bugapoint[]) => {
       this.bugapoints = bugapoints;

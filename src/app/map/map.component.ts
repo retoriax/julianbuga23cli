@@ -4,6 +4,7 @@ import 'leaflet-routing-machine';
 import {Bugapoint} from "../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
 import {MapInteractionService} from "../services/map-interaction.service";
+import {IconService} from "../services/icon.service";
 
 @Component({
   selector: 'app-map',
@@ -13,29 +14,36 @@ import {MapInteractionService} from "../services/map-interaction.service";
 export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
-  iconsCache: { [key: string]: L.Icon } = {};
+
   constructor(private cookieService: CookieService,
-              private mapInteractionService: MapInteractionService) {}
+              private mapInteractionService: MapInteractionService,
+              private iconService: IconService) {}
   ngOnInit() {
     /**
      * Map init at given position and zoom level.
      */
-    this.map = L.map('map').setView([49.495, 8.5], 15);
-    const savedView = this.cookieService.get('mapView');
-    if (savedView) {
+    this.map = L.map('map');
+    if (this.cookieService.check('mapView')) {
+      const savedView = this.cookieService.get('mapView');
       const { center, zoom } = JSON.parse(savedView);
       this.map.setView(center, zoom);
-    }
+    } else this.map.setView([49.495, 8.5], 15);
+
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
 
-    //saves the current View in Cookie
+    /**
+     * Saves the current map view.
+     */
     this.map.on('moveend', () => this.saveMapView());
 
-    //reloads the Map, if not fully loaded
+    /**
+     * Resizes the map after 500ms of showing the map.
+     * Needed to fix the map not loading bug.
+     */
     setTimeout(function () {
       window.dispatchEvent(new Event("resize"));
     }, 500);
@@ -58,6 +66,10 @@ export class MapComponent implements OnInit {
     this.mapInteractionService.clearRoute();
   }
 
+  /**
+   * Method to receive the currently selected bugapoints from the filter.
+   * @param filteredBugapoints, the array of the currently selected bugapoints.
+   */
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
     this.bugapoints = filteredBugapoints;
     this.updateMarkers();
@@ -73,11 +85,11 @@ export class MapComponent implements OnInit {
    * @param discriminator Discriminator
    */
   showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.getIconFromDiscriminator(discriminator))
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.iconService.getIconFromDiscriminator(discriminator))
   }
 
   /**
-   *   Method to update the markers on the map
+   *   Method to update the markers on the map.
    */
   updateMarkers() {
     // Remove all existing markers from the map
@@ -126,41 +138,12 @@ export class MapComponent implements OnInit {
     }
   }
 
-  getIconFromDiscriminator(discriminator: string): L.Icon {
-    const iconUrl = `././assets/MapIcons/${discriminator}.png`;
-    if (this.iconsCache[iconUrl]) {
-      return this.iconsCache[iconUrl];
-    } else if (this.fileExists(iconUrl)) {
-      const icon = L.icon({
-        iconUrl: iconUrl,
-        iconSize: [32, 32],
-      });
-      this.iconsCache[iconUrl] = icon;
-      return icon;
-    } else {
-      console.warn(`Icon file '${iconUrl}' not found. Using default icon.`);
-      const defaultIconUrl = '././assets/MapIcons/Default.png';
-      const defaultIcon = L.icon({
-          iconUrl: defaultIconUrl,
-          iconSize: [32, 32],
-      });
-      this.iconsCache[iconUrl] = defaultIcon;
-      return defaultIcon;
-    }
-  }
-
-  fileExists(url: string): boolean {
-    let http = new XMLHttpRequest();
-    http.open('HEAD', url, false);
-    http.send();
-    return http.status != 404;
-  }
-
+  /**
+   * Method to save the current view of the map to the browser cookies.
+   */
   saveMapView() {
     const center = this.map.getCenter();
     const zoom = this.map.getZoom();
     this.cookieService.set('mapView', JSON.stringify({ center, zoom }));
   }
-
-
 }

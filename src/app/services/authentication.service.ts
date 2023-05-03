@@ -5,6 +5,8 @@ import {CookieService} from 'ngx-cookie-service';
 import {loginrequest} from "../model/loginrequest";
 import {LoginStatusrequest} from "../model/login-statusrequest";
 import {Router} from '@angular/router';
+import {environment} from "../../environments/environment.development";
+
 
 
 @Injectable({
@@ -16,9 +18,9 @@ export class AuthenticationService {
   private loginStatusUrl: string;
 
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
-    this.registerUrl = "http://localhost:8080/api/v1/auth/register";
-    this.loginUrl = "http://localhost:8080/api/v1/auth/authenticate"
-    this.loginStatusUrl = "http://localhost:8080/api/v1/auth/checkToken"
+    this.registerUrl = environment.backEndUrl + "/api/v1/auth/register";
+    this.loginUrl = environment.backEndUrl + "/api/v1/auth/authenticate"
+    this.loginStatusUrl = environment.backEndUrl + "/api/v1/auth/checkToken"
 
   }
 

@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, shareReplay, Subject, takeUntil} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
 import {DatabaseSaveResponse} from "./DatabaseSaveResponse";
 import {environment} from "../../environments/environment.development";
@@ -11,21 +11,40 @@ import {environment} from "../../environments/environment.development";
 export class BugapointService {
 
   private subPath = '/bugapoint';
+  private reload$ = new Subject();
+  private bugapointCache$: Observable<Bugapoint[]>|null;
+  private discriminatorCache$: Observable<string[]>|null;
 
   constructor(private http: HttpClient) { }
+
+  /**
+   * Clears the caches.
+   */
+  forceReload() {
+    this.reload$.next(null);
+    this.discriminatorCache$ = null;
+    this.bugapointCache$ = null;
+  }
+
 
   /**
    * returns all bugapoints
    */
   findAll(): Observable<Bugapoint[]> {
-    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`);
+    if (!this.bugapointCache$) {
+      //Cache
+      this.bugapointCache$ = this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`).pipe(
+        takeUntil(this.reload$),
+        shareReplay(1));
+    }
+    return this.bugapointCache$;
   }
 
   /**
    * returns all bugapoints
    */
   getBugapoints(): Observable<Bugapoint[]> {
-    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`);
+    return this.findAll();
   }
 
   /**
@@ -51,6 +70,7 @@ export class BugapointService {
     return this.http.post<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/save`, bugapoint)
       .subscribe((data: any) => {
         console.log(data);
+        this.forceReload();
       });
   }
 
@@ -58,7 +78,11 @@ export class BugapointService {
    * Returns all discriminators.
    */
   getDiscriminators(): Observable<string[]> {
-    return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
+    if (!this.discriminatorCache$) {
+      //Cache
+      this.discriminatorCache$ = this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`).pipe(takeUntil(this.reload$), shareReplay(1));
+    }
+    return this.discriminatorCache$;
   }
 
   /**
@@ -81,8 +105,10 @@ export class BugapointService {
 
     try {
       let response = await this.http.put(url, null).toPromise();
+      this.forceReload();
       return response as DatabaseSaveResponse;
     } catch (e) {
+      this.forceReload();
       return new class implements DatabaseSaveResponse {
         message: string;
         success: boolean = false;
@@ -99,7 +125,8 @@ export class BugapointService {
   deleteBugapointById(id: number) {
     return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`)
       .subscribe((data: any) => {
-      console.log(data)
+        console.log(data);
+        this.forceReload();
     });
   }
 
