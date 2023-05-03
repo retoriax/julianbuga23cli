@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-admin-components-menu',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./adminpanel-menu.component.css']
 })
 export class AdminpanelMenuComponent {
+  adminName: string;
+
+  constructor(private authService: AuthenticationService) {
+
+  }
+
+  public logout(){
+    this.authService.logout();
+  }
 
 }
