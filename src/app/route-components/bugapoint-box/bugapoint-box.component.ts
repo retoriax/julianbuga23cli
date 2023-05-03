@@ -14,6 +14,7 @@ export class BugapointBoxComponent implements OnChanges{
   point: Bugapoint;
   @Input()
   index: number;
+
   mergeHighlight: boolean;
   unableToAddHighlight: boolean;
 
