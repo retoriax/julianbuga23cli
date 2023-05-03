@@ -38,12 +38,6 @@ export class BugapointDragAndDropComponent implements OnInit{
       if (value >=0) {
         this.mergeHighlightRouteBugapoint(value);
     }});
-    //updates the last point if the user tries to add the same point twice
-    this.routePointService.unableToAddRoutepointIndexObservable.
-    subscribe(value => {
-      if (value >=0) {
-        this.unableToAddHighlightRouteBugapoint(value);
-      }});
   }
 
   /**
@@ -52,21 +46,6 @@ export class BugapointDragAndDropComponent implements OnInit{
    */
   drop(event: CdkDragDrop<string[]>) {
     this.routePointService.moveRoutePointInRoute(event.previousIndex, event.currentIndex);
-  }
-
-
-  /**
-   * Highlights when it is not possible to add the same point twice in red
-   * @param routeBugapointIndex Index of the "unable to add point"
-   */
-  unableToAddHighlightRouteBugapoint(routeBugapointIndex: number) {
-    const element = document.querySelector(`.example-list .routepoint-box:nth-child(${routeBugapointIndex + 1})`);
-    if (element) {
-      element.classList.add('unableToAddHighlight');
-      setTimeout(() => {
-        element.classList.remove('unableToAddHighlight');
-      }, 1000);
-    }
   }
 
   /**

@@ -3,6 +3,7 @@ import {Bugapoint} from "../../model/bugapoint";
 import {RoutepointService} from "../../services/routepoint.service";
 import {MapInteractionService} from "../../services/map-interaction.service";
 
+
 @Component({
   selector: 'app-bugapoint-box',
   templateUrl: './bugapoint-box.component.html',
@@ -31,7 +32,6 @@ export class BugapointBoxComponent {
     this.routePointService.mergedRoutepointIndexObservable.
     subscribe(value => {
       if (value === this.index) {
-        console.log("true" + this);
         this.mergeHighlightRouteBugapoint();
       }});
     //updates the last point if the user tries to add the same point twice
@@ -73,13 +73,13 @@ export class BugapointBoxComponent {
   }
 
   mergeHighlightRouteBugapoint() {
+    console.log(this.index + " " + this);
     // set highlight to true
     this.mergeHighlight = true;
 
     // reset highlight after 1 second
     setTimeout(() => {
       this.mergeHighlight = false;
-    }, 1000);
+    }, 10000);
   }
-
 }

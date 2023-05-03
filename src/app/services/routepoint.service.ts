@@ -16,6 +16,7 @@ export class RoutepointService {
   private routepointsSubject = new BehaviorSubject<Bugapoint[]>([]);
   readonly routepointsObservable = this.routepointsSubject.asObservable();
 
+
   private mergedRoutepointIndex: number;
   private mergedRoutepointIndexSubject = new BehaviorSubject<number>(-1);
   readonly mergedRoutepointIndexObservable = this.mergedRoutepointIndexSubject.asObservable();
@@ -24,7 +25,7 @@ export class RoutepointService {
   private unableToAddRoutepointIndexSubject = new BehaviorSubject<number>(-1);
   readonly unableToAddRoutepointIndexObservable = this.unableToAddRoutepointIndexSubject.asObservable();
 
-  constructor() { }
+  constructor() {}
 
   addRoutePoint(routepoint: Bugapoint) {
     if (!(this.routepoints.length > 0 && this.routepoints[this.routepoints.length - 1].id === routepoint.id)) {
@@ -59,7 +60,6 @@ export class RoutepointService {
     let i = 0;
     while (i < this.routepoints.length - 1) {
       if (this.routepoints[i].id === this.routepoints[i + 1].id) {
-        console.log(i);
         this.mergedRoutepointIndex = i;
         this.routepoints.splice(i + 1, 1);
       } else {

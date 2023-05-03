@@ -1,8 +1,8 @@
 <div class="scrollable-content" cdkScrollable>
-  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" style="overflow-y: scroll">
-    <div *ngFor="let routeBugapoint of (route |async); let i = index"
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let i = index; let routeBugapoint of (route |async)"
          cdkDrag>
-      <app-bugapoint-box [point]= "routeBugapoint" [index]="i"></app-bugapoint-box>
+      <app-bugapoint-box [point]= "routeBugapoint" [index]="i" ></app-bugapoint-box>
     </div>
     <div class="vertical-center">
       <button  class="routeButton" (click)="goToRoute()" mat-raised-button>Search for Route</button>

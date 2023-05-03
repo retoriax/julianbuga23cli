@@ -1,15 +1,3 @@
-.example-list {
-  width: 100vw;
-  max-width: 100%;
-  border: solid 1px #ccc;
-  min-height: 60px;
-  max-height: border-box;
-  display: block;
-  background: white;
-  border-radius: 4px;
-  font-size: 20px;
-}
-
 .routepoint-box {
   padding: 20px 10px;
   border-bottom: solid 1px #ccc;
@@ -27,18 +15,12 @@
   .routepoint-box {
     font-size: 0.9em;
   }
-  .routeButton {
-    font-size: 14px;
-  }
 }
 
 /* Font size for screens smaller than 576px */
 @media (max-width: 350px) {
   .routepoint-box {
     font-size: 0.8em;
-  }
-  .routeButton {
-    font-size: 12px;
   }
 }
 
@@ -90,10 +72,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.routeButton {
-  margin: 0 auto;
-  font-size: 16px;
 }
 
 .sideBySideButtonsAndHandle {
