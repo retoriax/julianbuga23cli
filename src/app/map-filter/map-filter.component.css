@@ -42,6 +42,7 @@
   top: 110px;
   max-width: fit-content;
   left: 5px;
+  padding-bottom: 100px;
 }
 
 .shown {
@@ -49,7 +50,7 @@
 }
 
 mat-chip-option {
-  width: 100%;
+  width: calc(98%);
   height: 4vh;
   margin-bottom: 1vh;
   font-size: 110%;
