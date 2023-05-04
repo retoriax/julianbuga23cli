@@ -39,7 +39,7 @@
 
 .filter-list mat-chip-list{
   position: relative;
-  margin-top: 110px;
+  padding-top: 110px;
   max-width: fit-content;
   left: 5px;
   margin-bottom: 40px;
