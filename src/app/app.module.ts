@@ -40,6 +40,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import { BugapointBoxComponent } from './route-components/bugapoint-box/bugapoint-box.component';
 import { AdminpanelSavedialogComponent } from './admin-components/adminpanel-savedialog/adminpanel-savedialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 
@@ -65,6 +66,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     RegisterUiComponent,
     TokenCheckerComponent,
     AdminpanelSavedialogComponent,
+    BugapointBoxComponent,
     //AdminpanelParksliderComponent
     MapAnsichtComponent,
   ],

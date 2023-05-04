@@ -3,17 +3,39 @@ import * as L from "leaflet";
 import {BugapointService} from "./bugapoint.service";
 import {icon} from "leaflet";
 
+
+
+interface IconPicture {
+  discriminator: string;
+  src: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class IconService {
+  iconsPictureCache: { [discriminator: string] : string} = {};
   iconsCache: { [key: string]: L.Icon } = {};
   constructor( private bugapointService: BugapointService) {
-    this.bugapointService.findAll().subscribe(bugapoints => {
-      bugapoints.forEach((bugapoint) => {
-        this.getIconFromDiscriminator(bugapoint.discriminator);
+    fetch("././assets/MapIcons/icons.json")
+      .then(response => {
+        return response.json();
       })
-    });
+      .then(jsondata => {
+        jsondata.forEach((obj: IconPicture) => {
+          this.iconsPictureCache[obj.discriminator] = obj.src;
+        })
+        this.bugapointService.findAll().subscribe(bugapoints => {
+
+          let alreadyIn = new Set;
+          bugapoints.forEach((bugapoint) => {
+            if (!alreadyIn.has(bugapoint.discriminator)){
+              alreadyIn.add(bugapoint.discriminator);
+              this.getIconFromDiscriminator(bugapoint.discriminator);
+            }
+          })
+        });
+      });
 
   }
 
@@ -21,7 +43,7 @@ export class IconService {
    * Method to return an L.Icon for a given discriminator.
    * @param discriminator Discriminator
    */
-  async getIconFromDiscriminator(discriminator: string): Promise<L.Icon> {
+  getIconFromDiscriminator(discriminator: string): L.Icon {
 
     const iconUrl = `././assets/MapIcons/${discriminator.trim()}.png`;
     const defaultIconUrl = `././assets/MapIcons/Default.png`;
@@ -40,13 +62,13 @@ export class IconService {
       return this.iconsCache[iconUrl];
     }
     //Return the icon if there is a matching file
-    if (this.fileExists(iconUrl)) {
-      console.log(this.merge(iconUrl))
+    if (this.fileExists(iconUrl) && this.iconsPictureCache[discriminator.trim()]) {
       this.iconsCache[iconUrl] = L.icon({
-        iconUrl: await this.merge(iconUrl),
+        iconUrl: this.iconsPictureCache[discriminator.trim()],
         iconSize: [48 , 48],
       });
-    } else this.iconsCache[iconUrl] = this.iconsCache[defaultIconUrl];
+    }
+    else this.iconsCache[iconUrl] = this.iconsCache[defaultIconUrl];
     return this.iconsCache[iconUrl];
   }
 
@@ -61,7 +83,7 @@ export class IconService {
     return http.status != 404 && !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
   }
 
-  merge(url: string): Promise<string> {
+  merge(url: string, dei: string): Promise<string> {
     return new Promise((resolve, reject) => {
       const backgroundImage = new Image();
       backgroundImage.src = '././assets/MapIcons/Background.png';
@@ -76,6 +98,7 @@ export class IconService {
           image1.src = url;
           image1.onload = () => {
             ctx.drawImage(image1, backgroundImage.width/2 - backgroundImage.width/4, backgroundImage.height/6, canvas.width/2, canvas.height/2);
+            console.log("{ 'discriminator' : " + dei + ", 'src' : '" + canvas.toDataURL("image/png") + "'},")
             resolve(canvas.toDataURL("image/png"));
           };
           image1.onerror = (e) => {

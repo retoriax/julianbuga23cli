@@ -1,26 +1,26 @@
-.example-list {
-  width: 100vw;
-  max-width: 100%;
-  border: solid 1px #ccc;
-  min-height: 60px;
-  max-height: border-box;
-  display: block;
+.routepoint-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
   background: white;
-  border-radius: 4px;
-  font-size: 20px;
+  font-size: 1em;
 }
-
 /* Font size for screens smaller than 768px */
 @media (max-width: 500px) {
-  .routeButton {
-    font-size: 14px;
+  .routepoint-box {
+    font-size: 0.9em;
   }
 }
 
 /* Font size for screens smaller than 576px */
 @media (max-width: 350px) {
-  .routeButton {
-    font-size: 12px;
+  .routepoint-box {
+    font-size: 0.8em;
   }
 }
 
@@ -63,15 +63,15 @@
   cursor: move;
 }
 
+.drag {
+  width: 40px;
+  height: 40px;
+}
+
 .vertical-center {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.routeButton {
-  margin: 0 auto;
-  font-size: 16px;
-  margin-bottom: 120px;
 }
 
 .sideBySideButtonsAndHandle {
@@ -102,7 +102,7 @@ button[aria-label="delete Button"],
   margin-left: 3px;
 }
 
-.mergeHighlight {
+.routepoint-box.mergeHighlight {
   animation: mergeGlow 1s;
 }
 
@@ -115,7 +115,7 @@ button[aria-label="delete Button"],
   }
 }
 
-.unableToAddHighlight {
+.routepoint-box.unableToAddHighlight {
   animation: unableToAddGlow 1s;
 }
 
@@ -127,6 +127,4 @@ button[aria-label="delete Button"],
     background: white;
   }
 }
-
-
 
