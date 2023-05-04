@@ -147,7 +147,9 @@
               "../node_modules/leaflet/dist/leaflet.css",
               "../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/mapbox-gl/dist/mapbox-gl.js"
+            ]
           }
         },
         "ionic-cordova-serve": {
