@@ -47,7 +47,7 @@
 
 .y-scrollable {
   overflow-y: scroll;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 200px);
   margin-bottom: 100px;
 }
 
