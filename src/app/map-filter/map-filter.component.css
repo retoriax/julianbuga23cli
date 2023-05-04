@@ -60,13 +60,13 @@ mat-chip-option {
   font-size: 130%;
 }
 
-.filter-list {
+.filter-list mat-chip-list{
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
 }
 
-.filter-list::-webkit-scrollbar {
+.filter-list mat-chip-list::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
