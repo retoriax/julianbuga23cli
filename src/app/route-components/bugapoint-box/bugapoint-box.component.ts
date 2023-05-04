@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Bugapoint} from "../../model/bugapoint";
 import {RoutepointService} from "../../services/routepoint.service";
 import {MapInteractionService} from "../../services/map-interaction.service";
@@ -9,14 +9,14 @@ import {MapInteractionService} from "../../services/map-interaction.service";
   templateUrl: './bugapoint-box.component.html',
   styleUrls: ['./bugapoint-box.component.css']
 })
-export class BugapointBoxComponent implements AfterViewInit{
+export class BugapointBoxComponent {
   @Input()
   point: Bugapoint;
   @Input()
   index: number;
 
-  mergeHighlight: boolean;
-  unableToAddHighlight: boolean;
+  mergeHighlight: boolean; //boolean to add class.mergeHighlight to highlight component in css
+  unableToAddHighlight: boolean; //boolean to add class.unableToAddHighlight to highlight component in css
 
 
   /**
@@ -28,22 +28,13 @@ export class BugapointBoxComponent implements AfterViewInit{
   constructor(private routePointService: RoutepointService,
               private mapInteractionService: MapInteractionService) { }
 
-  ngAfterViewInit() {
-    //updates the points that are merged together
-    this.routePointService.mergedRoutepointIndexObservable.
-    subscribe(value => {
-      if (value === this.index) {
-        this.mergeHighlightRouteBugapoint();
-      }});
-  }
-
   ngOnInit() {
     //updates the points that are merged together
-    this.routePointService.mergedRoutepointIndexObservable.
-    subscribe(value => {
-      if (value === this.index) {
+    this.routePointService.routepointsObservable.subscribe(value => {
+      if ((this.index < value.length && value[this.index].id === value[this.index + 1].id)) {
         this.mergeHighlightRouteBugapoint();
-      }});
+      }
+    })
     //updates the last point if the user tries to add the same point twice
     this.routePointService.unableToAddRoutepointIndexObservable.
     subscribe(value => {
@@ -70,7 +61,7 @@ export class BugapointBoxComponent implements AfterViewInit{
 
 
   /**
-   * Highlights when it is not possible to add the same point twice in red
+   * Highlights the bugapoint-box when it is not possible to add the same point twice in red
    */
   unableToAddHighlightRouteBugapoint() {
     // set highlight to true
@@ -82,6 +73,9 @@ export class BugapointBoxComponent implements AfterViewInit{
     }, 1000);
   }
 
+  /**
+   * Highlights the bugapoint-box when two points are merged together into one
+   */
   mergeHighlightRouteBugapoint() {
     console.log(this.index + " " + this);
     // set highlight to true

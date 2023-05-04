@@ -31,13 +31,6 @@ export class BugapointDragAndDropComponent implements OnInit{
   ngOnInit(): void {
     //transfer the route from the routePointService
     this.route = this.routePointService.routepointsObservable;
-
-    //updates the points that are merged together
-    this.routePointService.mergedRoutepointIndexObservable.
-    subscribe(value => {
-      if (value >=0) {
-        this.mergeHighlightRouteBugapoint(value);
-    }});
   }
 
   /**
@@ -58,20 +51,6 @@ export class BugapointDragAndDropComponent implements OnInit{
     ).subscribe(routepoints => {
       this.mapInteractionService.callMapRouting(routepoints);
     });
-  }
-
-  /**
-   * Highlights when two points are merged into one in green (when two points equal are neighbours one is delted)
-   * @param routeBugapointIndex Index of merged point
-   */
-  mergeHighlightRouteBugapoint(routeBugapointIndex: number) {
-    const element = document.querySelector(`.example-list .routepoint-box:nth-child(${routeBugapointIndex + 1})`);
-    if (element) {
-      element.classList.add('mergeHighlight');
-      setTimeout(() => {
-        element.classList.remove('mergeHighlight');
-      }, 1000);
-    }
   }
 }
 

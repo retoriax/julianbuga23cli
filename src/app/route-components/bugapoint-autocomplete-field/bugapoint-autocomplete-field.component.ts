@@ -59,10 +59,17 @@ export class BugapointAutocompleteFieldComponent implements OnInit {
     );
   }
 
+
     displayFn(bugapoint: Bugapoint): string {
       return bugapoint && bugapoint.title ? bugapoint.title : '';
     }
-    submit() {
+
+
+  /**
+   * Submits the input and adds the Bugapoint to the list of routepoints if possible.
+   * Otherwise sets routePointErrorStateMatcher into an alarm
+   */
+  submit() {
       if (this.newElement && typeof this.newElement !== 'string') {
         this.routePointErrorStateMatcher.isValid();
         this.routepointservice.addRoutePoint(this.newElement);
@@ -71,12 +78,10 @@ export class BugapointAutocompleteFieldComponent implements OnInit {
         this.routePointErrorStateMatcher.isFalse();
         this.findBugapointByTitle(this.newElement as string);
       }
-
     }
 
-
   /**
-   *
+   * Searches a Bugapoint which title correspond with the input string
    * @param searchString
    */
   findBugapointByTitle(searchString: string) {
@@ -85,9 +90,10 @@ export class BugapointAutocompleteFieldComponent implements OnInit {
         filter((arr: Bugapoint[]) => arr.some((item: Bugapoint) => item.title === searchString)),
         // map the filtered array to the first element of type MyType
         map((arr: Bugapoint[]) => arr.find((item: Bugapoint) => item.title === searchString)),
+        //only call this once
         take(1)
       );
-      //
+      //looks up whether a Bugapoint was found or not
       searchByString.subscribe((item: Bugapoint | undefined) => {
         if (item === undefined) {
           console.log("myFilteredObservable contains an undefined value");
