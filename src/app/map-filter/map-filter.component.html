@@ -1,4 +1,5 @@
 <div class="filter-list">
+  <div class="scrollable">
     <mat-chip-list #chipList>
       <mat-chip-option [selected]="alleSelected" id="alleSelectedChip" (click)="alleAuswaehlen()">Alle auswählen</mat-chip-option>
       <mat-chip-option *ngFor="let discriminator of discriminatorSet" [selected]="selectedDiscriminators.has(discriminator)" [selectable]="true" [removable]="false"
@@ -6,6 +7,7 @@
         {{discriminator}}
       </mat-chip-option>
     </mat-chip-list>
+  </div>
 </div>
 <div class="filter-button">
   <input type="checkbox" id="check">
