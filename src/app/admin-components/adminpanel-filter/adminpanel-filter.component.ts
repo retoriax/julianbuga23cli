@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AdminpanelBugapointlistComponent} from "../adminpanel-bugapointlist/adminpanel-bugapointlist.component";
+import {MatTabChangeEvent} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-admin-components-filter',
@@ -17,9 +18,9 @@ export class AdminpanelFilterComponent {
   luisenparkId = '1';
   spinelliparkId = '2';
 
-  changedTo(park: string) {
-    console.log(park)
-    this.filterChanged.emit(park)
-
+  changedTo(event: MatTabChangeEvent) {
+    console.log('INDEX: ' + event.index)
+    this.filterChanged.emit('' + Number(event.index + 1))
   }
+
 }

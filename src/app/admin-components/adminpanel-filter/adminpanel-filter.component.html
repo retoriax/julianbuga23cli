@@ -1,7 +1,7 @@
-<mat-button-toggle-group>
-  <mat-button-toggle value="Luisenpark" (click)="changedTo(luisenparkId)" [checked]="true">Luisenpark</mat-button-toggle>
-  <mat-button-toggle value="Spinellipark" (click)="changedTo(spinelliparkId)">Spinellipark</mat-button-toggle>
-</mat-button-toggle-group>
+<mat-tab-group (selectedTabChange)="changedTo($event)">
+  <mat-tab label="Luisenpark"></mat-tab>
+  <mat-tab label="Spinellipark"></mat-tab>
+</mat-tab-group>
 <mat-autocomplete>
 
 </mat-autocomplete>

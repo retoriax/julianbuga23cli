@@ -45,6 +45,9 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { AdminpanelFilterComponent } from './admin-components/adminpanel-filter/adminpanel-filter.component';
 import { AdminpanelChooserComponent } from './admin-components/adminpanel-chooser/adminpanel-chooser.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 @NgModule({
@@ -103,6 +106,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     MatCardModule,
     MatDialogModule,
     MatButtonToggleModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatTabsModule,
   ],
   exports: [
     MapFilterComponent,

@@ -16,6 +16,7 @@ export class AdminpanelBugapointlistComponent implements OnInit {
   admins: Admin[];
 
   filter: string;
+  isLoading: boolean = false;
 
   constructor(private bugapointservice: BugapointService, private adminservice: AdminService) {
 
@@ -27,9 +28,11 @@ export class AdminpanelBugapointlistComponent implements OnInit {
 
   async onFilterChanged(parkId: string) {
     this.filter = parkId;
-    console.log("HIER: " + parkId)
+    this.points = [];
+    console.log('parkid: ' + parkId)
+    this.isLoading = true;
     this.points = await lastValueFrom(this.bugapointservice.getBugapointsByParkID(parkId))
-    console.log(this.points)
+    this.isLoading = false;
   }
 
 

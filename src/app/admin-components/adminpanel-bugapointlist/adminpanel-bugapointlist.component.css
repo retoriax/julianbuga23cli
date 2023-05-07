@@ -18,11 +18,11 @@ mat-expansion-panel mat-panel-description {
   height: 70vh;
 }
 
-.filter {
+.pointFilter {
   margin: auto;
 }
 
-.containerFilter {
+.filterFrame {
   display: -webkit-flex;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -31,4 +31,22 @@ mat-expansion-panel mat-panel-description {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.prograssBarFrame {
+  margin-top: 0.5vw;
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+mat-progress-bar {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2vw;
 }
