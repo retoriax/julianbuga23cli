@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {MapInteractionService} from "../services/map-interaction.service";
 import {IconService} from "../services/icon.service";
 
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -83,11 +84,47 @@ export class MapComponent implements OnInit {
    * @param latitude Latitude
    * @param longitude Longitude
    * @param title Title
+   * @param description
    * @param discriminator Discriminator
    */
-  async showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.iconService.getIconFromDiscriminator(discriminator))
+  async showMarker(latitude: number, longitude: number, title: string, description: string, discriminator: string) {
+    const popupContent = `
+    <div style="font-size: 16px;"><b>${title}</b></div>
+    <div id="additional-info-${latitude}-${longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${description}</div>
+    <div style="margin-top: 10px;"><button id="toggle-info-${latitude}-${longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px;"><i class="fa fa-plus"></i> Mehr Details anzeigen</button></div>
+    `;
+    const marker = L.marker([latitude, longitude]).addTo(this.map).bindPopup(popupContent).setIcon(this.iconService.getIconFromDiscriminator(discriminator));
+    marker.on('popupopen', () => {
+      const toggleButton = document.getElementById(`toggle-info-${latitude}-${longitude}`);
+      const additionalInfoContainer = document.getElementById(`additional-info-${latitude}-${longitude}`);
+      if (toggleButton && additionalInfoContainer) {
+        toggleButton.onclick = (event) => {
+          event.preventDefault(); // prevent default behavior of anchor tag
+          if (additionalInfoContainer.style.display === 'none') {
+            additionalInfoContainer.style.display = 'block';
+            toggleButton.innerHTML = '<i class="fa fa-minus"></i> Details ausblenden';
+          } else {
+            additionalInfoContainer.style.display = 'none';
+            toggleButton.innerHTML = '<i class="fa fa-plus"></i> Mehr Details anzeigen';
+          }
+        };
+      }
+    });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    *   Method to update the markers on the map.
@@ -101,7 +138,7 @@ export class MapComponent implements OnInit {
     });
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
-      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.discriminator);
+      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.description, bugapoint.discriminator);
     }
   }
 
