@@ -6,6 +6,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./adminpanel-bugapoints.component.css']
 })
 export class AdminpanelBugapointsComponent implements OnInit {
+
   ngOnInit(): void {
   }
 }

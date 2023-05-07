@@ -15,13 +15,24 @@ export class AdminpanelBugapointlistComponent implements OnInit {
   points: Bugapoint[];
   admins: Admin[];
 
+  filter: string;
+
   constructor(private bugapointservice: BugapointService, private adminservice: AdminService) {
 
   }
 
   async ngOnInit() {
     this.admins = await lastValueFrom(this.adminservice.findAll())
-    this.points = await lastValueFrom(this.bugapointservice.findAll())
   }
+
+  async onFilterChanged(parkId: string) {
+    this.filter = parkId;
+    console.log("HIER: " + parkId)
+    this.points = await lastValueFrom(this.bugapointservice.getBugapointsByParkID(parkId))
+    console.log(this.points)
+  }
+
+
+
 
 }

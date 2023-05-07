@@ -42,6 +42,9 @@ import {MatDividerModule} from "@angular/material/divider";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { AdminpanelSavedialogComponent } from './admin-components/adminpanel-savedialog/adminpanel-savedialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { AdminpanelFilterComponent } from './admin-components/adminpanel-filter/adminpanel-filter.component';
+import { AdminpanelChooserComponent } from './admin-components/adminpanel-chooser/adminpanel-chooser.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 @NgModule({
@@ -65,8 +68,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     RegisterUiComponent,
     TokenCheckerComponent,
     AdminpanelSavedialogComponent,
-    //AdminpanelParksliderComponent
     MapAnsichtComponent,
+    AdminpanelFilterComponent,
+    AdminpanelChooserComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,6 +102,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatIconModule,
     MatCardModule,
     MatDialogModule,
+    MatButtonToggleModule,
   ],
   exports: [
     MapFilterComponent,

@@ -1,5 +1,10 @@
+
+<div class="containerFilter">
+  <app-admin-components-filter class="filter" (filterChanged)="onFilterChanged($event)"></app-admin-components-filter>
+</div>
+
 <mat-divider></mat-divider>
-<div class="bugapointlist">
+<div class="bugapointlist" *ngIf="filter">
   <div *ngFor="let point of points">
     <app-admin-components-bugapointpanel [point]="point" [admins]="admins"></app-admin-components-bugapointpanel>
   </div>

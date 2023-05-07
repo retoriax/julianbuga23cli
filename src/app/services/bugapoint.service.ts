@@ -2,7 +2,6 @@ import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable, shareReplay, Subject, takeUntil} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
-import {DatabaseSaveResponse} from "./DatabaseSaveResponse";
 import {environment} from "../../environments/environment.development";
 
 @Injectable({
@@ -63,6 +62,19 @@ export class BugapointService {
     return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/filter`, {
       params: {
         discriminators: Array.from(discriminators).join(',')
+      }
+    });
+  }
+
+  /**
+   * Returns all the bugapoints with the given park id
+   *
+   * @param parkId identifier of the park
+   */
+  getBugapointsByParkID(parkId: string): Observable<Bugapoint[]> {
+    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/park`, {
+      params: {
+        parkid: parkId
       }
     });
   }

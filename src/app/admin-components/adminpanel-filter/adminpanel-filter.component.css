@@ -1,0 +1,15 @@
+mat-button-toggle {
+  margin: auto;
+}
+
+mat-button-toggle-group {
+  align-items: center;
+
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flex;
+
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+}
