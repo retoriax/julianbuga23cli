@@ -6,6 +6,7 @@ import {AdminService} from "../../../services/admin.service";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
+import {BugapointlistComponent} from "../bugapointlist/bugapointlist.component";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -24,6 +25,9 @@ export class BugapointpanelComponent implements OnInit {
 
   @Input()
   point: Bugapoint
+
+  @Input()
+  list: BugapointlistComponent
 
   adminForm = new FormControl('')
 
@@ -85,8 +89,8 @@ export class BugapointpanelComponent implements OnInit {
   /**
    * Deletes this bugapoint.
    */
-  delete() {
-    this.adminBugapointService.deleteBugapointById(this.point.id);
-    window.location.reload()
+  async delete() {
+    await this.adminBugapointService.deleteBugapointById(this.point.id);
+    await this.list.onFilterChanged(this.point.parkID + '')
   }
 }
