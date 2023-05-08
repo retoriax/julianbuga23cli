@@ -43,7 +43,6 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { AdminpanelSavedialogComponent } from './admin-components/adminpanel-savedialog/adminpanel-savedialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { AdminpanelFilterComponent } from './admin-components/adminpanel-filter/adminpanel-filter.component';
-import { AdminpanelChooserComponent } from './admin-components/adminpanel-chooser/adminpanel-chooser.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -73,7 +72,6 @@ import {MatTabsModule} from "@angular/material/tabs";
     AdminpanelSavedialogComponent,
     MapAnsichtComponent,
     AdminpanelFilterComponent,
-    AdminpanelChooserComponent,
   ],
   imports: [
     BrowserModule,
