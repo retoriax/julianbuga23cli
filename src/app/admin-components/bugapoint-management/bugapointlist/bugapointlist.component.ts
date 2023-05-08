@@ -41,7 +41,6 @@ export class BugapointlistComponent implements OnInit {
       const points$ = this.bugapointservice.getBugapointsByParkID(parkId);
       this.points = await lastValueFrom(points$);
       this.sortPoints()
-      console.log(this.points)
     } catch (err) {
       console.error('Error fetching Bugapoints:', err);
     } finally {
