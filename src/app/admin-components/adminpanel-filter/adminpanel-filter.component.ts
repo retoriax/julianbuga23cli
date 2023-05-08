@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AdminpanelBugapointlistComponent} from "../adminpanel-bugapointlist/adminpanel-bugapointlist.component";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 
@@ -7,7 +7,7 @@ import {MatTabChangeEvent} from "@angular/material/tabs";
   templateUrl: './adminpanel-filter.component.html',
   styleUrls: ['./adminpanel-filter.component.css']
 })
-export class AdminpanelFilterComponent {
+export class AdminpanelFilterComponent implements OnInit {
 
   @Input()
   private list : AdminpanelBugapointlistComponent;
@@ -15,12 +15,13 @@ export class AdminpanelFilterComponent {
   @Output()
   private filterChanged = new EventEmitter<string>;
 
-  luisenparkId = '1';
-  spinelliparkId = '2';
 
   changedTo(event: MatTabChangeEvent) {
-    console.log('INDEX: ' + event.index)
     this.filterChanged.emit('' + Number(event.index + 1))
+  }
+
+  ngOnInit(): void {
+    this.filterChanged.emit('' + 0)
   }
 
 }
