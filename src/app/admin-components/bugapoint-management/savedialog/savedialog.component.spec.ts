@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminpanelSavedialogComponent } from './adminpanel-savedialog.component';
+import { SavedialogComponent } from './savedialog.component';
 
 describe('AdminpanelSavedialogComponent', () => {
-  let component: AdminpanelSavedialogComponent;
-  let fixture: ComponentFixture<AdminpanelSavedialogComponent>;
+  let component: SavedialogComponent;
+  let fixture: ComponentFixture<SavedialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminpanelSavedialogComponent ]
+      declarations: [ SavedialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminpanelSavedialogComponent);
+    fixture = TestBed.createComponent(SavedialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

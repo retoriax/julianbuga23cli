@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminpanelFilterComponent } from './adminpanel-filter.component';
+import { FilterComponent } from './filter.component';
 
 describe('AdminpanelFilterComponent', () => {
-  let component: AdminpanelFilterComponent;
-  let fixture: ComponentFixture<AdminpanelFilterComponent>;
+  let component: FilterComponent;
+  let fixture: ComponentFixture<FilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminpanelFilterComponent ]
+      declarations: [ FilterComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminpanelFilterComponent);
+    fixture = TestBed.createComponent(FilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

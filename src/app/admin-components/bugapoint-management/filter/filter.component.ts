@@ -1,16 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AdminpanelBugapointlistComponent} from "../adminpanel-bugapointlist/adminpanel-bugapointlist.component";
+import {BugapointlistComponent} from "../bugapointlist/bugapointlist.component";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-admin-components-filter',
-  templateUrl: './adminpanel-filter.component.html',
-  styleUrls: ['./adminpanel-filter.component.css']
+  templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.css']
 })
-export class AdminpanelFilterComponent implements OnInit {
+export class FilterComponent implements OnInit {
 
   @Input()
-  private list : AdminpanelBugapointlistComponent;
+  private list : BugapointlistComponent;
 
   @Output()
   private filterChanged = new EventEmitter<string>;

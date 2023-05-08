@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {MapComponent} from "./map/map.component";
 import {RoutePlannerComponent} from "./route-components/route-planner/route-planner.component";
 import {AdminpanelMenuComponent} from "./admin-components/adminpanel-menu/adminpanel-menu.component";
-import {AdminpanelBugapointsComponent} from "./admin-components/adminpanel-bugapointmenu/adminpanel-bugapoints.component";
-import {AdminpanelNewpointpanelComponent} from "./admin-components/adminpanel-newpointpanel/adminpanel-newpointpanel.component";
+import {BugapointmenuComponent} from "./admin-components/bugapoint-management/bugapointmenu/bugapointmenu.component";
+import {NewpointpanelComponent} from "./admin-components/bugapoint-management/newpointpanel/newpointpanel.component";
 import {BlankComponent} from "./blank/blank.component";
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {LoginFormComponent} from "./login-form/login-form.component";
@@ -17,8 +17,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterUiComponent},
   { path: 'login', component: LoginFormComponent},
   { path: 'admin/menu', component: AdminpanelMenuComponent},
-  { path: 'admin/bugapoints', component: AdminpanelBugapointsComponent},
-  { path: 'admin/bugapoints/new', component: AdminpanelNewpointpanelComponent },
+  { path: 'admin/bugapoints', component: BugapointmenuComponent},
+  { path: 'admin/bugapoints/new', component: NewpointpanelComponent },
   { path: 'blank', component: BlankComponent},
   { path: '**', redirectTo: '/map'},
 ];

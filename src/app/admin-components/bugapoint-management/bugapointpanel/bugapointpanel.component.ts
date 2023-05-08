@@ -1,18 +1,18 @@
 import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
-import {Bugapoint} from "../../model/bugapoint";
+import {Bugapoint} from "../../../model/bugapoint";
 import {FormControl} from "@angular/forms";
-import {Admin} from "../../model/admin";
-import {AdminService} from "../../services/admin.service";
-import {BugapointService} from "../../services/bugapoint.service";
-import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
-import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
+import {Admin} from "../../../model/admin";
+import {AdminService} from "../../../services/admin.service";
+import {BugapointService} from "../../../services/bugapoint.service";
+import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
+import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
-  templateUrl: './adminpanel-bugapointpanel.component.html',
-  styleUrls: ['./adminpanel-bugapointpanel.component.css']
+  templateUrl: './bugapointpanel.component.html',
+  styleUrls: ['./bugapointpanel.component.css']
 })
-export class AdminpanelBugapointpanelComponent implements OnInit {
+export class BugapointpanelComponent implements OnInit {
 
   constructor(private adminService: AdminService, private bugapointService: BugapointService,
               private elementRef: ElementRef, private renderer: Renderer2,

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminpanelBugapointpanelComponent } from './adminpanel-bugapointpanel.component';
+import { BugapointpanelComponent } from './bugapointpanel.component';
 
 describe('AdminpanelBugapointpanelComponent', () => {
-  let component: AdminpanelBugapointpanelComponent;
-  let fixture: ComponentFixture<AdminpanelBugapointpanelComponent>;
+  let component: BugapointpanelComponent;
+  let fixture: ComponentFixture<BugapointpanelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminpanelBugapointpanelComponent ]
+      declarations: [ BugapointpanelComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminpanelBugapointpanelComponent);
+    fixture = TestBed.createComponent(BugapointpanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
