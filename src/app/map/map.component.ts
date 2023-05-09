@@ -77,23 +77,28 @@ export class MapComponent implements OnInit {
     this.updateMarkers();
   }
 
-
   /**
    * Method to add a simple marker to the map.
    *
    * @param latitude Latitude
    * @param longitude Longitude
    * @param title Title
-   * @param description
+   * @param description Description
    * @param discriminator Discriminator
    */
   async showMarker(latitude: number, longitude: number, title: string, description: string, discriminator: string) {
+    // Define the HTML content for the popup
     const popupContent = `
-    <div style="font-size: 16px;"><b>${title}</b></div>
-    <div id="additional-info-${latitude}-${longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${description}</div>
-    <div style="margin-top: 10px;"><button id="toggle-info-${latitude}-${longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px;"><i class="fa fa-plus"></i> Mehr Details anzeigen</button></div>
-    `;
+    <div style="font-size: 16px;"><b>${title}</b></div> <!-- Title of the popup -->
+    <div id="additional-info-${latitude}-${longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${description}</div> <!-- Additional information that can be toggled to display or hide -->
+    <div style="margin-top: 10px;">
+      <button class="popup-add-to-route-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: #007bff; color: white;"><i class="fa fa-plus"></i> Zur Route hinzufügen</button> <!-- Button to add the location to a route -->
+      <button id="toggle-info-${latitude}-${longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button> <!-- Button to toggle the display of additional information -->
+    </div>
+  `;
+    // Create a new marker on the map, set its popup content, and set its icon based on the discriminator
     const marker = L.marker([latitude, longitude]).addTo(this.map).bindPopup(popupContent).setIcon(this.iconService.getIconFromDiscriminator(discriminator));
+    // When the popup is opened, add an event listener to the toggle button to show/hide the additional information
     marker.on('popupopen', () => {
       const toggleButton = document.getElementById(`toggle-info-${latitude}-${longitude}`);
       const additionalInfoContainer = document.getElementById(`additional-info-${latitude}-${longitude}`);
@@ -101,30 +106,16 @@ export class MapComponent implements OnInit {
         toggleButton.onclick = (event) => {
           event.preventDefault(); // prevent default behavior of anchor tag
           if (additionalInfoContainer.style.display === 'none') {
-            additionalInfoContainer.style.display = 'block';
-            toggleButton.innerHTML = '<i class="fa fa-minus"></i> Details ausblenden';
+            additionalInfoContainer.style.display = 'block'; // show additional information
+            toggleButton.innerHTML = '<i class="fa fa-minus" style="color: #007bff;"></i> Details ausblenden'; // change the label of the toggle button to indicate that the information can be hidden
           } else {
-            additionalInfoContainer.style.display = 'none';
-            toggleButton.innerHTML = '<i class="fa fa-plus"></i> Mehr Details anzeigen';
+            additionalInfoContainer.style.display = 'none'; // hide additional information
+            toggleButton.innerHTML = '<i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen'; // change the label of the toggle button to indicate that the information can be displayed
           }
         };
       }
     });
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   /**
    *   Method to update the markers on the map.
@@ -141,7 +132,6 @@ export class MapComponent implements OnInit {
       this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.description, bugapoint.discriminator);
     }
   }
-
 
   /**
    * This method is called when a new option is selected from the view options.
