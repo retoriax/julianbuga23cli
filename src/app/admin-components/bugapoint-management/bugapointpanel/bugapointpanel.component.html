@@ -5,15 +5,15 @@
   </mat-expansion-panel-header>
 
   <mat-form-field class="inputfield">
-    <mat-label>Description</mat-label>
-    <textarea matInput placeholder="Enter description for this Bugapoint here" [formControl]="descriptionForm">
-      Placeholder by now.
+    <mat-label>Beschreibung</mat-label>
+    <textarea matInput placeholder="Beschreibung hier eintragen" [formControl]="descriptionForm">
+      Platzhalter
     </textarea>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Admin</mat-label>
-    <input matInput placeholder="Select admin accountable for this Bugapoint" [matAutocomplete]="adminAuto"
+    <input matInput placeholder="Wähle einen Admin aus" [matAutocomplete]="adminAuto"
            [formControl]="adminForm">
     <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
       <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
@@ -39,14 +39,14 @@
     <br>
   </form>
 
-  <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Use my location</button>
+  <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Meine Position</button>
   <br>
   <br>
 
 
   <div class="buttonBar">
     <button mat-raised-button color="primary" (click)="update()">Update</button>
-    <button mat-raised-button color="warn" (click)="delete()">Delete</button>
+    <button mat-raised-button color="warn" (click)="delete()">Löschen</button>
   </div>
 
   <br>
