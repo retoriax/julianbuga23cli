@@ -43,19 +43,16 @@ export class NewpointpanelComponent implements OnInit {
   ngOnInit(): void {
     //Load admins from database
     this.adminService.findAll().subscribe((data: Admin[]) => {
-      console.log(data)
       this.admins = data;
     })
 
     //Load bugapoints from database
     this.bugapointService.getDiscriminators().subscribe((data: any) => {
-      console.log(data)
       this.discriminators = data;
     })
 
     //Load parks from databse
     this.parkService.findAll().subscribe((data: Park[]) => {
-      console.log(data)
       this.parks = data;
     })
   }
@@ -129,8 +126,5 @@ export class NewpointpanelComponent implements OnInit {
     this.formular.get('longitude')?.setValue('')
     this.formular.get('admin')?.setValue('')
   }
-
-
-
 
 }

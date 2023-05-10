@@ -45,7 +45,7 @@
     <input matInput placeholder="Enter longitude here" formControlName="longitude" type="number">
   </mat-form-field>
 
-  <button mat-raised-button class="button" color="primary" (click)="getGeoLocation()">Use my location</button>
+  <button mat-raised-button class="button" (click)="getGeoLocation()">Use my location</button>
   <br><br>
 
   <mat-form-field>
@@ -59,7 +59,8 @@
     </mat-autocomplete>
   </mat-form-field>
 
-
-  <button mat-raised-button class="button" color="primary" (click)="saveBugapoint()">Save</button>
+  <div class="saveButtonDiv">
+    <button mat-raised-button class="saveButton" color="primary" (click)="saveBugapoint()">Save</button>
+  </div>
 
 </form>
