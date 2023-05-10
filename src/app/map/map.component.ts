@@ -86,7 +86,7 @@ export class MapComponent implements OnInit {
    * @param discriminator Discriminator
    */
   async showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(await this.iconService.getIconFromDiscriminator(discriminator))
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.iconService.getIconFromDiscriminator(discriminator))
   }
 
   /**

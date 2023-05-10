@@ -44,6 +44,16 @@
   left: 5px;
 }
 
+.y-scrollable {
+  overflow-y: scroll;
+  height: calc(100vh - 100px);
+  margin-bottom: 100px;
+}
+
+.buffer {
+  margin-bottom: 1000px;
+}
+
 .shown {
   right:0;
 }

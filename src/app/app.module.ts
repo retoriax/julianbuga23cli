@@ -40,13 +40,9 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
-import { SavedialogComponent } from './admin-components/bugapoint-management/savedialog/savedialog.component';
+import { BugapointBoxComponent } from './route-components/bugapoint-box/bugapoint-box.component';
+import { AdminpanelSavedialogComponent } from './admin-components/adminpanel-savedialog/adminpanel-savedialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { FilterComponent } from './admin-components/bugapoint-management/filter/filter.component';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatProgressBarModule} from "@angular/material/progress-bar";
-import {MatTabsModule} from "@angular/material/tabs";
 
 
 @NgModule({
@@ -70,6 +66,9 @@ import {MatTabsModule} from "@angular/material/tabs";
     RegisterUiComponent,
     TokenCheckerComponent,
     SavedialogComponent,
+    AdminpanelSavedialogComponent,
+    BugapointBoxComponent,
+    //AdminpanelParksliderComponent
     MapAnsichtComponent,
     FilterComponent,
   ],
