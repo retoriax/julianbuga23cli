@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, shareReplay, Subject, takeUntil} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
 import {environment} from "../../environments/environment.development";
 
