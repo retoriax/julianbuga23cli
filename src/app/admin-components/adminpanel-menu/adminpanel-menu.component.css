@@ -1,11 +1,20 @@
-body {
-  background-color: #e6c83c;
+.background {
+  top: 0;
+  right: 0;
+  background-color: blue;
+  margin: 0;
 }
 
-
 .welcome-text-field {
-  margin-top: 20px;
-  margin-left: 10px;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  margin: 0;
+  background-color: white;
+  z-index: 9999;
+  box-shadow: 3px 6px 0 1px rgb(69, 69, 69, 0.2);
 }
 
 .welcome-text {
@@ -15,7 +24,8 @@ body {
 }
 
 .menu-button-list {
-  background-color: lightgray;
+  position: relative;
+  background-color: #e6c83c;
   display: flex;
   flex-direction: column;
 
