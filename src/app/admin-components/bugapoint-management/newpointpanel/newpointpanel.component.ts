@@ -54,6 +54,7 @@ export class NewpointpanelComponent implements OnInit {
     //Load parks from databse
     this.parkService.findAll().subscribe((data: Park[]) => {
       this.parks = data;
+      console.log(this.parks)
     })
   }
 
@@ -85,7 +86,8 @@ export class NewpointpanelComponent implements OnInit {
 
       const foundPark = this.parks.find(pPark => pPark.title == this.formular.get('park')?.value)
       // @ts-ignore
-      bugaPoint.parkID = Number(foundPark.id);
+      bugaPoint.parkID = parseInt(foundPark.id);
+      console.log('parkId: ' + bugaPoint.parkID)
     } catch (e) {
 
     }
