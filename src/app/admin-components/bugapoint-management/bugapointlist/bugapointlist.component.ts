@@ -38,32 +38,13 @@ export class BugapointlistComponent implements OnInit {
       this.filter = parkId;
       this.points = [];
       this.isLoading = true;
-      const points$ = this.bugapointservice.getBugapointsByParkID(parkId);
+      const points$ = this.bugapointservice
+        .findAll('whereParkId=' + parseInt(parkId) + '&orderBy=title');
       this.points = await lastValueFrom(points$);
-      this.sortPoints()
     } catch (err) {
       console.error('Error fetching Bugapoints:', err);
     } finally {
       this.isLoading = false;
-    }
-  }
-
-  /**
-   * Sortiert Punkte.
-   */
-  sortPoints() {
-    if (this.points.length > 0) {
-      this.points.sort((a, b) => {
-        const titleA = a.title.toUpperCase();
-        const titleB = b.title.toUpperCase();
-        if (titleA < titleB) {
-          return -1;
-        } else if (titleA > titleB) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
     }
   }
 

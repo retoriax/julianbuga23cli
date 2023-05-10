@@ -25,18 +25,11 @@ export class BugapointService {
     this.bugapointCache$ = null;
   }
 
-
   /**
    * returns all bugapoints
    */
-  findAll(): Observable<Bugapoint[]> {
-    if (!this.bugapointCache$) {
-      //Cache
-      this.bugapointCache$ = this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`).pipe(
-        takeUntil(this.reload$),
-        shareReplay(1));
-    }
-    return this.bugapointCache$;
+  findAll(query?: string): Observable<Bugapoint[]> {
+    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list?` + query);
   }
 
   /**
@@ -45,41 +38,5 @@ export class BugapointService {
   getDiscriminators(): Observable<string[]> {
     return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
   }
-
-  /**
-   * returns all bugapoints
-   */
-  getBugapoints(): Observable<Bugapoint[]> {
-    return this.findAll();
-  }
-
-  /**
-   * Returns all bugapoints with the given discriminators.
-   *
-   * @param discriminators discriminators
-   */
-  getFilteredBugapoints(discriminators: Set<string>): Observable<Bugapoint[]> {
-    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/filter`, {
-      params: {
-        discriminators: Array.from(discriminators).join(',')
-      }
-    });
-  }
-
-  /**
-   * Returns all the bugapoints with the given park id
-   *
-   * @param parkId identifier of the park
-   */
-  getBugapointsByParkID(parkId: string): Observable<Bugapoint[]> {
-    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/park`, {
-      params: {
-        parkid: parkId
-      }
-    });
-  }
-
-
-
 
 }
