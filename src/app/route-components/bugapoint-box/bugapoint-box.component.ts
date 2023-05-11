@@ -31,7 +31,7 @@ export class BugapointBoxComponent {
   ngOnInit() {
     //updates the points that are merged together
     this.routePointService.routepointsObservable.subscribe(value => {
-      if ((this.index < value.length && value[this.index].id === value[this.index + 1].id)) {
+      if (value.length > this.index + 1 && value[this.index]?.id === value[this.index + 1]?.id) {
         this.mergeHighlightRouteBugapoint();
       }
     })
