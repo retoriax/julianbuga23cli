@@ -48,6 +48,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FilterComponent} from "./admin-components/bugapoint-management/filter/filter.component";
 import {SavedialogComponent} from "./admin-components/bugapoint-management/savedialog/savedialog.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -110,6 +111,7 @@ import {SavedialogComponent} from "./admin-components/bugapoint-management/saved
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTabsModule,
+    MatSnackBarModule,
   ],
   exports: [
     MapFilterComponent,

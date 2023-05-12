@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Bugapoint} from "../../model/bugapoint";
 import {RoutepointService} from "../../services/routepoint.service";
 import {MapInteractionService} from "../../services/map-interaction.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -24,9 +25,11 @@ export class BugapointBoxComponent {
    * and a Service that makes it possible to navigate to the map and show the route or a point.
    * @param routePointService Lets you manage the points in your route
    * @param mapInteractionService Lets you navigate to the map and show the route or a point
+   * @param snackBar
    */
   constructor(private routePointService: RoutepointService,
-              private mapInteractionService: MapInteractionService) { }
+              private mapInteractionService: MapInteractionService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     //updates the points that are merged together
@@ -66,6 +69,10 @@ export class BugapointBoxComponent {
   unableToAddHighlightRouteBugapoint() {
     // set highlight to true
     this.unableToAddHighlight = true;
+    this.snackBar.open(this.point.title + 'ist schon vorhanden!', '', {
+      duration:3000,
+      verticalPosition:'bottom'
+    });
 
     // reset highlight after 1 second
     setTimeout(() => {
@@ -77,9 +84,12 @@ export class BugapointBoxComponent {
    * Highlights the bugapoint-box when two points are merged together into one
    */
   mergeHighlightRouteBugapoint() {
-    console.log(this.index + " " + this);
     // set highlight to true
     this.mergeHighlight = true;
+    this.snackBar.open(this.point.title + 'wurde mit dem selben Routenpunkt vereint!', '', {
+      duration:3000,
+      verticalPosition:'bottom'
+    });
 
     // reset highlight after 1 second
     setTimeout(() => {

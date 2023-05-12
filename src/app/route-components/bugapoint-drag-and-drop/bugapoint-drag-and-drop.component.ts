@@ -27,7 +27,7 @@ export class BugapointDragAndDropComponent implements OnInit{
    * @param mapInteractionService Lets you navigate to the map and show the route or a point
    */
   constructor(private routePointService: RoutepointService,
-              private mapInteractionService: MapInteractionService) { }
+              private mapInteractionService: MapInteractionService) {}
   ngOnInit(): void {
     //transfer the route from the routePointService
     this.route = this.routePointService.routepointsObservable;
