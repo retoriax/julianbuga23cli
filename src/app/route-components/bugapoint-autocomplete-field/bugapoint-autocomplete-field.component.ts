@@ -46,7 +46,7 @@ export class BugapointAutocompleteFieldComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.datbaseBugapoints = this.bugapointservice.findAll();
+    this.datbaseBugapoints = this.bugapointservice.findAll('orderBy=title');
     this.filteredBugapoints = this.myControl.valueChanges.pipe(
       startWith(''),
       // delay emits

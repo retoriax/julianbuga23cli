@@ -27,12 +27,12 @@ import {MatCardModule} from "@angular/material/card";
 import { AdminpanelMenuComponent } from './admin-components/adminpanel-menu/adminpanel-menu.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatListModule} from "@angular/material/list";
-import { AdminpanelBugapointsComponent } from './admin-components/adminpanel-bugapointmenu/adminpanel-bugapoints.component';
+import { BugapointmenuComponent } from './admin-components/bugapoint-management/bugapointmenu/bugapointmenu.component';
 import { AdminpanelSubmenubarComponent } from './admin-components/adminpanel-submenubar/adminpanel-submenubar.component';
-import { AdminpanelBugapointlistComponent } from './admin-components/adminpanel-bugapointlist/adminpanel-bugapointlist.component';
+import { BugapointlistComponent } from './admin-components/bugapoint-management/bugapointlist/bugapointlist.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { AdminpanelNewpointpanelComponent } from './admin-components/adminpanel-newpointpanel/adminpanel-newpointpanel.component';
-import { AdminpanelBugapointpanelComponent } from './admin-components/adminpanel-bugapointpanel/adminpanel-bugapointpanel.component';
+import { NewpointpanelComponent } from './admin-components/bugapoint-management/newpointpanel/newpointpanel.component';
+import { BugapointpanelComponent } from './admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component';
 import { BlankComponent } from './blank/blank.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
@@ -41,8 +41,14 @@ import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatDividerModule} from "@angular/material/divider";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { BugapointBoxComponent } from './route-components/bugapoint-box/bugapoint-box.component';
-import { AdminpanelSavedialogComponent } from './admin-components/adminpanel-savedialog/adminpanel-savedialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {FilterComponent} from "./admin-components/bugapoint-management/filter/filter.component";
+import {SavedialogComponent} from "./admin-components/bugapoint-management/savedialog/savedialog.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -56,19 +62,20 @@ import {MatDialogModule} from "@angular/material/dialog";
     LoginFormComponent,
     MapFilterComponent,
     AdminpanelMenuComponent,
-    AdminpanelBugapointsComponent,
+    BugapointmenuComponent,
     AdminpanelSubmenubarComponent,
-    AdminpanelBugapointlistComponent,
-    AdminpanelNewpointpanelComponent,
-    AdminpanelBugapointpanelComponent,
+    BugapointlistComponent,
+    NewpointpanelComponent,
+    BugapointpanelComponent,
     BlankComponent,
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
-    AdminpanelSavedialogComponent,
+    SavedialogComponent,
     BugapointBoxComponent,
-    //AdminpanelParksliderComponent
     MapAnsichtComponent,
+    FilterComponent,
+    BugapointDragAndDropComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +107,11 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatIconModule,
     MatCardModule,
     MatDialogModule,
+    MatButtonToggleModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatTabsModule,
+    MatSnackBarModule,
   ],
   exports: [
     MapFilterComponent,

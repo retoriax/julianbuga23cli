@@ -1,0 +1,17 @@
+
+<div class="filterFrame">
+  <app-admin-components-filter class="pointFilter" (filterChanged)="onFilterChanged($event)"></app-admin-components-filter>
+</div>
+
+<mat-divider></mat-divider>
+<div class="bugapointlist" *ngIf="filter">
+
+  <div class="prograssBarFrame">
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  </div>
+
+  <div *ngFor="let point of points">
+    <app-admin-components-bugapointpanel [point]="point" [admins]="admins" [list]="this"></app-admin-components-bugapointpanel>
+  </div>
+</div>
+<mat-divider></mat-divider>

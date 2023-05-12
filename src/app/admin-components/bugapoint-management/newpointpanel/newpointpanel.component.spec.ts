@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminpanelNewpointpanelComponent } from './adminpanel-newpointpanel.component';
+import { NewpointpanelComponent } from './newpointpanel.component';
 
 describe('AdminpanelNewpointpanelComponent', () => {
-  let component: AdminpanelNewpointpanelComponent;
-  let fixture: ComponentFixture<AdminpanelNewpointpanelComponent>;
+  let component: NewpointpanelComponent;
+  let fixture: ComponentFixture<NewpointpanelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminpanelNewpointpanelComponent ]
+      declarations: [ NewpointpanelComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminpanelNewpointpanelComponent);
+    fixture = TestBed.createComponent(NewpointpanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

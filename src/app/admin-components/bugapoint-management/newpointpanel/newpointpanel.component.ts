@@ -1,22 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {AdminService} from "../../services/admin.service";
-import {BugapointService} from "../../services/bugapoint.service";
-import {Bugapoint} from "../../model/bugapoint";
-import {Admin} from "../../model/admin";
-import {Park} from "../../model/park";
-import {ParkService} from "../../services/park.service";
-import {AdminBugapointService} from "../../services/admin-services/admin-bugapoint.service";
+import {AdminService} from "../../../services/admin.service";
+import {BugapointService} from "../../../services/bugapoint.service";
+import {Bugapoint} from "../../../model/bugapoint";
+import {Admin} from "../../../model/admin";
+import {Park} from "../../../model/park";
+import {ParkService} from "../../../services/park.service";
+import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {MatDialog} from "@angular/material/dialog";
-import {AdminpanelSavedialogComponent} from "../adminpanel-savedialog/adminpanel-savedialog.component";
-import {DatabaseSaveResponse} from "../../services/DatabaseSaveResponse";
+import {SavedialogComponent} from "../savedialog/savedialog.component";
+import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 
 @Component({
   selector: 'app-admin-components-newpointpanel',
-  templateUrl: './adminpanel-newpointpanel.component.html',
-  styleUrls: ['./adminpanel-newpointpanel.component.css']
+  templateUrl: './newpointpanel.component.html',
+  styleUrls: ['./newpointpanel.component.css']
 })
-export class AdminpanelNewpointpanelComponent implements OnInit {
+export class NewpointpanelComponent implements OnInit {
 
   admins: Admin[]
   discriminators = new Set<string>;
@@ -43,20 +43,18 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
   ngOnInit(): void {
     //Load admins from database
     this.adminService.findAll().subscribe((data: Admin[]) => {
-      console.log(data)
       this.admins = data;
     })
 
     //Load bugapoints from database
     this.bugapointService.getDiscriminators().subscribe((data: any) => {
-      console.log(data)
       this.discriminators = data;
     })
 
     //Load parks from databse
     this.parkService.findAll().subscribe((data: Park[]) => {
-      console.log(data)
       this.parks = data;
+      console.log(this.parks)
     })
   }
 
@@ -88,7 +86,8 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
 
       const foundPark = this.parks.find(pPark => pPark.title == this.formular.get('park')?.value)
       // @ts-ignore
-      bugaPoint.parkID = Number(foundPark.id);
+      bugaPoint.parkID = parseInt(foundPark.id);
+      console.log('parkId: ' + bugaPoint.parkID)
     } catch (e) {
 
     }
@@ -103,7 +102,7 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
 
 
     if (response.success) {
-      this.dialog.open(AdminpanelSavedialogComponent, {data:
+      this.dialog.open(SavedialogComponent, {data:
           {
             message: 'Gespeichert!'
           }
@@ -111,7 +110,7 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
 
       this.clearForms()
     } else {
-      this.dialog.open(AdminpanelSavedialogComponent, {data:
+      this.dialog.open(SavedialogComponent, {data:
           {
             message: 'Neuer Punkt konnte nicht gespeichert werden.'
           }
@@ -129,8 +128,5 @@ export class AdminpanelNewpointpanelComponent implements OnInit {
     this.formular.get('longitude')?.setValue('')
     this.formular.get('admin')?.setValue('')
   }
-
-
-
 
 }

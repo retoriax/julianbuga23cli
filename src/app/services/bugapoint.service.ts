@@ -1,8 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, shareReplay, Subject, takeUntil} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
-import {DatabaseSaveResponse} from "./DatabaseSaveResponse";
 import {environment} from "../../environments/environment.development";
 
 @Injectable({
@@ -26,18 +25,11 @@ export class BugapointService {
     this.bugapointCache$ = null;
   }
 
-
   /**
    * returns all bugapoints
    */
-  findAll(): Observable<Bugapoint[]> {
-    if (!this.bugapointCache$) {
-      //Cache
-      this.bugapointCache$ = this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list`).pipe(
-        takeUntil(this.reload$),
-        shareReplay(1));
-    }
-    return this.bugapointCache$;
+  findAll(query?: string): Observable<Bugapoint[]> {
+    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list?` + query);
   }
 
   /**
@@ -46,28 +38,5 @@ export class BugapointService {
   getDiscriminators(): Observable<string[]> {
     return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
   }
-
-  /**
-   * returns all bugapoints
-   */
-  getBugapoints(): Observable<Bugapoint[]> {
-    return this.findAll();
-  }
-
-  /**
-   * Returns all bugapoints with the given discriminators.
-   *
-   * @param discriminators discriminators
-   */
-  getFilteredBugapoints(discriminators: Set<string>): Observable<Bugapoint[]> {
-    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list/filter`, {
-      params: {
-        discriminators: Array.from(discriminators).join(',')
-      }
-    });
-  }
-
-
-
 
 }

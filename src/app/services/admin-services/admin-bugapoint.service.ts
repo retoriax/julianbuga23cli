@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Bugapoint} from "../../model/bugapoint";
 import {DatabaseSaveResponse} from "../DatabaseSaveResponse";
@@ -6,7 +6,7 @@ import {environment} from "../../../environments/environment.development";
 import {AuthenticationService} from "../authentication.service";
 import {LoginStatusrequest} from "../../model/login-statusrequest";
 import {CookieService} from "ngx-cookie-service";
-import {catchError, lastValueFrom, of, throwError} from "rxjs";
+import {catchError, lastValueFrom, of} from "rxjs";
 
 /**
  * Bugapoint service for admins.
@@ -73,11 +73,18 @@ export class AdminBugapointService {
    *
    * @param id identifier
    */
-  deleteBugapointById(id: number) {
-    return this.http.delete<string[]>(environment.backEndUrl + `${this.subPath}/delete?id=${id}`, this.authService.getAuthheader())
-      .subscribe((data: any) => {
-        console.log(data)
-      });
+  async deleteBugapointById(id: number): Promise<DatabaseSaveResponse> {
+    try {
+      return await lastValueFrom(this.http.delete<DatabaseSaveResponse>(
+        environment.backEndUrl + `${this.subPath}/delete?id=${id}`,
+        this.authService.getAuthheader()
+      ));
+    } catch (error) {
+      return new class implements DatabaseSaveResponse {
+        message: string = "Failed";
+        success: boolean = false;
+      }
+    }
   }
 
 

@@ -1,0 +1,52 @@
+.updateButton {
+  color: greenyellow;
+
+  margin-top: 0.8rem;
+}
+
+.latlngDescriptor {
+  font-family: Verdana, serif;
+  font-size: 1em;
+}
+
+mat-expansion-panel mat-panel-description {
+  margin-bottom: 1rem;
+}
+
+.bugapointlist {
+  overflow: auto;
+  height: 70vh;
+}
+
+.pointFilter {
+  margin: auto;
+}
+
+.filterFrame {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.prograssBarFrame {
+  margin-top: 0.5vw;
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+mat-progress-bar {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2vw;
+}
