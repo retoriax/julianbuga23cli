@@ -88,12 +88,14 @@ export class MapComponent implements OnInit {
    */
   async showMarker(latitude: number, longitude: number, title: string, description: string, discriminator: string) {
     // Define the HTML content for the popup
+    const hasDescription = !!description; // Check if description is truthy (not empty or null)
+    const additionalInfoButton = hasDescription ? `<button id="toggle-info-${latitude}-${longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button>` : '';
     const popupContent = `
     <div style="font-size: 16px;"><b>${title}</b></div> <!-- Title of the popup -->
     <div id="additional-info-${latitude}-${longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${description}</div> <!-- Additional information that can be toggled to display or hide -->
     <div style="margin-top: 10px;">
       <button class="popup-add-to-route-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: #007bff; color: white;"><i class="fa fa-plus"></i> Zur Route hinzufügen</button> <!-- Button to add the location to a route -->
-      <button id="toggle-info-${latitude}-${longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button> <!-- Button to toggle the display of additional information -->
+      ${additionalInfoButton}
     </div>
   `;
     // Create a new marker on the map, set its popup content, and set its icon based on the discriminator
