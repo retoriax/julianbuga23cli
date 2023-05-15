@@ -8,6 +8,9 @@ import {NewpointpanelComponent} from "./admin-components/bugapoint-management/ne
 import {BlankComponent} from "./blank/blank.component";
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {LoginFormComponent} from "./login-form/login-form.component";
+import {
+  MapLocationChooserComponent
+} from "./admin-components/bugapoint-management/map-location-chooser/map-location-chooser.component";
 
 
 const routes: Routes = [
@@ -20,6 +23,7 @@ const routes: Routes = [
   { path: 'admin/bugapoints', component: BugapointmenuComponent},
   { path: 'admin/bugapoints/new', component: NewpointpanelComponent },
   { path: 'blank', component: BlankComponent},
+  { path: 'admin/bugapoints/location', component: MapLocationChooserComponent},
   { path: '**', redirectTo: '/map'},
 ];
 

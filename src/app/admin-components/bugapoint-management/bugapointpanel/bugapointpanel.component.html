@@ -39,7 +39,7 @@
 
   <section class="locationSelectionOptions">
     <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Meine Position</button>
-    <button mat-raised-button><mat-icon>map</mat-icon></button>
+    <button mat-raised-button (click)="openMapChooser()"><mat-icon>map</mat-icon></button>
   </section>
 
   <br>
@@ -48,7 +48,7 @@
 
   <div class="buttonBar">
     <button mat-raised-button color="primary" (click)="update()">Update</button>
-    <button mat-raised-button color="warn" (click)="delete()">Löschen</button>
+    <button mat-raised-button color="warn" [routerLink]="'/location'">Löschen</button>
   </div>
 
   <br>

@@ -7,6 +7,7 @@ import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {BugapointlistComponent} from "../bugapointlist/bugapointlist.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -15,9 +16,11 @@ import {BugapointlistComponent} from "../bugapointlist/bugapointlist.component";
 })
 export class BugapointpanelComponent implements OnInit {
 
-  constructor(private adminService: AdminService, private bugapointService: BugapointService,
+  constructor(private adminService: AdminService,
+              private bugapointService: BugapointService,
               private elementRef: ElementRef, private renderer: Renderer2,
-              private adminBugapointService: AdminBugapointService) {
+              private adminBugapointService: AdminBugapointService,
+              private router: Router) {
   }
 
   @Input()
@@ -92,5 +95,10 @@ export class BugapointpanelComponent implements OnInit {
   async delete() {
     await this.adminBugapointService.deleteBugapointById(this.point.id);
     await this.list.onFilterChanged(this.point.parkID + '')
+  }
+
+  openMapChooser() {
+    const queryParams = {bugaPointId: this.point.id}
+    this.router.navigate(['/admin/bugapoints/location'], { queryParams }).then()
   }
 }
