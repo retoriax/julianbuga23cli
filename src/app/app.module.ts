@@ -49,6 +49,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FilterComponent} from "./admin-components/bugapoint-management/filter/filter.component";
 import {SavedialogComponent} from "./admin-components/bugapoint-management/savedialog/savedialog.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { MapLocationChooserComponent } from './admin-components/bugapoint-management/map-location-chooser/map-location-chooser.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     BugapointBoxComponent,
     MapAnsichtComponent,
     FilterComponent,
-    BugapointDragAndDropComponent
+    BugapointDragAndDropComponent,
+    MapLocationChooserComponent
   ],
   imports: [
     BrowserModule,

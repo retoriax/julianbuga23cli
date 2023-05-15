@@ -35,11 +35,13 @@
       <mat-label>Longitude</mat-label>
       <input matInput [placeholder]="'' + point.longitude" [formControl]="longForm">
     </mat-form-field>
-
-    <br>
   </form>
 
-  <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Meine Position</button>
+  <section class="locationSelectionOptions">
+    <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Meine Position</button>
+    <button mat-raised-button><mat-icon>map</mat-icon></button>
+  </section>
+
   <br>
   <br>
 
