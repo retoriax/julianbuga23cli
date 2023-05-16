@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as L from "leaflet";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {Bugapoint} from "../../../model/bugapoint";
@@ -25,7 +25,8 @@ export class MapLocationChooserComponent implements OnInit{
   isNewLocationSet = true;
 
   constructor(private route: ActivatedRoute, private bugapointService: BugapointService,
-              private adminbugapointService: AdminBugapointService) {
+              private adminbugapointService: AdminBugapointService,
+              private router: Router) {
   }
 
 
@@ -74,6 +75,22 @@ export class MapLocationChooserComponent implements OnInit{
       this.map.removeLayer(this.newPositionMarker)
     }
     this.newPositionMarker = L.marker([lat, lng]).addTo(this.map);
+  }
+
+
+  /**
+   * Saves the new position of the buga point
+   */
+  onSave() {
+
+  }
+
+
+  /**
+   * Aborts the relocation of the buga point
+   */
+  onAbort() {
+    this.router.navigate(['/admin/bugapoints']).then();
   }
 
 }

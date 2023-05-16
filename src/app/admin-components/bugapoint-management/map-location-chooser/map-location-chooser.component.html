@@ -25,7 +25,7 @@
       <input matInput [formControl]="lngForm" type="number" (input)="changeNewPositionMarker()">
     </mat-form-field>
 
-    <button mat-raised-button color="warn">Abbrechen</button>
+    <button mat-raised-button color="warn" (click)="onAbort()">Abbrechen</button>
 
   </div>
 </div>
