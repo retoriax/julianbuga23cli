@@ -2,6 +2,30 @@
 
 </app-admin-components-submenubar>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
 <div id="map"></div>
+
+
+<div class="inputContainer">
+  <div class="grid">
+
+    <mat-form-field>
+      <mat-label>Latitude</mat-label>
+      <input matInput value="{{this.latitude}}">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Speichern</button>
+
+    <mat-form-field>
+      <mat-label>Longitude</mat-label>
+      <input matInput value="{{this.longitude}}">
+    </mat-form-field>
+
+    <button mat-raised-button color="warn">Abbrechen</button>
+
+  </div>
+</div>
