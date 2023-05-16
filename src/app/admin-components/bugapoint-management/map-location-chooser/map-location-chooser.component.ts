@@ -40,7 +40,8 @@ export class MapLocationChooserComponent implements OnInit{
 
       this.map = L.map('map');
 
-      L.marker([this.point.latitude, this.point.longitude]).addTo(this.map)
+      L.marker([this.point.latitude, this.point.longitude]).addTo(this.map).bindPopup('Alte Position von '
+        + this.point.title)
       this.map.setView([this.point.latitude, this.point.longitude], 16);
 
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -74,7 +75,9 @@ export class MapLocationChooserComponent implements OnInit{
     if (this.newPositionMarker != null) {
       this.map.removeLayer(this.newPositionMarker)
     }
-    this.newPositionMarker = L.marker([lat, lng]).addTo(this.map);
+
+    this.newPositionMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Neue Position von '
+      + this.point.title);
   }
 
 
