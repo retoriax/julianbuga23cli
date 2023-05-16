@@ -21,7 +21,7 @@ export class MapLocationChooserComponent implements OnInit{
   point: Bugapoint;
 
   latForm = new FormControl
-  longForm = new FormControl
+  lngForm = new FormControl
   isNewLocationSet = true;
 
   constructor(private route: ActivatedRoute, private bugapointService: BugapointService,
@@ -35,13 +35,10 @@ export class MapLocationChooserComponent implements OnInit{
       this.point = points[0]
 
       this.latForm.setValue(this.point.latitude + '')
-      this.longForm.setValue(this.point.longitude + '')
-
-      console.log(this.point)
+      this.lngForm.setValue(this.point.longitude + '')
 
       this.map = L.map('map');
 
-      console.log(this.point.latitude)
       L.marker([this.point.latitude, this.point.longitude]).addTo(this.map)
       this.map.setView([this.point.latitude, this.point.longitude], 16);
 
@@ -52,19 +49,31 @@ export class MapLocationChooserComponent implements OnInit{
       }).addTo(this.map);
 
       this.map.on('click', (e: any) => {
-        this.isNewLocationSet = false;
 
         var coord = this.newPosition = e.latlng;
         this.latForm.setValue(coord.lat + '');
-        this.longForm.setValue(coord.lng + '');
+        this.lngForm.setValue(coord.lng + '');
 
-        if (this.newPositionMarker != null) {
-          this.map.removeLayer(this.newPositionMarker)
-        }
-        this.newPositionMarker = L.marker([coord.lat, coord.lng]).addTo(this.map);
+        this.changeNewPositionMarker(coord.lat, coord.lng);
 
       })
     })
+  }
+
+
+  /**
+   * Moves the marker on the map the given position.
+   *
+   * @param lat Latitude
+   * @param lng Longitude
+   */
+  changeNewPositionMarker(lat: number = this.latForm.value, lng: number = this.lngForm.value) {
+    this.isNewLocationSet = false;
+
+    if (this.newPositionMarker != null) {
+      this.map.removeLayer(this.newPositionMarker)
+    }
+    this.newPositionMarker = L.marker([lat, lng]).addTo(this.map);
   }
 
 }
