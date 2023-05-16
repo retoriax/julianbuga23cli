@@ -14,15 +14,15 @@
   <div class="grid">
 
     <mat-form-field>
-      <mat-label>Latitude</mat-label>
-      <input matInput value="{{this.latitude}}">
+      <mat-label>Neue Latitude</mat-label>
+      <input matInput [formControl]="latForm">
     </mat-form-field>
 
-    <button mat-raised-button color="primary">Speichern</button>
+    <button mat-raised-button [disabled]="isNewLocationSet" color="primary">Speichern</button>
 
     <mat-form-field>
-      <mat-label>Longitude</mat-label>
-      <input matInput value="{{this.longitude}}">
+      <mat-label>Neue Longitude</mat-label>
+      <input matInput [formControl]="longForm">
     </mat-form-field>
 
     <button mat-raised-button color="warn">Abbrechen</button>
