@@ -18,7 +18,7 @@
       <input matInput [formControl]="latForm" type="number" (input)="changeNewPositionMarker()">
     </mat-form-field>
 
-    <button mat-raised-button [disabled]="isNewLocationSet" color="primary">Speichern</button>
+    <button mat-raised-button [disabled]="isNewLocationSet" color="primary" (click)="onSave()">Speichern</button>
 
     <mat-form-field>
       <mat-label>Neue Longitude</mat-label>

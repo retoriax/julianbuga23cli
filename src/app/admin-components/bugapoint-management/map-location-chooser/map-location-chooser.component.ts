@@ -6,6 +6,7 @@ import {AdminBugapointService} from "../../../services/admin-services/admin-buga
 import {Bugapoint} from "../../../model/bugapoint";
 import {lastValueFrom} from "rxjs";
 import {FormControl} from "@angular/forms";
+import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 
 @Component({
   selector: 'app-map-location-chooser',
@@ -25,7 +26,7 @@ export class MapLocationChooserComponent implements OnInit{
   isNewLocationSet = true;
 
   constructor(private route: ActivatedRoute, private bugapointService: BugapointService,
-              private adminbugapointService: AdminBugapointService,
+              private adminBugapointService: AdminBugapointService,
               private router: Router) {
   }
 
@@ -34,6 +35,7 @@ export class MapLocationChooserComponent implements OnInit{
     this.route.queryParams.subscribe(async (params) => {
       const points = await lastValueFrom(this.bugapointService.findAll("whereId=" + params['bugaPointId']))
       this.point = points[0]
+      console.log(this.point)
 
       this.latForm.setValue(this.point.latitude + '')
       this.lngForm.setValue(this.point.longitude + '')
@@ -84,7 +86,22 @@ export class MapLocationChooserComponent implements OnInit{
   /**
    * Saves the new position of the buga point
    */
-  onSave() {
+  async onSave() {
+    try {
+      const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
+        this.point,
+        Number(this.latForm.value),
+        Number(this.lngForm.value),
+      );
+
+
+      if (bugaPointResponse.success) {
+        console.log("Success")
+      } else {
+        console.log("no success")
+      }
+    } catch (error) {
+    }
 
   }
 
