@@ -27,13 +27,13 @@
     <br>
     <mat-form-field>
       <mat-label>Latitude</mat-label>
-      <input matInput [placeholder]="'' + point.latitude" [formControl]="latForm">
+      <input matInput [placeholder]="'' + point.latitude" [formControl]="latForm" type="number">
     </mat-form-field>
     <br>
 
     <mat-form-field>
       <mat-label>Longitude</mat-label>
-      <input matInput [placeholder]="'' + point.longitude" [formControl]="lngForm">
+      <input matInput [placeholder]="'' + point.longitude" [formControl]="lngForm" type="number">
     </mat-form-field>
   </form>
 
