@@ -65,21 +65,16 @@ export class BugapointpanelComponent implements OnInit {
    * Updates the bugapoint with the values in the form controls
    */
   async update() {
-
     const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
     try {
-
       let query = `newLat=${this.latForm.value}&newLng=${this.lngForm.value}
         &newDescription=${this.descriptionForm.value}&newAdminEmailaddress=${this.adminForm.value}`
-
-      console.log(query)
 
       const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
         this.point,
         query
       );
-
 
       if (bugaPointResponse.success) {
         this.renderer.addClass(elem, "success-animation");
