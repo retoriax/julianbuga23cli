@@ -7,6 +7,9 @@ import {Bugapoint} from "../../../model/bugapoint";
 import {lastValueFrom} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
+import {MatDialog} from "@angular/material/dialog";
+import {diamond} from "ionicons/icons";
+import {SavedialogComponent} from "../savedialog/savedialog.component";
 
 @Component({
   selector: 'app-map-location-chooser',
@@ -27,7 +30,7 @@ export class MapLocationChooserComponent implements OnInit{
 
   constructor(private route: ActivatedRoute, private bugapointService: BugapointService,
               private adminBugapointService: AdminBugapointService,
-              private router: Router) {
+              private router: Router, private dialog: MatDialog) {
   }
 
 
@@ -35,7 +38,6 @@ export class MapLocationChooserComponent implements OnInit{
     this.route.queryParams.subscribe(async (params) => {
       const points = await lastValueFrom(this.bugapointService.findAll("whereId=" + params['bugaPointId']))
       this.point = points[0]
-      console.log(this.point)
 
       this.latForm.setValue(this.point.latitude + '')
       this.lngForm.setValue(this.point.longitude + '')
@@ -88,6 +90,24 @@ export class MapLocationChooserComponent implements OnInit{
    */
   async onSave() {
 
+    let query = `newLat=${this.latForm.value}&newLng=${this.lngForm.value}`
+
+    let response : DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(this.point, query);
+
+    if (response.success) {
+      this.router.navigate(['/admin/bugapoints']).then();
+      this.dialog.open(SavedialogComponent, {data:
+          {
+            message: `Neue Position für ${this.point.title} gespeichert!`
+          }
+      })
+    } else {
+      this.dialog.open(SavedialogComponent, {data:
+          {
+            message: `Ein Fehler ist aufgetreten. Neue Position konnte nicht gespeichert werden.`
+          }
+      })
+    }
   }
 
 
