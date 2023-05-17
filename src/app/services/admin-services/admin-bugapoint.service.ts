@@ -49,20 +49,13 @@ export class AdminBugapointService {
    * Updates the bugapoint.
    *
    * @param bugapoint bugapoint which gets updated
-   * @param newLat new latitude
-   * @param newLong new longitude
-   * @param newAdminEmailaddress new admin email address
-   * @param newDescription new description
+   * @param query query
    */
-  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminEmailaddress?: string, newDescription?: string): Promise<DatabaseSaveResponse> {
+  async updateBugapoint(bugapoint: Bugapoint, query: string): Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
-    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
-     &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
-     &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
-     &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
-     &newAdminEmailaddress=${newAdminEmailaddress !== undefined ? newAdminEmailaddress : bugapoint.adminID}`;
+    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}&${query}`;
 
     return lastValueFrom(this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()));
   }

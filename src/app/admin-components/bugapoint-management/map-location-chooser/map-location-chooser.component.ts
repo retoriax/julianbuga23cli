@@ -87,21 +87,6 @@ export class MapLocationChooserComponent implements OnInit{
    * Saves the new position of the buga point
    */
   async onSave() {
-    try {
-      const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
-        this.point,
-        Number(this.latForm.value),
-        Number(this.lngForm.value),
-      );
-
-
-      if (bugaPointResponse.success) {
-        console.log("Success")
-      } else {
-        console.log("no success")
-      }
-    } catch (error) {
-    }
 
   }
 

@@ -35,7 +35,7 @@ export class BugapointpanelComponent implements OnInit {
   adminForm = new FormControl('')
 
   latForm = new FormControl('')
-  longForm = new FormControl('')
+  lngForm = new FormControl('')
 
   descriptionForm = new FormControl('')
   async ngOnInit(): Promise<void> {
@@ -46,7 +46,7 @@ export class BugapointpanelComponent implements OnInit {
     this.descriptionForm.setValue(this.point.description)
 
     this.latForm.setValue(this.point.latitude + '')
-    this.longForm.setValue(this.point.longitude + '')
+    this.lngForm.setValue(this.point.longitude + '')
   }
 
   /**
@@ -56,7 +56,7 @@ export class BugapointpanelComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latForm.setValue(position.coords.latitude + '');
-        this.longForm.setValue(position.coords.longitude + '');
+        this.lngForm.setValue(position.coords.longitude + '');
       })
     }
   }
@@ -69,12 +69,15 @@ export class BugapointpanelComponent implements OnInit {
     const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
     try {
+
+      let query = `newLat=${this.latForm.value}&newLng=${this.lngForm.value}
+        &newDescription=${this.descriptionForm.value}&newAdminEmailaddress=${this.adminForm.value}`
+
+      console.log(query)
+
       const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
         this.point,
-        Number(this.latForm.value),
-        Number(this.longForm.value),
-        String(this.adminForm.value),
-        String(this.descriptionForm.value).trim()
+        query
       );
 
 
