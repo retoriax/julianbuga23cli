@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import {Bugapoint} from "../model/bugapoint";
+import {Bugapoint} from "../../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
-import {MapInteractionService} from "../services/map-interaction.service";
-import {IconService} from "../services/icon.service";
+import {MapInteractionService} from "../../services/map-interaction.service";
+import {IconService} from "../../services/icon.service";
 
 @Component({
   selector: 'app-map',
