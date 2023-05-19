@@ -36,6 +36,8 @@ export class MapComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
     this.onAnsichtOptionSelected('free-movement');
+    this.map.attributionControl.remove();
+
 
     /**
      * Saves the current map view.
