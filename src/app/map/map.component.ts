@@ -28,7 +28,7 @@ export class MapComponent implements OnInit {
       const savedView = this.cookieService.get('mapView');
       const { center, zoom } = JSON.parse(savedView);
       this.map.setView(center, zoom);
-    } else this.map.setView([49.495, 8.5], 15);
+      } else this.map.setView([49.482334946560044, 8.497849729196929], 15);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
