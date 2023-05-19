@@ -1,13 +1,11 @@
 import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {Bugapoint} from "../../../model/bugapoint";
 import {FormControl} from "@angular/forms";
-import {Admin} from "../../../model/admin";
 import {AdminService} from "../../../services/admin.service";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
-import {BugapointlistComponent} from "../bugapointlist/bugapointlist.component";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -20,15 +18,14 @@ export class BugapointpanelComponent implements OnInit {
               private bugapointService: BugapointService,
               private elementRef: ElementRef, private renderer: Renderer2,
               private adminBugapointService: AdminBugapointService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
-  @Input()
-  admins: Admin[]
 
-  @Input()
   point: Bugapoint
 
+  admins: any
 
 
   adminForm = new FormControl('')
@@ -38,9 +35,18 @@ export class BugapointpanelComponent implements OnInit {
 
   descriptionForm = new FormControl('')
   async ngOnInit(): Promise<void> {
-    let pAdmin: Admin = this.admins.find((p: Admin) => p.id === this.point.adminID)!;
 
-    this.adminForm.setValue(pAdmin.emailadress)
+    const bugapointId = this.route.queryParams.subscribe(params => {
+      return params['bugaPointId']
+    })
+
+    console.log(bugapointId)
+
+    this.bugapointService.findAll(`whereId=${bugapointId}`).subscribe((bugapoints: Bugapoint[]) => {
+      this.point = bugapoints[0]
+    })
+
+    this.adminForm.setValue('')
 
     this.descriptionForm.setValue(this.point.description)
 
