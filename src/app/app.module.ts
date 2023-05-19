@@ -114,6 +114,7 @@ import { MapLocationChooserComponent } from './admin-components/bugapoint-manage
     MatProgressBarModule,
     MatTabsModule,
     MatSnackBarModule,
+    MatListModule
   ],
   exports: [
     MapFilterComponent,

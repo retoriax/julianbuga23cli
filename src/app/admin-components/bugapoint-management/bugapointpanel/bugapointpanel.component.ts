@@ -29,8 +29,7 @@ export class BugapointpanelComponent implements OnInit {
   @Input()
   point: Bugapoint
 
-  @Input()
-  list: BugapointlistComponent
+
 
   adminForm = new FormControl('')
 
@@ -92,7 +91,7 @@ export class BugapointpanelComponent implements OnInit {
    */
   async delete() {
     await this.adminBugapointService.deleteBugapointById(this.point.id);
-    await this.list.onFilterChanged(this.point.parkID + '')
+
   }
 
   openMapChooser() {

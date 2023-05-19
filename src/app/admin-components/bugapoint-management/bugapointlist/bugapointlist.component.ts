@@ -4,6 +4,7 @@ import {BugapointService} from "../../../services/bugapoint.service";
 import {Admin} from "../../../model/admin";
 import {AdminService} from "../../../services/admin.service";
 import {lastValueFrom} from "rxjs";
+import {bug} from "ionicons/icons";
 
 @Component({
   selector: 'app-admin-components-bugapointlist',
@@ -48,4 +49,7 @@ export class BugapointlistComponent implements OnInit {
     }
   }
 
+  onEdit(bugapointId: number) {
+    console.log(bugapointId)
+  }
 }
