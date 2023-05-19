@@ -35,17 +35,21 @@
   background: rgba(227, 227, 227, 1);
   transition: 0.5s;
   text-align: center;
+  overflow: hidden;
 }
 
-.filter-list mat-chip-list{
+.filter-list mat-chip-list {
   position: relative;
   top: 110px;
-  max-width: fit-content;
   left: 5px;
 }
 
 .y-scrollable {
+  width: 100%;
+  padding-right: 17px;
+  box-sizing: content-box;
   overflow-y: scroll;
+  overflow-x: hidden;
   height: calc(100vh - 100px);
   margin-bottom: 100px;
 }
@@ -59,7 +63,7 @@
 }
 
 mat-chip-option {
-  width: 100%;
+  width: 95%;
   height: 4vh;
   margin-bottom: 1vh;
   font-size: 110%;
