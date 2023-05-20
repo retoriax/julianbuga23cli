@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import {Bugapoint} from "../model/bugapoint";
+import {Bugapoint} from "../../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
-import {MapInteractionService} from "../services/map-interaction.service";
-import {IconService} from "../services/icon.service";
+import {MapInteractionService} from "../../services/map-interaction.service";
+import {IconService} from "../../services/icon.service";
 
 @Component({
   selector: 'app-map',
@@ -85,8 +85,8 @@ export class MapComponent implements OnInit {
    * @param title Title
    * @param discriminator Discriminator
    */
-  async showMarker(latitude: number, longitude: number, title: string, discriminator: string) {
-    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(this.iconService.getIconFromDiscriminator(discriminator))
+  async showMarker(latitude: number, longitude: number, title: string, discriminator: string, icons:string) {
+    L.marker([latitude, longitude]).addTo(this.map).bindPopup(title).addTo(this.map).setIcon(await this.iconService.getIconFromDiscriminator(icons))
   }
 
   /**
@@ -101,7 +101,7 @@ export class MapComponent implements OnInit {
     });
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
-      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.discriminator);
+      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.discriminator, bugapoint.discriminator);
     }
   }
 

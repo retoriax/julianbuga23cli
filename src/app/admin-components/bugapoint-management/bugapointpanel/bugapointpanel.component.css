@@ -47,3 +47,9 @@ button {
   25% { background-color: red; }
   100% { background-color: white; }
 }
+
+.locationSelectionOptions {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}

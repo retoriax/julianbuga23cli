@@ -18,5 +18,9 @@ export class ParkService {
     return this.http.get<Park[]>(environment.backEndUrl + `${this.subPath}/list`);
   }
 
+  getPark(id: number): Observable<Park> {
+    return this.http.get<Park>(environment.backEndUrl + `${this.subPath}/id/` + id)
+  }
+
 
 }

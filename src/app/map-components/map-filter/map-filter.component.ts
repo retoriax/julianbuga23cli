@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Bugapoint } from '../model/bugapoint';
-import {BugapointService} from "../services/bugapoint.service";
+import { Bugapoint } from '../../model/bugapoint';
+import {BugapointService} from "../../services/bugapoint.service";
 import {CookieService} from "ngx-cookie-service";
 
 @Component({

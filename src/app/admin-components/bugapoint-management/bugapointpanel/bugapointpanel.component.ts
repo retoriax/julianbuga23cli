@@ -7,6 +7,7 @@ import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {BugapointlistComponent} from "../bugapointlist/bugapointlist.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -15,9 +16,11 @@ import {BugapointlistComponent} from "../bugapointlist/bugapointlist.component";
 })
 export class BugapointpanelComponent implements OnInit {
 
-  constructor(private adminService: AdminService, private bugapointService: BugapointService,
+  constructor(private adminService: AdminService,
+              private bugapointService: BugapointService,
               private elementRef: ElementRef, private renderer: Renderer2,
-              private adminBugapointService: AdminBugapointService) {
+              private adminBugapointService: AdminBugapointService,
+              private router: Router) {
   }
 
   @Input()
@@ -32,7 +35,7 @@ export class BugapointpanelComponent implements OnInit {
   adminForm = new FormControl('')
 
   latForm = new FormControl('')
-  longForm = new FormControl('')
+  lngForm = new FormControl('')
 
   descriptionForm = new FormControl('')
   async ngOnInit(): Promise<void> {
@@ -43,7 +46,7 @@ export class BugapointpanelComponent implements OnInit {
     this.descriptionForm.setValue(this.point.description)
 
     this.latForm.setValue(this.point.latitude + '')
-    this.longForm.setValue(this.point.longitude + '')
+    this.lngForm.setValue(this.point.longitude + '')
   }
 
   /**
@@ -53,7 +56,7 @@ export class BugapointpanelComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latForm.setValue(position.coords.latitude + '');
-        this.longForm.setValue(position.coords.longitude + '');
+        this.lngForm.setValue(position.coords.longitude + '');
       })
     }
   }
@@ -62,18 +65,16 @@ export class BugapointpanelComponent implements OnInit {
    * Updates the bugapoint with the values in the form controls
    */
   async update() {
-
     const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
 
     try {
+      let query = `newLat=${this.latForm.value}&newLng=${this.lngForm.value}
+        &newDescription=${this.descriptionForm.value}&newAdminEmailaddress=${this.adminForm.value}`
+
       const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
         this.point,
-        Number(this.latForm.value),
-        Number(this.longForm.value),
-        String(this.adminForm.value),
-        String(this.descriptionForm.value).trim()
+        query
       );
-
 
       if (bugaPointResponse.success) {
         this.renderer.addClass(elem, "success-animation");
@@ -92,5 +93,10 @@ export class BugapointpanelComponent implements OnInit {
   async delete() {
     await this.adminBugapointService.deleteBugapointById(this.point.id);
     await this.list.onFilterChanged(this.point.parkID + '')
+  }
+
+  openMapChooser() {
+    const queryParams = {bugaPointId: this.point.id}
+    this.router.navigate(['/admin/bugapoints/location'], { queryParams }).then()
   }
 }
