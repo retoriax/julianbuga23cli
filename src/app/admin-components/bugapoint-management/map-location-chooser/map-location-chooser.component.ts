@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {Bugapoint} from "../../../model/bugapoint";
-import {lastValueFrom} from "rxjs";
+import {lastValueFrom, Observable} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {MatDialog} from "@angular/material/dialog";
@@ -35,10 +35,12 @@ export class MapLocationChooserComponent implements OnInit{
   }
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.route.queryParams.subscribe(async (params) => {
       const points = await lastValueFrom(this.bugapointService.findAll("whereId=" + params['bugaPointId']))
       this.point = points[0]
+
+
 
       this.latForm.setValue(this.point.latitude + '')
       this.lngForm.setValue(this.point.longitude + '')

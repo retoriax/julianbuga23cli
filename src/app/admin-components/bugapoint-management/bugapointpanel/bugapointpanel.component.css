@@ -1,5 +1,8 @@
 #bugapointpanel {
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align:justify;
+  height: 90vh;
 }
 
 mat-expansion-panel {
@@ -59,16 +62,19 @@ button {
 }
 
 #map {
-  width: 300px;
-  height: 300px;
+  width: 95%;
+  height: 50vh;
   z-index: 0;
   margin: 1vw auto;
+
+  border: 1px black;
 }
 
 .inputContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: space-between;
 }
 
 .grid {

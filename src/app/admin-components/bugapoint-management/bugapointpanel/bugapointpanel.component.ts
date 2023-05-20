@@ -7,6 +7,8 @@ import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";
+import {Admin} from "../../../model/admin";
+import * as L from "leaflet";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -23,24 +25,37 @@ export class BugapointpanelComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
-  point: Bugapoint
-  admins: any
 
-  adminForm = new FormControl('')
-  latForm = new FormControl('')
-  lngForm = new FormControl('')
-  descriptionForm = new FormControl('')
+  point: Bugapoint
+  oldPosition: number[]
+  admins: Admin[]
+
+  map: any
+  newPositionMarker: L.Marker
+  newPosition: any;
+
+  title: string
+
+  adminForm = new FormControl
+  latForm = new FormControl
+  lngForm = new FormControl
+  descriptionForm = new FormControl
 
   async ngOnInit(): Promise<void> {
-
-
     this.route.queryParams.subscribe(async (params) => {
       const points = await lastValueFrom(this.bugapointService.findAll("whereId=" + params['bugaPointId']))
       this.point = points[0]
+      this.oldPosition = [this.point.latitude, this.point.longitude]
 
-      this.admins = this.adminService.findAll();
+      this.title = this.point.title
 
-      this.adminForm.setValue('')
+
+      await this.adminService.findAll().subscribe((data: Admin[]) => {
+        this.admins = data;
+        let pointAdmin : Admin | undefined = this.admins.find((a => a.id == this.point.adminID))
+        // @ts-ignore
+        this.adminForm.setValue(pointAdmin?.emailadress)
+      })
 
       this.descriptionForm.setValue(this.point.description)
 
@@ -48,19 +63,30 @@ export class BugapointpanelComponent implements OnInit {
       this.lngForm.setValue(this.point.longitude + '')
 
 
-    })
-  }
+      this.map = L.map('map');
 
-  /**
-   * fills Lat and Long form controls with present geolocation
-   */
-  getGeoLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latForm.setValue(position.coords.latitude + '');
-        this.lngForm.setValue(position.coords.longitude + '');
+      L.marker([this.point.latitude, this.point.longitude]).addTo(this.map).bindPopup('Alte Position von '
+        + this.point.title)
+      this.map.setView([this.point.latitude, this.point.longitude], 16);
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom:10,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(this.map);
+
+      this.map.on('click', (e: any) => {
+
+        var coord = this.newPosition = e.latlng;
+        this.latForm.setValue(coord.lat + '');
+        this.lngForm.setValue(coord.lng + '');
+
+        this.changeNewPositionMarker(coord.lat, coord.lng);
+
       })
-    }
+
+
+    })
   }
 
   /**
@@ -94,11 +120,51 @@ export class BugapointpanelComponent implements OnInit {
    */
   async delete() {
     await this.adminBugapointService.deleteBugapointById(this.point.id);
+  }
+
+
+  /**
+   * Moves the marker on the map the given position.
+   *
+   * @param lat Latitude
+   * @param lng Longitude
+   */
+  changeNewPositionMarker(lat: number = this.latForm.value, lng: number = this.lngForm.value) {
+    if (this.newPositionMarker != null) {
+      this.map.removeLayer(this.newPositionMarker)
+    }
+
+    this.newPositionMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Neue Position von '
+      + this.point.title);
+  }
+
+
+  /**
+   * Sets the position of the position marker to the user location. Also updates the input fields
+   */
+  useUserPosition() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latForm.setValue(position.coords.latitude + '');
+        this.lngForm.setValue(position.coords.longitude + '');
+
+        this.changeNewPositionMarker(position.coords.latitude, position.coords.longitude)
+      })
+    }
+
 
   }
 
-  openMapChooser() {
-    const queryParams = {bugaPointId: this.point.id}
-    this.router.navigate(['/admin/bugapoints/location'], { queryParams }).then()
+  /**
+   * Sets the inputs and the marker to database version.
+   * Also deletes the new position marker.
+   */
+  resetPointPosition() {
+    this.latForm.setValue(this.oldPosition[0]);
+    this.lngForm.setValue(this.oldPosition[1]);
+
+    if (this.newPositionMarker != null) {
+      this.map.removeLayer(this.newPositionMarker)
+    }
   }
 }

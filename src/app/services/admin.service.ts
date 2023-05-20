@@ -18,6 +18,9 @@ export class AdminService {
    * returns all admins
    */
   findAll(): Observable<Admin[]> {
+
+    console.log(environment.backEndUrl + `${this.subUrl}/list`)
+
     return this.http.get<Admin[]>(environment.backEndUrl + `${this.subUrl}/list`);
   }
 
