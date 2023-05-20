@@ -67,7 +67,7 @@ export class MapAnsichtComponent {
 
   showNotification(message: string) {
     this.snackBar.open(message, 'Schließen', {
-      duration: 3500, // Duration in milliseconds
+      duration: 3000, // Duration in milliseconds
       verticalPosition: 'top' // Position the notification at the top
     });
   }
