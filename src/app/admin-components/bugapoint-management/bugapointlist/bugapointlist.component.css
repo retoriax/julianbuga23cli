@@ -51,25 +51,15 @@ mat-progress-bar {
   margin-top: 2vw;
 }
 
-.list-item {
-  display: flex;
-  align-items: center;
-  margin-right: 100px;
-}
-
 .item-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: fit-content;
+  horiz-align: center;
 }
 
 .item-text {
-  margin-left: 5vw;
+  margin-left: 1vw;
   font-size: 15px;
-}
-
-.item-button {
-  margin-right: 2vw;
 }
