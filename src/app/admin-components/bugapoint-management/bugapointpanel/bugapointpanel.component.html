@@ -10,6 +10,17 @@
   </mat-form-field>
 
   <mat-form-field class="inputfield">
+    <mat-label>Typ</mat-label>
+    <input matInput placeholder="Wähle Typ aus" [matAutocomplete]="typeAuto" [formControl]="discriminatorForm">
+    <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
+      <mat-option *ngFor="let type of this.discriminators" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+  <mat-form-field class="inputfield">
     <mat-label>Beschreibung</mat-label>
     <textarea matInput placeholder="Beschreibung hier eintragen" [formControl]="descriptionForm">
       Platzhalter
@@ -18,8 +29,7 @@
 
   <mat-form-field>
     <mat-label>Admin</mat-label>
-    <input matInput placeholder="Wähle einen Admin aus" [matAutocomplete]="adminAuto"
-           [formControl]="adminForm">
+    <input matInput placeholder="Wähle einen Admin aus" [matAutocomplete]="adminAuto" [formControl]="adminForm">
     <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
       <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
         {{admin.emailadress}}
@@ -61,7 +71,7 @@
 
 
   <div class="buttonBar">
-    <button mat-raised-button color="primary" (click)="update()">{{buttonText}}</button>
-    <button mat-raised-button color="warn" (click)="delete()">Löschen</button>
+    <button mat-raised-button color="primary" (click)="save()">{{buttonText}}</button>
+    <button mat-raised-button color="warn" (click)="delete()" *ngIf="mode == 'update'">Löschen</button>
   </div>
 </div>

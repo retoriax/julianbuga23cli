@@ -6,11 +6,11 @@ export class Bugapoint {
   }
 
   id: number;
-  adminID: number;
+  adminID: number | undefined;
   parkID: number;
   title: string;
   longitude: number;
   latitude : number;
   discriminator: string;
-  description: string;
+  description: string | null;
 }
