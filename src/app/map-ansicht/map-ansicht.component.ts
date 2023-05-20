@@ -23,7 +23,6 @@ export class MapAnsichtComponent {
   showPopup() {
     // Toggle popup flag
     this.showPopupFlag = !this.showPopupFlag;
-
     if (this.showPopupFlag) {
       // Add click event listener to document to close popup if clicked outside of it
       document.addEventListener('click', this.closePopup.bind(this));
@@ -58,7 +57,7 @@ export class MapAnsichtComponent {
         this.showNotification('Jetzt bist du auf dem Luisenpark festgelegt.');
         break;
       case 'Spinellipark':
-        this.showNotification('Jetzt bist du auf dem Spinelli festgelegt.');
+        this.showNotification('Jetzt bist du auf dem Spinellipark festgelegt.');
         break;
       default:
         break;
@@ -68,7 +67,7 @@ export class MapAnsichtComponent {
   showNotification(message: string) {
     this.snackBar.open(message, 'Schließen', {
       duration: 3000, // Duration in milliseconds
-      verticalPosition: 'top' // Position the notification at the top
+      verticalPosition: 'top'
     });
   }
 
