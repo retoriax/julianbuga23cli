@@ -1,5 +1,4 @@
 export const environment = {
   //backEndUrl: undefined
-  backEndUrl: 'http://localhost:8080'
-
+  backEndUrl: "https://bugamapspringboot-production-5b55.up.railway.app"
 };
