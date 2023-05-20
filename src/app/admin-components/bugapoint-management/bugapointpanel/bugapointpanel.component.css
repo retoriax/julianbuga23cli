@@ -1,8 +1,7 @@
 #bugapointpanel {
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align:justify;
-  height: 90vh;
+  height: calc(100vh - 60px);
+  overflow: auto;
+  overflow-y: scroll;
 }
 
 mat-expansion-panel {

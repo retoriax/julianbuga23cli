@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";
 import {Admin} from "../../../model/admin";
 import * as L from "leaflet";
+import {MatSnackBar, matSnackBarAnimations, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -17,12 +18,9 @@ import * as L from "leaflet";
 })
 export class BugapointpanelComponent implements OnInit {
 
-  constructor(private adminService: AdminService,
-              private bugapointService: BugapointService,
-              private elementRef: ElementRef, private renderer: Renderer2,
-              private adminBugapointService: AdminBugapointService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(private adminService: AdminService, private bugapointService: BugapointService, private router: Router,
+              private elementRef: ElementRef, private renderer: Renderer2, private route: ActivatedRoute,
+              private adminBugapointService: AdminBugapointService, private snackBar: MatSnackBar) {
   }
 
 
@@ -93,7 +91,10 @@ export class BugapointpanelComponent implements OnInit {
    * Updates the bugapoint with the values in the form controls
    */
   async update() {
-    const elem = this.elementRef.nativeElement.querySelector("mat-expansion-panel");
+    let sbConfig = new MatSnackBarConfig();
+    sbConfig.duration = 1000;
+    sbConfig.verticalPosition = "top";
+    sbConfig.horizontalPosition = "center"
 
     try {
       let query = `newLat=${this.latForm.value}&newLng=${this.lngForm.value}
@@ -105,12 +106,15 @@ export class BugapointpanelComponent implements OnInit {
       );
 
       if (bugaPointResponse.success) {
-        this.renderer.addClass(elem, "success-animation");
+        this.snackBar.open("Gespeichert", "", sbConfig)
       } else {
-        this.renderer.addClass(elem, "fail-animation");
+        this.snackBar.open("Nicht gespeichert", "", sbConfig)
       }
+
+      await this.router.navigate(['admin/bugapoints'])
+
     } catch (error) {
-      this.renderer.addClass(elem, "fail-animation");
+      this.snackBar.open("Nicht gespeichert", "", sbConfig)
     }
   }
 

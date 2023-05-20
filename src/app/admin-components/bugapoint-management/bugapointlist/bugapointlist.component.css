@@ -15,7 +15,7 @@ mat-expansion-panel mat-panel-description {
 
 .bugapointlist {
   overflow: auto;
-  height: 70vh;
+  height: calc(100vh - 260px);
 }
 
 .pointFilter {
