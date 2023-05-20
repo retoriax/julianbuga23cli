@@ -10,7 +10,7 @@ export class MapAnsichtComponent {
   @Output() ansichtOptionSelected = new EventEmitter<string>();
 
   // Default selected option
-  selectedAnsichtOption = 'free-movement';
+  selectedAnsichtOption = 'Freie Bewegung';
 
   // Flag to show/hide popup
   showPopupFlag = false;
@@ -51,17 +51,17 @@ export class MapAnsichtComponent {
 
   // Add event listeners for radio buttons on component initialization
   ngOnInit() {
-    const luisenparkRadioBtn = document.getElementById('luisenpark') as HTMLInputElement;
+    const luisenparkRadioBtn = document.getElementById('Luisenpark') as HTMLInputElement;
     if (luisenparkRadioBtn) {
       luisenparkRadioBtn.addEventListener('change', () => {
-        this.onAnsichtOptionSelected('luisenpark');
+        this.onAnsichtOptionSelected('Luisenpark');
       });
     }
 
-    const spinelliparkRadioBtn = document.getElementById('spinellipark') as HTMLInputElement;
+    const spinelliparkRadioBtn = document.getElementById('Spinellipark') as HTMLInputElement;
     if (spinelliparkRadioBtn) {
       spinelliparkRadioBtn.addEventListener('change', () => {
-        this.onAnsichtOptionSelected('spinellipark');
+        this.onAnsichtOptionSelected('Spinellipark');
       });
     }
   }

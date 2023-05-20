@@ -35,7 +35,7 @@ export class MapComponent implements OnInit {
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
-    this.onAnsichtOptionSelected('free-movement');
+    this.onAnsichtOptionSelected('Freie Bewegung');
     this.map.attributionControl.remove();
 
 
@@ -146,7 +146,7 @@ export class MapComponent implements OnInit {
    */
   onAnsichtOptionSelected(selectedOption: string) {
     switch (selectedOption) {
-      case 'free-movement':
+      case 'Freie Bewegung':
         const freemovementBounds = L.latLngBounds(
           [49.562104830601314, 8.36095242436513],
           [49.40726086087864, 8.619292747892453]
@@ -154,7 +154,7 @@ export class MapComponent implements OnInit {
         this.map.setMaxBounds(freemovementBounds);
         this.map.setMinZoom(13);
         break;
-      case 'luisenpark':
+      case 'Luisenpark':
         const luisenparkBounds = L.latLngBounds(
           [49.47513192672553, 8.482767282123094],
           [49.492965547797894, 8.506547916954819]
@@ -163,7 +163,7 @@ export class MapComponent implements OnInit {
         this.map.setMinZoom(16);
         this.map.setView([49.48371930307348, 8.496315119052708], 16, {animate: true});
         break;
-      case 'spinellipark':
+      case 'Spinellipark':
         const spinelliparkBounds = L.latLngBounds(
           [49.507839038133326, 8.506913315977895],
           [49.4904377789783, 8.539246483439282]
