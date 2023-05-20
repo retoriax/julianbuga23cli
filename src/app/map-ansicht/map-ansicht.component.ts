@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, ElementRef } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-map-ansicht',
@@ -16,7 +17,7 @@ export class MapAnsichtComponent {
   showPopupFlag = false;
 
   // Inject the element reference of this component
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef, private snackBar: MatSnackBar) { }
 
   // Show/hide popup when button is clicked
   showPopup() {
@@ -47,6 +48,28 @@ export class MapAnsichtComponent {
   onAnsichtOptionSelected(selectedOption: string) {
     this.selectedAnsichtOption = selectedOption;
     this.ansichtOptionSelected.emit(selectedOption);
+
+    // Show a notification based on the selected option
+    switch (selectedOption) {
+      case 'Freie Bewegung':
+        this.showNotification('Jetzt kannst du dich frei auf der Karte bewegen.');
+        break;
+      case 'Luisenpark':
+        this.showNotification('Jetzt bist du auf dem Luisenpark festgelegt.');
+        break;
+      case 'Spinellipark':
+        this.showNotification('Jetzt bist du auf dem Spinelli festgelegt.');
+        break;
+      default:
+        break;
+    }
+  }
+
+  showNotification(message: string) {
+    this.snackBar.open(message, 'Schließen', {
+      duration: 3500, // Duration in milliseconds
+      verticalPosition: 'top' // Position the notification at the top
+    });
   }
 
   // Add event listeners for radio buttons on component initialization

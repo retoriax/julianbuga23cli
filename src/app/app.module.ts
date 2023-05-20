@@ -43,6 +43,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { BugapointBoxComponent } from './route-components/bugapoint-box/bugapoint-box.component';
 import { AdminpanelSavedialogComponent } from './admin-components/adminpanel-savedialog/adminpanel-savedialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -100,6 +101,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatIconModule,
     MatCardModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   exports: [
     MapFilterComponent,
