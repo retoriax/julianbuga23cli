@@ -51,10 +51,14 @@ export class BugapointlistComponent implements OnInit {
     }
   }
 
+  /**
+   * Opens the editor for the given point id
+   *
+   * @param id id of the point
+   */
   onEdit(id: number) {
-    console.log(id)
     this.router.navigate(
       ['admin/bugapoints/edit'],
-      {queryParams: { bugaPointId: id}})
+      {queryParams: {bugaPointId: id}}).then()
   }
 }

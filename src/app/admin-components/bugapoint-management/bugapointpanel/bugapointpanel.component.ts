@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {Bugapoint} from "../../../model/bugapoint";
 import {FormControl} from "@angular/forms";
 import {AdminService} from "../../../services/admin.service";
@@ -9,7 +9,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";
 import {Admin} from "../../../model/admin";
 import * as L from "leaflet";
-import {MatSnackBar, matSnackBarAnimations, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {LatLng} from "leaflet";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -23,49 +24,91 @@ export class BugapointpanelComponent implements OnInit {
               private adminBugapointService: AdminBugapointService, private snackBar: MatSnackBar) {
   }
 
+  mode: string
+  buttonText: string
+
+  newPointLatLng: L.LatLng = new LatLng(49.48648544355771, 8.501050886466462)
 
   point: Bugapoint
-  oldPosition: number[]
+  oldLatLng: L.LatLng
   admins: Admin[]
 
   map: any
-  newPositionMarker: L.Marker
+  flexMarker: L.Marker
   newPosition: any;
 
   title: string
 
+  titleForm = new FormControl
   adminForm = new FormControl
   latForm = new FormControl
   lngForm = new FormControl
   descriptionForm = new FormControl
 
   async ngOnInit(): Promise<void> {
-    this.route.queryParams.subscribe(async (params) => {
-      const points = await lastValueFrom(this.bugapointService.findAll("whereId=" + params['bugaPointId']))
-      this.point = points[0]
-      this.oldPosition = [this.point.latitude, this.point.longitude]
+    switch (this.route.snapshot.url[this.route.snapshot.url.length - 1].path) {
+      case "edit": {
+        this.mode = "update";
+        this.buttonText = "Speichern";
+        break;
+      }
 
-      this.title = this.point.title
+      case "new": {
+        this.mode = "new";
+        this.title = "Neuer Bugapoint";
+        this.buttonText = "Erstellen";
+        break;
+      }
+    }
+
+    this.map = L.map('map');
+
+    if (this.mode == "update") { // Update stuff
+      this.route.queryParams.subscribe(async (params) => {
+        const points = await lastValueFrom(this.bugapointService.findAll("whereId=" + params['bugaPointId']))
+        this.point = points[0]
+        this.oldLatLng = new LatLng(this.point.latitude, this.point.longitude)
+
+        this.title = this.point.title
 
 
-      await this.adminService.findAll().subscribe((data: Admin[]) => {
-        this.admins = data;
-        let pointAdmin : Admin | undefined = this.admins.find((a => a.id == this.point.adminID))
-        // @ts-ignore
-        this.adminForm.setValue(pointAdmin?.emailadress)
+        await this.adminService.findAll().subscribe((data: Admin[]) => {
+          this.admins = data;
+          let pointAdmin : Admin | undefined = this.admins.find((a => a.id == this.point.adminID))
+          // @ts-ignore
+          this.adminForm.setValue(pointAdmin?.emailadress)
+        })
+
+        this.descriptionForm.setValue(this.point.description)
+
+        this.latForm.setValue(this.point.latitude + '')
+        this.lngForm.setValue(this.point.longitude + '')
+
+        L.marker([this.point.latitude, this.point.longitude]).addTo(this.map).bindPopup('Alte Position von '
+          + this.point.title)
+        this.map.setView([this.point.latitude, this.point.longitude], 16);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          minZoom:10,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(this.map);
+
+        this.map.on('click', (e: any) => {
+
+          var coord = this.newPosition = e.latlng;
+          this.latForm.setValue(coord.lat + '');
+          this.lngForm.setValue(coord.lng + '');
+
+          this.changeNewPositionMarker(coord.lat, coord.lng);
+
+        })
       })
+    }
 
-      this.descriptionForm.setValue(this.point.description)
-
-      this.latForm.setValue(this.point.latitude + '')
-      this.lngForm.setValue(this.point.longitude + '')
-
-
-      this.map = L.map('map');
-
-      L.marker([this.point.latitude, this.point.longitude]).addTo(this.map).bindPopup('Alte Position von '
-        + this.point.title)
-      this.map.setView([this.point.latitude, this.point.longitude], 16);
+    if (this.mode == "new") {
+      this.flexMarker = L.marker(this.newPointLatLng).addTo(this.map).bindPopup("")
+      this.map.setView(this.newPointLatLng, 16);
 
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -73,19 +116,12 @@ export class BugapointpanelComponent implements OnInit {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(this.map);
 
-      this.map.on('click', (e: any) => {
-
-        var coord = this.newPosition = e.latlng;
-        this.latForm.setValue(coord.lat + '');
-        this.lngForm.setValue(coord.lng + '');
-
-        this.changeNewPositionMarker(coord.lat, coord.lng);
-
-      })
-
-
-    })
+      this.latForm.setValue(this.newPointLatLng.lat);
+      this.lngForm.setValue(this.newPointLatLng.lng);
+    }
   }
+
+
 
   /**
    * Updates the bugapoint with the values in the form controls
@@ -134,11 +170,11 @@ export class BugapointpanelComponent implements OnInit {
    * @param lng Longitude
    */
   changeNewPositionMarker(lat: number = this.latForm.value, lng: number = this.lngForm.value) {
-    if (this.newPositionMarker != null) {
-      this.map.removeLayer(this.newPositionMarker)
+    if (this.flexMarker != null) {
+      this.map.removeLayer(this.flexMarker)
     }
 
-    this.newPositionMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Neue Position von '
+    this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Neue Position von '
       + this.point.title);
   }
 
@@ -164,11 +200,11 @@ export class BugapointpanelComponent implements OnInit {
    * Also deletes the new position marker.
    */
   resetPointPosition() {
-    this.latForm.setValue(this.oldPosition[0]);
-    this.lngForm.setValue(this.oldPosition[1]);
+    this.latForm.setValue(this.oldLatLng.lat);
+    this.lngForm.setValue(this.oldLatLng.lng);
 
-    if (this.newPositionMarker != null) {
-      this.map.removeLayer(this.newPositionMarker)
+    if (this.flexMarker != null) {
+      this.map.removeLayer(this.flexMarker)
     }
   }
 }

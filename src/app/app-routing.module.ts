@@ -19,9 +19,10 @@ const routes: Routes = [
   { path: 'login', component: LoginFormComponent},
   { path: 'admin/menu', component: AdminpanelMenuComponent},
   { path: 'admin/bugapoints', component: BugapointmenuComponent},
-  { path: 'admin/bugapoints/new', component: NewpointpanelComponent },
+  //{ path: 'admin/bugapoints/new', component: NewpointpanelComponent },
   { path: 'blank', component: BlankComponent},
   { path: 'admin/bugapoints/edit', component: BugapointpanelComponent},
+  { path: 'admin/bugapoints/new', component: BugapointpanelComponent},
   { path: '**', redirectTo: '/map'},
 ];
 

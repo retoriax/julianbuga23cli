@@ -4,6 +4,11 @@
 
   <br>
 
+  <mat-form-field *ngIf="mode == 'new'">
+    <mat-label>Titel</mat-label>
+    <input matInput [formControl]="titleForm">
+  </mat-form-field>
+
   <mat-form-field class="inputfield">
     <mat-label>Beschreibung</mat-label>
     <textarea matInput placeholder="Beschreibung hier eintragen" [formControl]="descriptionForm">
@@ -56,7 +61,7 @@
 
 
   <div class="buttonBar">
-    <button mat-raised-button color="primary" (click)="update()">Update</button>
+    <button mat-raised-button color="primary" (click)="update()">{{buttonText}}</button>
     <button mat-raised-button color="warn" (click)="delete()">Löschen</button>
   </div>
 </div>
