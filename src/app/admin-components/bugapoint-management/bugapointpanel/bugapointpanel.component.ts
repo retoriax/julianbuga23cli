@@ -67,6 +67,7 @@ export class BugapointpanelComponent implements OnInit {
       }
     }
 
+
     //Setup Map
     this.map = L.map('map');
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -78,10 +79,8 @@ export class BugapointpanelComponent implements OnInit {
       var coord = this.newPosition = e.latlng;
       this.latForm.setValue(coord.lat);
       this.lngForm.setValue(coord.lng);
-
       this.changeNewPositionMarker(coord.lat, coord.lng);
     })
-
 
     //Load data (discriminators and admins for drop down panels)
     await this.bugapointService.getDiscriminators().subscribe((data: any) => {
@@ -135,13 +134,14 @@ export class BugapointpanelComponent implements OnInit {
    * Updates the bugapoint with the values in the form controls
    */
   async save() {
+
+    let sbConfig = new MatSnackBarConfig();
+    sbConfig.duration = 1000;
+    sbConfig.verticalPosition = "top";
+    sbConfig.horizontalPosition = "center"
+
     switch (this.mode) {
       case "update": {
-        let sbConfig = new MatSnackBarConfig();
-        sbConfig.duration = 1000;
-        sbConfig.verticalPosition = "top";
-        sbConfig.horizontalPosition = "center"
-
         try {
           let query =
             `newLat=${this.latForm.value}
@@ -175,13 +175,18 @@ export class BugapointpanelComponent implements OnInit {
         saveBugapoint.description = this.descriptionForm.value;
         saveBugapoint.discriminator = this.discriminatorForm.value;
 
-        console.log(saveBugapoint)
+        const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.saveBugapoint(saveBugapoint);
+
+        if (bugaPointResponse.success) {
+          this.snackBar.open("Gespeichert", "", sbConfig)
+        } else {
+          this.snackBar.open("Nicht gespeichert", "", sbConfig)
+        }
+        await this.router.navigate(['admin/bugapoints'])
 
         break;
       }
     }
-
-
   }
 
 
@@ -190,6 +195,7 @@ export class BugapointpanelComponent implements OnInit {
    */
   async delete() {
     await this.adminBugapointService.deleteBugapointById(this.point.id);
+    await this.router.navigate(['admin/bugapoints'])
   }
 
 

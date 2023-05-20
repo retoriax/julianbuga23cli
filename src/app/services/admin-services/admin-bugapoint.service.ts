@@ -27,7 +27,7 @@ export class AdminBugapointService {
    *
    * @param bugapoint
    */
-  saveBugapoint(bugapoint: Bugapoint) : Promise<DatabaseSaveResponse> {
+  async saveBugapoint(bugapoint: Bugapoint) : Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
