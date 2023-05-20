@@ -6,6 +6,7 @@ import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-admin-components-bugapointpanel',
@@ -22,36 +23,32 @@ export class BugapointpanelComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
-
   point: Bugapoint
-
   admins: any
 
-
   adminForm = new FormControl('')
-
   latForm = new FormControl('')
   lngForm = new FormControl('')
-
   descriptionForm = new FormControl('')
+
   async ngOnInit(): Promise<void> {
 
-    const bugapointId = this.route.queryParams.subscribe(params => {
-      return params['bugaPointId']
+
+    this.route.queryParams.subscribe(async (params) => {
+      const points = await lastValueFrom(this.bugapointService.findAll("whereId=" + params['bugaPointId']))
+      this.point = points[0]
+
+      this.admins = this.adminService.findAll();
+
+      this.adminForm.setValue('')
+
+      this.descriptionForm.setValue(this.point.description)
+
+      this.latForm.setValue(this.point.latitude + '')
+      this.lngForm.setValue(this.point.longitude + '')
+
+
     })
-
-    console.log(bugapointId)
-
-    this.bugapointService.findAll(`whereId=${bugapointId}`).subscribe((bugapoints: Bugapoint[]) => {
-      this.point = bugapoints[0]
-    })
-
-    this.adminForm.setValue('')
-
-    this.descriptionForm.setValue(this.point.description)
-
-    this.latForm.setValue(this.point.latitude + '')
-    this.lngForm.setValue(this.point.longitude + '')
   }
 
   /**

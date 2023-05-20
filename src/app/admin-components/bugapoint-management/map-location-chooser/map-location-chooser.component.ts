@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as L from "leaflet";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BugapointService} from "../../../services/bugapoint.service";
@@ -22,6 +22,7 @@ export class MapLocationChooserComponent implements OnInit{
   newPositionMarker: L.Marker
   newPosition: any;
 
+  @Input()
   point: Bugapoint;
 
   latForm = new FormControl

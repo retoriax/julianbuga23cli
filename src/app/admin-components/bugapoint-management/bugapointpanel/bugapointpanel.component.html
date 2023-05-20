@@ -1,8 +1,8 @@
-<mat-expansion-panel>
+<div id="bugapointpanel">
+  <app-admin-components-submenubar [title]="point.title" [backUrl]="'/admin/bugapoints'">
+  </app-admin-components-submenubar>
 
-  <mat-expansion-panel-header>
-    {{point.title}}
-  </mat-expansion-panel-header>
+  <br>
 
   <mat-form-field class="inputfield">
     <mat-label>Beschreibung</mat-label>
@@ -23,19 +23,12 @@
   </mat-form-field>
 
 
-  <form>
-    <br>
-    <mat-form-field>
-      <mat-label>Latitude</mat-label>
-      <input matInput [placeholder]="'' + point.latitude" [formControl]="latForm" type="number">
-    </mat-form-field>
-    <br>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <div id="map"></div>
 
-    <mat-form-field>
-      <mat-label>Longitude</mat-label>
-      <input matInput [placeholder]="'' + point.longitude" [formControl]="lngForm" type="number">
-    </mat-form-field>
-  </form>
+
+
 
   <section class="locationSelectionOptions">
     <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Meine Position</button>
@@ -52,5 +45,4 @@
   </div>
 
   <br>
-  <mat-divider></mat-divider>
-</mat-expansion-panel>
+</div>
