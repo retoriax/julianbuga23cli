@@ -4,74 +4,77 @@
 
   <br>
 
-  <mat-form-field *ngIf="mode == 'new'">
-    <mat-label>Titel</mat-label>
-    <input matInput [formControl]="titleForm">
-  </mat-form-field>
+  <div id="bugapointpanel-content">
 
-  <mat-form-field class="inputfield">
-    <mat-label>Typ</mat-label>
-    <input matInput placeholder="Wähle Typ aus" [matAutocomplete]="typeAuto" [formControl]="discriminatorForm">
-    <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
-      <mat-option *ngFor="let type of this.discriminators" [value]="type">
-        {{type}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+    <mat-form-field *ngIf="mode == 'new'">
+      <mat-label>Titel</mat-label>
+      <input matInput [formControl]="titleForm">
+    </mat-form-field>
+
+    <mat-form-field class="inputfield">
+      <mat-label>Typ</mat-label>
+      <input matInput placeholder="Wähle Typ aus" [matAutocomplete]="typeAuto" [formControl]="discriminatorForm">
+      <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
+        <mat-option *ngFor="let type of this.discriminators" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
 
-  <mat-form-field class="inputfield">
-    <mat-label>Beschreibung</mat-label>
-    <textarea matInput placeholder="Beschreibung hier eintragen" [formControl]="descriptionForm">
+    <mat-form-field class="inputfield">
+      <mat-label>Beschreibung</mat-label>
+      <textarea matInput placeholder="Beschreibung hier eintragen" [formControl]="descriptionForm">
       Platzhalter
     </textarea>
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Admin</mat-label>
-    <input matInput placeholder="Wähle einen Admin aus" [matAutocomplete]="adminAuto" [formControl]="adminForm">
-    <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
-      <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
-        {{admin.emailadress}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-          integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-  <div id="map"></div>
-
-  <div class="inputContainer">
-    <div class="grid">
-      <mat-form-field>
-        <mat-label>Neue Latitude</mat-label>
-        <input matInput [formControl]="latForm" type="number" (input)="changeNewPositionMarker()">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Neue Longitude</mat-label>
-        <input matInput [formControl]="lngForm" type="number" (input)="changeNewPositionMarker()">
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>Admin</mat-label>
+      <input matInput placeholder="Wähle einen Admin aus" [matAutocomplete]="adminAuto" [formControl]="adminForm">
+      <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
+        <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
+          {{admin.emailadress}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
 
-      <button mat-raised-button (click)="useUserPosition()">
-        Meine Position
-      </button>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <div id="map"></div>
 
-      <button mat-raised-button (click)="resetPointPosition()">
-        Alte Position
-      </button>
+    <div class="inputContainer">
+      <div class="grid">
+        <mat-form-field>
+          <mat-label>Neue Latitude</mat-label>
+          <input matInput [formControl]="latForm" type="number" (input)="changeNewPositionMarker()">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Neue Longitude</mat-label>
+          <input matInput [formControl]="lngForm" type="number" (input)="changeNewPositionMarker()">
+        </mat-form-field>
 
 
+        <button mat-raised-button (click)="useUserPosition()">
+          Meine Position
+        </button>
+
+        <button mat-raised-button (click)="resetPointPosition()">
+          Alte Position
+        </button>
+
+
+      </div>
     </div>
-  </div>
 
 
-  <div class="buttonBar">
-    <button mat-raised-button color="primary" (click)="save()">{{buttonText}}</button>
-    <button mat-raised-button color="warn" (click)="delete()" *ngIf="mode == 'update'">Löschen</button>
+    <div class="buttonBar">
+      <button mat-raised-button color="primary" (click)="save()">{{buttonText}}</button>
+      <button mat-raised-button color="warn" (click)="delete()" *ngIf="mode == 'update'">Löschen</button>
+    </div>
   </div>
 </div>

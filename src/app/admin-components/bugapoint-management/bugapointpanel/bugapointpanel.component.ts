@@ -10,8 +10,10 @@ import {lastValueFrom} from "rxjs";
 import {Admin} from "../../../model/admin";
 import * as L from "leaflet";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
-import {LatLng} from "leaflet";
+import {LatLng, Util} from "leaflet";
+import trim = Util.trim;
 
+//TODO: env vars
 @Component({
   selector: 'app-admin-components-bugapointpanel',
   templateUrl: './bugapointpanel.component.html',
@@ -75,6 +77,14 @@ export class BugapointpanelComponent implements OnInit {
       minZoom: 10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
+
+    const freemovementBounds = L.latLngBounds(
+      [49.562104830601314, 8.36095242436513],
+      [49.40726086087864, 8.619292747892453]
+    );
+    this.map.setMaxBounds(freemovementBounds);
+    this.map.setMinZoom(13);
+
     this.map.on('click', (e: any) => {
       var coord = this.newPosition = e.latlng;
       this.latForm.setValue(coord.lat);
@@ -143,16 +153,15 @@ export class BugapointpanelComponent implements OnInit {
     switch (this.mode) {
       case "update": {
         try {
-          let query =
-            `newLat=${this.latForm.value}
-            &newLng=${this.lngForm.value}
-            &newDescription=${this.descriptionForm.value}
-            &newAdminEmailaddress=${this.adminForm.value}
-            &newDiscriminator=${this.discriminatorForm.value}`
+
+          let updatedPoint = new Bugapoint(this.latForm.value, this.lngForm.value)
+          updatedPoint.description = this.descriptionForm.value;
+          updatedPoint.discriminator = this.discriminatorForm.value;
+          updatedPoint.adminID = this.admins.find(a => a.emailadress == this.adminForm.value)?.id;
 
           const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
             this.point,
-            query
+            updatedPoint
           );
 
           if (bugaPointResponse.success) {
@@ -161,7 +170,7 @@ export class BugapointpanelComponent implements OnInit {
             this.snackBar.open("Nicht gespeichert", "", sbConfig)
           }
 
-          await this.router.navigate(['admin/bugapoints'])
+          this.router.navigate(['admin/bugapoints'])
 
         } catch (error) {
           this.snackBar.open("Nicht gespeichert", "", sbConfig)
@@ -170,10 +179,12 @@ export class BugapointpanelComponent implements OnInit {
       }
       case "new": {
         let saveBugapoint: Bugapoint = new Bugapoint(this.latForm.value, this.lngForm.value);
-        saveBugapoint.title = this.titleForm.value;
+        saveBugapoint.title = trim(this.titleForm.value);
         saveBugapoint.adminID = this.admins.find(a => a.emailadress == this.adminForm.value)?.id;
-        saveBugapoint.description = this.descriptionForm.value;
-        saveBugapoint.discriminator = this.discriminatorForm.value;
+        if (this.descriptionForm.value != null) {
+          saveBugapoint.description = trim(this.descriptionForm.value);
+        }
+        saveBugapoint.discriminator = trim(this.discriminatorForm.value);
 
         const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.saveBugapoint(saveBugapoint);
 
