@@ -2,10 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Bugapoint} from "../../../model/bugapoint";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {Admin} from "../../../model/admin";
-import {AdminService} from "../../../services/admin.service";
 import {lastValueFrom} from "rxjs";
-import {bug} from "ionicons/icons";
 import {Router} from "@angular/router";
+import {AdminAdminService} from "../../../services/admin-services/admin-admin.service";
 
 @Component({
   selector: 'app-admin-components-bugapointlist',
@@ -20,7 +19,7 @@ export class BugapointlistComponent implements OnInit {
   filter: string;
   isLoading: boolean = false;
 
-  constructor(private bugapointservice: BugapointService, private adminservice: AdminService,
+  constructor(private bugapointservice: BugapointService, private adminservice: AdminAdminService,
               private router: Router) {
 
   }

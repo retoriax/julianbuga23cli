@@ -12,6 +12,7 @@ import * as L from "leaflet";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {LatLng, Util} from "leaflet";
 import trim = Util.trim;
+import {AdminAdminService} from "../../../services/admin-services/admin-admin.service";
 
 //TODO: env vars
 @Component({
@@ -21,7 +22,7 @@ import trim = Util.trim;
 })
 export class BugapointpanelComponent implements OnInit {
 
-  constructor(private adminService: AdminService, private bugapointService: BugapointService, private router: Router,
+  constructor(private adminService: AdminAdminService, private bugapointService: BugapointService, private router: Router,
               private elementRef: ElementRef, private renderer: Renderer2, private route: ActivatedRoute,
               private adminBugapointService: AdminBugapointService, private snackBar: MatSnackBar) {
   }

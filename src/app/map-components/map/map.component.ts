@@ -162,7 +162,7 @@ export class MapComponent implements OnInit {
       addWaypoints: false,
       plan: L.Routing.plan(waypoints, {draggableWaypoints: false, addWaypoints: false, language: 'de'}),
       router: L.Routing.osrmv1({
-        serviceUrl: 'http://hjetter.ddns.net:5000/route/v1',
+        serviceUrl: 'https://hjetter.ddns.net/osrm/route/v1',
         profile: 'foot',
       })
     }).addTo(this.map);
