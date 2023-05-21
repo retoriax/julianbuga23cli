@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {Bugapoint} from "../../../model/bugapoint";
 import {FormControl} from "@angular/forms";
-import {AdminService} from "../../../services/admin.service";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
@@ -216,8 +215,17 @@ export class BugapointpanelComponent implements OnInit {
    * Deletes this bugapoint.
    */
   async delete() {
+
+    let sbConfig = new MatSnackBarConfig();
+    sbConfig.duration = 1000;
+    sbConfig.verticalPosition = "top";
+    sbConfig.horizontalPosition = "center"
+
+
     await this.adminBugapointService.deleteBugapointById(this.point.id);
     await this.router.navigate(['admin/bugapoints'])
+
+    this.snackBar.open(this.point.title + " wurde gelöscht.", "", sbConfig)
   }
 
 
