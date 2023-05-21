@@ -153,11 +153,16 @@ export class BugapointpanelComponent implements OnInit {
     switch (this.mode) {
       case "update": {
         try {
-
           let updatedPoint = new Bugapoint(this.latForm.value, this.lngForm.value)
           updatedPoint.description = this.descriptionForm.value;
           updatedPoint.discriminator = this.discriminatorForm.value;
-          updatedPoint.adminID = this.admins.find(a => a.emailadress == this.adminForm.value)?.id;
+          const admin$ = this.admins.find(a => a.emailadress == this.adminForm.value);
+
+          if (admin$ != null) {
+            updatedPoint.adminID = admin$.id;
+          } else {
+            updatedPoint.adminID = 0;
+          }
 
           const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.updateBugapoint(
             this.point,
@@ -165,12 +170,17 @@ export class BugapointpanelComponent implements OnInit {
           );
 
           if (bugaPointResponse.success) {
-            this.snackBar.open("Gespeichert", "", sbConfig)
+            if (bugaPointResponse.failed?.length == 0) {
+              this.snackBar.open("Gespeichert", "", sbConfig)
+              await this.router.navigate(['admin/bugapoints'])
+            } else {
+              this.snackBar.open(bugaPointResponse.failed + " nicht gespeichert", "", sbConfig);
+              await this.router.navigate(['admin/bugapoints'])
+            }
           } else {
             this.snackBar.open("Nicht gespeichert", "", sbConfig)
+            await this.router.navigate(['admin/bugapoints'])
           }
-
-          this.router.navigate(['admin/bugapoints'])
 
         } catch (error) {
           this.snackBar.open("Nicht gespeichert", "", sbConfig)
@@ -190,13 +200,13 @@ export class BugapointpanelComponent implements OnInit {
 
         if (bugaPointResponse.success) {
           this.snackBar.open("Gespeichert", "", sbConfig)
+          await this.router.navigate(['admin/bugapoints'])
         } else {
           this.snackBar.open("Nicht gespeichert", "", sbConfig)
         }
-        await this.router.navigate(['admin/bugapoints'])
-
         break;
       }
+
     }
   }
 

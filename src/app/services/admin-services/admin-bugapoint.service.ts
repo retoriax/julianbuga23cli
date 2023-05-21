@@ -37,7 +37,7 @@ export class AdminBugapointService {
         catchError((error: HttpErrorResponse) => {
           const dbErrorResponse: DatabaseSaveResponse = {
             success: false,
-            message: error.error.message
+            message: error.error.message,
           };
           return of(dbErrorResponse)
         })))
