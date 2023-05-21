@@ -15,7 +15,7 @@ mat-expansion-panel mat-panel-description {
 
 .bugapointlist {
   overflow: auto;
-  height: 70vh;
+  height: calc(100vh - 280px);
 }
 
 .pointFilter {
@@ -49,4 +49,17 @@ mat-progress-bar {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2vw;
+}
+
+.item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  horiz-align: center;
+}
+
+.item-text {
+  margin-left: 1vw;
+  font-size: 15px;
 }

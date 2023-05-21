@@ -4,6 +4,8 @@ import {BugapointService} from "../../../services/bugapoint.service";
 import {Admin} from "../../../model/admin";
 import {AdminService} from "../../../services/admin.service";
 import {lastValueFrom} from "rxjs";
+import {bug} from "ionicons/icons";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-components-bugapointlist',
@@ -18,7 +20,8 @@ export class BugapointlistComponent implements OnInit {
   filter: string;
   isLoading: boolean = false;
 
-  constructor(private bugapointservice: BugapointService, private adminservice: AdminService) {
+  constructor(private bugapointservice: BugapointService, private adminservice: AdminService,
+              private router: Router) {
 
   }
 
@@ -48,4 +51,14 @@ export class BugapointlistComponent implements OnInit {
     }
   }
 
+  /**
+   * Opens the editor for the given point id
+   *
+   * @param id id of the point
+   */
+  onEdit(id: number) {
+    this.router.navigate(
+      ['admin/bugapoints/edit'],
+      {queryParams: {bugaPointId: id}}).then()
+  }
 }

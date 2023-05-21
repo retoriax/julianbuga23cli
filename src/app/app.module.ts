@@ -31,7 +31,6 @@ import { BugapointmenuComponent } from './admin-components/bugapoint-management/
 import { AdminpanelSubmenubarComponent } from './admin-components/adminpanel-submenubar/adminpanel-submenubar.component';
 import { BugapointlistComponent } from './admin-components/bugapoint-management/bugapointlist/bugapointlist.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { NewpointpanelComponent } from './admin-components/bugapoint-management/newpointpanel/newpointpanel.component';
 import { BugapointpanelComponent } from './admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component';
 import { BlankComponent } from './blank/blank.component';
 import {MatIconModule} from "@angular/material/icon";
@@ -49,7 +48,6 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FilterComponent} from "./admin-components/bugapoint-management/filter/filter.component";
 import {SavedialogComponent} from "./admin-components/bugapoint-management/savedialog/savedialog.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { MapLocationChooserComponent } from './admin-components/bugapoint-management/map-location-chooser/map-location-chooser.component';
 
 
 @NgModule({
@@ -66,7 +64,6 @@ import { MapLocationChooserComponent } from './admin-components/bugapoint-manage
     BugapointmenuComponent,
     AdminpanelSubmenubarComponent,
     BugapointlistComponent,
-    NewpointpanelComponent,
     BugapointpanelComponent,
     BlankComponent,
     RegisterFormComponent,
@@ -77,7 +74,6 @@ import { MapLocationChooserComponent } from './admin-components/bugapoint-manage
     MapAnsichtComponent,
     FilterComponent,
     BugapointDragAndDropComponent,
-    MapLocationChooserComponent
   ],
   imports: [
     BrowserModule,
@@ -114,6 +110,7 @@ import { MapLocationChooserComponent } from './admin-components/bugapoint-manage
     MatProgressBarModule,
     MatTabsModule,
     MatSnackBarModule,
+    MatListModule
   ],
   exports: [
     MapFilterComponent,

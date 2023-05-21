@@ -27,7 +27,7 @@ export class AdminBugapointService {
    *
    * @param bugapoint
    */
-  saveBugapoint(bugapoint: Bugapoint) : Promise<DatabaseSaveResponse> {
+  async saveBugapoint(bugapoint: Bugapoint) : Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
@@ -37,7 +37,7 @@ export class AdminBugapointService {
         catchError((error: HttpErrorResponse) => {
           const dbErrorResponse: DatabaseSaveResponse = {
             success: false,
-            message: error.error.message
+            message: error.error.message,
           };
           return of(dbErrorResponse)
         })))
@@ -49,15 +49,22 @@ export class AdminBugapointService {
    * Updates the bugapoint.
    *
    * @param bugapoint bugapoint which gets updated
-   * @param query query
+   * @param updates
    */
-  async updateBugapoint(bugapoint: Bugapoint, query: string): Promise<DatabaseSaveResponse> {
+  async updateBugapoint(bugapoint: Bugapoint, updates: Bugapoint): Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
-    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}&${query}`;
-
-    return lastValueFrom(this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()));
+    return lastValueFrom(this.http.put<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/update?bugaPointId=${bugapoint.id}`, updates,
+      this.authService.getAuthheader())
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          const dbErrorResponse: DatabaseSaveResponse = {
+            success: false,
+            message: error.error.message
+          };
+          return of(dbErrorResponse)
+        })))
   }
 
 
