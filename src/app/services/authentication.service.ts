@@ -20,9 +20,9 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router,
               private navigation:NavigationService) {
-    this.registerUrl = environment.backEndUrl + "/api/v1/auth/register";
-    this.loginUrl = environment.backEndUrl + "/api/v1/auth/authenticate"
-    this.loginStatusUrl = environment.backEndUrl + "/api/v1/auth/checkToken"
+    this.registerUrl = environment.backEndUrl + "/open/auth/register";
+    this.loginUrl = environment.backEndUrl + "/open/auth/authenticate"
+    this.loginStatusUrl = environment.backEndUrl + "/open/auth/checkToken"
 
   }
 

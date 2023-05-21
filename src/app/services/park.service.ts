@@ -9,7 +9,7 @@ import {Park} from "../model/park";
 })
 export class ParkService {
 
-  private subPath = '/park';
+  private subPath = '/open/park';
 
   constructor(private http: HttpClient) { }
 

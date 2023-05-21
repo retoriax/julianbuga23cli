@@ -9,7 +9,7 @@ import {environment} from "../../environments/environment.development";
 })
 export class BugapointService {
 
-  private subPath = '/bugapoint';
+  private subPath = '/open/bugapoint';
   private reload$ = new Subject();
   private bugapointCache$: Observable<Bugapoint[]>|null;
   private discriminatorCache$: Observable<string[]>|null;

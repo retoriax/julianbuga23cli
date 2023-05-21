@@ -16,7 +16,7 @@ import {catchError, lastValueFrom, of} from "rxjs";
 })
 export class AdminBugapointService {
 
-  private subPath = '/api/v1/admin/bugapoint';
+  private subPath = '/management/bugapoint';
 
   constructor(private http: HttpClient, private authService: AuthenticationService, private cookieService:CookieService)
   { }
