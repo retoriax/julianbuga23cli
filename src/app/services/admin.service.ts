@@ -10,7 +10,7 @@ import {environment} from "../../environments/environment.development";
 })
 export class AdminService {
 
-  private subUrl = '/admin';
+  private subUrl = '/management';
 
   constructor(private http: HttpClient) { }
 
