@@ -4,7 +4,6 @@ import {MapComponent} from "./map-components/map/map.component";
 import {RoutePlannerComponent} from "./route-components/route-planner/route-planner.component";
 import {AdminpanelMenuComponent} from "./admin-components/adminpanel-menu/adminpanel-menu.component";
 import {BugapointmenuComponent} from "./admin-components/bugapoint-management/bugapointmenu/bugapointmenu.component";
-import {NewpointpanelComponent} from "./admin-components/bugapoint-management/newpointpanel/newpointpanel.component";
 import {BlankComponent} from "./blank/blank.component";
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {LoginFormComponent} from "./login-form/login-form.component";
@@ -19,7 +18,6 @@ const routes: Routes = [
   { path: 'login', component: LoginFormComponent},
   { path: 'admin/menu', component: AdminpanelMenuComponent},
   { path: 'admin/bugapoints', component: BugapointmenuComponent},
-  //{ path: 'admin/bugapoints/new', component: NewpointpanelComponent },
   { path: 'blank', component: BlankComponent},
   { path: 'admin/bugapoints/edit', component: BugapointpanelComponent},
   { path: 'admin/bugapoints/new', component: BugapointpanelComponent},

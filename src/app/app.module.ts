@@ -31,7 +31,6 @@ import { BugapointmenuComponent } from './admin-components/bugapoint-management/
 import { AdminpanelSubmenubarComponent } from './admin-components/adminpanel-submenubar/adminpanel-submenubar.component';
 import { BugapointlistComponent } from './admin-components/bugapoint-management/bugapointlist/bugapointlist.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { NewpointpanelComponent } from './admin-components/bugapoint-management/newpointpanel/newpointpanel.component';
 import { BugapointpanelComponent } from './admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component';
 import { BlankComponent } from './blank/blank.component';
 import {MatIconModule} from "@angular/material/icon";
@@ -65,7 +64,6 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     BugapointmenuComponent,
     AdminpanelSubmenubarComponent,
     BugapointlistComponent,
-    NewpointpanelComponent,
     BugapointpanelComponent,
     BlankComponent,
     RegisterFormComponent,
