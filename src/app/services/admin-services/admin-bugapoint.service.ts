@@ -7,7 +7,6 @@ import {AuthenticationService} from "../authentication.service";
 import {LoginStatusrequest} from "../../model/login-statusrequest";
 import {CookieService} from "ngx-cookie-service";
 import {catchError, lastValueFrom, of} from "rxjs";
-import {BugapointService} from "../bugapoint.service";
 
 /**
  * Bugapoint service for admins.
