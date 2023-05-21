@@ -10,7 +10,7 @@ import {AuthenticationService} from "../authentication.service";
 })
 export class AdminAdminService {
 
-  private subPath = '/api/v1/admin/admin';
+  private subPath = '/management/admin';
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
