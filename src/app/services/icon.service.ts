@@ -18,16 +18,11 @@ export class IconService {
   iconsPromises: { [key: string]: Promise<string> } = {};
 
   constructor( private bugapointService: BugapointService) {
-    this.bugapointService.findAll().subscribe(bugapoints => {
-
-      let alreadyIn = new Set;
-      bugapoints.forEach((bugapoint) => {
-        if (!alreadyIn.has(bugapoint.discriminator)){
-          alreadyIn.add(bugapoint.discriminator);
-          this.getIconFromDiscriminator(bugapoint.discriminator);
-        }
+    this.bugapointService.getDiscriminators().subscribe(discriminators => {
+      discriminators.forEach((discriminator) => {
+        this.getIconFromDiscriminator(discriminator);
       })
-    });
+    })
   }
 
   /**
