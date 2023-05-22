@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {Bugapoint} from "../../../model/bugapoint";
 import {FormControl} from "@angular/forms";
 import {BugapointService} from "../../../services/bugapoint.service";
-import {DatabaseSaveResponse} from "../../../services/DatabaseSaveResponse";
+import {DatabaseSaveResponse} from "../../../services/Responses/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {lastValueFrom} from "rxjs";

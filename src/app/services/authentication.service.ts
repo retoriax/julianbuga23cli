@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
 import {environment} from "../../environments/environment.development";
 import {NavigationService} from "./navigation.service";
 import {Navigation} from "./navigation";
+import {AuthenticationResponse} from "./Responses/AuthenticationResponse";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 
 @Injectable({
@@ -19,18 +21,26 @@ export class AuthenticationService {
   private loginStatusUrl: string;
 
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router,
-              private navigation:NavigationService) {
+              private navigation: NavigationService,private snackBar: MatSnackBar) {
     this.registerUrl = environment.backEndUrl + "/open/auth/register";
     this.loginUrl = environment.backEndUrl + "/open/auth/authenticate"
     this.loginStatusUrl = environment.backEndUrl + "/open/auth/checkToken"
 
   }
 
+  //sorry max
   public register(request: RegisterRequest) {
+    //sorry max
+    let sbConfig = new MatSnackBarConfig();
+    sbConfig.duration = 4000;
+    sbConfig.verticalPosition = "top";
+    sbConfig.horizontalPosition = "center"
     this.http.post(this.registerUrl, request).subscribe({
       next: (data) => {
         this.setCookie(data)
-        this.router.navigate(['/admin/menu'])
+        this.router.navigate(['/login'])
+        this.snackBar.open("Ein Admin muss deinen Account verifizieren","",sbConfig)
+
       },
       error: (error: any) => {
         console.error(error);
@@ -43,18 +53,21 @@ export class AuthenticationService {
     });
   }
 
-  public login(request: loginrequest) {
-    this.http.post(this.loginUrl, request).subscribe({
+  public login(request: loginrequest, callback: (role: string) => void) {
+    const respone = this.http.post<AuthenticationResponse>(this.loginUrl, request).subscribe({
       next: (data) => {
+        console.log("hier is token zum speichern"+ data)
         this.setCookie(data)
-        this.router.navigate(['/admin/menu'])
+        callback(data.role)
       },
       error: (error: any) => {
         if (error.status === 403) {
           console.error('Unauthorized access');
+          callback("no")
           // @TODO visual response in frontend
         } else {
           console.error(error);
+          callback("no")
           // @TODO visual response in frontend
         }
       },
@@ -64,6 +77,7 @@ export class AuthenticationService {
     });
   }
 
+  // @TODO um rolle erweitern
   public checkIfLoggedIn(callback: (success: boolean) => void) {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
@@ -88,7 +102,7 @@ export class AuthenticationService {
     });
   }
 
-  public logout(){
+  public logout() {
     this.cookieService.delete("token");
     this.navigation.navigate(Navigation.Login);
   }
