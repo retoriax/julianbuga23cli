@@ -8,7 +8,7 @@ import * as L from 'leaflet';
 })
 export class MapComponent implements OnInit {
   map!: L.Map;
-  selectedAnsichtOption = 'free-movement';
+  selectedAnsichtOption = 'Freie Bewegung';
 
   ngOnInit() {
     this.initMap();

@@ -16,7 +16,7 @@ import {catchError, lastValueFrom, of} from "rxjs";
 })
 export class AdminBugapointService {
 
-  private subPath = '/api/v1/admin/bugapoint';
+  private subPath = '/management/bugapoint';
 
   constructor(private http: HttpClient, private authService: AuthenticationService, private cookieService:CookieService)
   { }
@@ -27,7 +27,7 @@ export class AdminBugapointService {
    *
    * @param bugapoint
    */
-  saveBugapoint(bugapoint: Bugapoint) : Promise<DatabaseSaveResponse> {
+  async saveBugapoint(bugapoint: Bugapoint) : Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
@@ -37,7 +37,7 @@ export class AdminBugapointService {
         catchError((error: HttpErrorResponse) => {
           const dbErrorResponse: DatabaseSaveResponse = {
             success: false,
-            message: error.error.message
+            message: error.error.message,
           };
           return of(dbErrorResponse)
         })))
@@ -49,22 +49,22 @@ export class AdminBugapointService {
    * Updates the bugapoint.
    *
    * @param bugapoint bugapoint which gets updated
-   * @param newLat new latitude
-   * @param newLong new longitude
-   * @param newAdminEmailaddress new admin email address
-   * @param newDescription new description
+   * @param updates
    */
-  async updateBugapoint(bugapoint: Bugapoint, newLat?: number, newLong?: number, newAdminEmailaddress?: string, newDescription?: string): Promise<DatabaseSaveResponse> {
+  async updateBugapoint(bugapoint: Bugapoint, updates: Bugapoint): Promise<DatabaseSaveResponse> {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
 
-    const url = environment.backEndUrl + `${this.subPath}/update` + `?bugaPointId=${bugapoint.id}
-     &newLat=${newLat !== undefined ? newLat : bugapoint.latitude}
-     &newLong=${newLong !== undefined ? newLong : bugapoint.longitude}
-     &newDescription=${newDescription !== undefined ? newDescription : bugapoint.description}
-     &newAdminEmailaddress=${newAdminEmailaddress !== undefined ? newAdminEmailaddress : bugapoint.adminID}`;
-
-    return lastValueFrom(this.http.put<DatabaseSaveResponse>(url, null, this.authService.getAuthheader()));
+    return lastValueFrom(this.http.put<DatabaseSaveResponse>(environment.backEndUrl + `${this.subPath}/update?bugaPointId=${bugapoint.id}`, updates,
+      this.authService.getAuthheader())
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          const dbErrorResponse: DatabaseSaveResponse = {
+            success: false,
+            message: error.error.message
+          };
+          return of(dbErrorResponse)
+        })))
   }
 
 

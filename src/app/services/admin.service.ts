@@ -10,16 +10,9 @@ import {environment} from "../../environments/environment.development";
 })
 export class AdminService {
 
-  private subUrl = '/admin';
+  private subUrl = '/open';
 
   constructor(private http: HttpClient) { }
-
-  /**
-   * returns all admins
-   */
-  findAll(): Observable<Admin[]> {
-    return this.http.get<Admin[]>(environment.backEndUrl + `${this.subUrl}/list`);
-  }
 
   /**
    * returns admin with the given id

@@ -4,7 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RoutePlannerComponent } from './route-components/route-planner/route-planner.component';
@@ -13,12 +12,10 @@ import { BugapointDragAndDropComponent } from './route-components/bugapoint-drag
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { MapFilterComponent } from './map-filter/map-filter.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MapAnsichtComponent } from './map-ansicht/map-ansicht.component';
 import {MatButtonModule} from "@angular/material/button";
 import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {RegisterFormComponent} from "./UI/register-components/register-form/register-form.component";
@@ -27,12 +24,8 @@ import {MatCardModule} from "@angular/material/card";
 import { AdminpanelMenuComponent } from './admin-components/adminpanel-menu/adminpanel-menu.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatListModule} from "@angular/material/list";
-import { BugapointmenuComponent } from './admin-components/bugapoint-management/bugapointmenu/bugapointmenu.component';
 import { AdminpanelSubmenubarComponent } from './admin-components/adminpanel-submenubar/adminpanel-submenubar.component';
-import { BugapointlistComponent } from './admin-components/bugapoint-management/bugapointlist/bugapointlist.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { NewpointpanelComponent } from './admin-components/bugapoint-management/newpointpanel/newpointpanel.component';
-import { BugapointpanelComponent } from './admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component';
 import { BlankComponent } from './blank/blank.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
@@ -49,6 +42,12 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FilterComponent} from "./admin-components/bugapoint-management/filter/filter.component";
 import {SavedialogComponent} from "./admin-components/bugapoint-management/savedialog/savedialog.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MapComponent} from "./map-components/map/map.component";
+import {MapFilterComponent} from "./map-components/map-filter/map-filter.component";
+import {BugapointmenuComponent} from "./admin-components/bugapoint-management/bugapointmenu/bugapointmenu.component";
+import {BugapointlistComponent} from "./admin-components/bugapoint-management/bugapointlist/bugapointlist.component";
+import {BugapointpanelComponent} from "./admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component";
+import {MapAnsichtComponent} from "./map-components/map-ansicht/map-ansicht.component";
 
 
 @NgModule({
@@ -65,7 +64,6 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     BugapointmenuComponent,
     AdminpanelSubmenubarComponent,
     BugapointlistComponent,
-    NewpointpanelComponent,
     BugapointpanelComponent,
     BlankComponent,
     RegisterFormComponent,
@@ -75,7 +73,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     BugapointBoxComponent,
     MapAnsichtComponent,
     FilterComponent,
-    BugapointDragAndDropComponent
+    BugapointDragAndDropComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +110,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatProgressBarModule,
     MatTabsModule,
     MatSnackBarModule,
+    MatListModule
   ],
   exports: [
     MapFilterComponent,

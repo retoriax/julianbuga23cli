@@ -9,13 +9,17 @@ import {Park} from "../model/park";
 })
 export class ParkService {
 
-  private subPath = '/park';
+  private subPath = '/open/park';
 
   constructor(private http: HttpClient) { }
 
 
   findAll(): Observable<Park[]> {
     return this.http.get<Park[]>(environment.backEndUrl + `${this.subPath}/list`);
+  }
+
+  getPark(id: number): Observable<Park> {
+    return this.http.get<Park>(environment.backEndUrl + `${this.subPath}/id/` + id)
   }
 
 

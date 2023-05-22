@@ -1,3 +1,12 @@
+#bugapointpanel {
+
+}
+
+#bugapointpanel-content {
+  overflow: auto;
+  height: calc(100vh - 200px);
+}
+
 mat-expansion-panel {
   display: flex;
   flex-direction: column;
@@ -46,4 +55,33 @@ button {
   0% { background-color: white; }
   25% { background-color: red; }
   100% { background-color: white; }
+}
+
+.locationSelectionOptions {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+#map {
+  width: 95%;
+  height: 50vh;
+  z-index: 0;
+  margin: 1vw auto;
+
+  border: 1px black;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: space-between;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 10px;
 }

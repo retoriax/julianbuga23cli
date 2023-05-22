@@ -1,54 +1,80 @@
-<mat-expansion-panel>
+<div id="bugapointpanel">
+  <app-admin-components-submenubar [title]="title" [backUrl]="'/admin/bugapoints'">
+  </app-admin-components-submenubar>
 
-  <mat-expansion-panel-header>
-    {{point.title}}
-  </mat-expansion-panel-header>
+  <br>
 
-  <mat-form-field class="inputfield">
-    <mat-label>Beschreibung</mat-label>
-    <textarea matInput placeholder="Beschreibung hier eintragen" [formControl]="descriptionForm">
+  <div id="bugapointpanel-content">
+
+    <mat-form-field *ngIf="mode == 'new'">
+      <mat-label>Titel</mat-label>
+      <input matInput [formControl]="titleForm">
+    </mat-form-field>
+
+    <mat-form-field class="inputfield">
+      <mat-label>Typ</mat-label>
+      <input matInput placeholder="Wähle Typ aus" [matAutocomplete]="typeAuto" [formControl]="discriminatorForm">
+      <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
+        <mat-option *ngFor="let type of this.discriminators" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+
+    <mat-form-field class="inputfield">
+      <mat-label>Beschreibung</mat-label>
+      <textarea matInput placeholder="Beschreibung hier eintragen" [formControl]="descriptionForm">
       Platzhalter
     </textarea>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Admin</mat-label>
-    <input matInput placeholder="Wähle einen Admin aus" [matAutocomplete]="adminAuto"
-           [formControl]="adminForm">
-    <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
-      <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
-        {{admin.emailadress}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-
-  <form>
-    <br>
-    <mat-form-field>
-      <mat-label>Latitude</mat-label>
-      <input matInput [placeholder]="'' + point.latitude" [formControl]="latForm">
-    </mat-form-field>
-    <br>
-
-    <mat-form-field>
-      <mat-label>Longitude</mat-label>
-      <input matInput [placeholder]="'' + point.longitude" [formControl]="longForm">
     </mat-form-field>
 
-    <br>
-  </form>
+    <mat-form-field>
+      <mat-label>Admin</mat-label>
+      <input matInput placeholder="Wähle einen Admin aus" [matAutocomplete]="adminAuto" [formControl]="adminForm">
+      <mat-autocomplete autoActiveFirstOption #adminAuto="matAutocomplete">
+        <mat-option *ngFor="let admin of this.admins" [value]="admin.emailadress">
+          {{admin.emailadress}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-  <button mat-raised-button class="locationButton" (click)="getGeoLocation()">Meine Position</button>
-  <br>
-  <br>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <div id="map"></div>
+
+    <div class="inputContainer">
+      <div class="grid">
+        <mat-form-field>
+          <mat-label>Neue Latitude</mat-label>
+          <input matInput [formControl]="latForm" type="number" (input)="changeNewPositionMarker()">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Neue Longitude</mat-label>
+          <input matInput [formControl]="lngForm" type="number" (input)="changeNewPositionMarker()">
+        </mat-form-field>
 
 
-  <div class="buttonBar">
-    <button mat-raised-button color="primary" (click)="update()">Update</button>
-    <button mat-raised-button color="warn" (click)="delete()">Löschen</button>
+        <button mat-raised-button (click)="useUserPosition()">
+          Meine Position
+        </button>
+
+        <button mat-raised-button (click)="resetPointPosition()">
+          Alte Position
+        </button>
+
+
+      </div>
+    </div>
+
+
+    <div class="buttonBar">
+      <button mat-raised-button color="primary" (click)="save()">{{buttonText}}</button>
+      <button mat-raised-button color="warn" (click)="delete()" *ngIf="mode == 'update'">Löschen</button>
+    </div>
   </div>
-
-  <br>
-  <mat-divider></mat-divider>
-</mat-expansion-panel>
+</div>

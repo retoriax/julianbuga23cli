@@ -1,7 +1,10 @@
-<app-admin-components-submenubar [title]="'Buga Points'" [backUrl]="'/admin/menu'"></app-admin-components-submenubar>
+<div id="bugapointmenu">
+  <app-admin-components-submenubar [title]="'Buga Points'" [backUrl]="'/admin/menu'"></app-admin-components-submenubar>
 
-<app-admin-components-bugapointlist></app-admin-components-bugapointlist>
-<br>
-<div class="newpointDiv">
-  <button mat-raised-button routerLink='/admin/bugapoints/new' color="primary">Punkt hinzufügen</button>
+  <app-admin-components-bugapointlist></app-admin-components-bugapointlist>
+  <br>
+  <div class="newpointDiv">
+    <button mat-raised-button routerLink='/admin/bugapoints/new' color="primary">Punkt hinzufügen</button>
+  </div>
 </div>
+

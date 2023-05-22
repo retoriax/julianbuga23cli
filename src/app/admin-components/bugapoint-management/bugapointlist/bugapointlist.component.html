@@ -10,8 +10,17 @@
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
   </div>
 
-  <div *ngFor="let point of points">
-    <app-admin-components-bugapointpanel [point]="point" [admins]="admins" [list]="this"></app-admin-components-bugapointpanel>
-  </div>
+  <mat-list *ngFor="let point of points">
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <div class="item-content">
+        <div class="item-text">{{ point.title }}</div>
+        <button mat-icon-button class="item-button" (click)="onEdit(point.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </mat-list-item>
+
+  </mat-list>
 </div>
 <mat-divider></mat-divider>

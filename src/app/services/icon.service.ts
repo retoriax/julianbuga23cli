@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as L from "leaflet";
 import {BugapointService} from "./bugapoint.service";
-import {icon} from "leaflet";
 
 
 
@@ -14,36 +13,23 @@ interface IconPicture {
   providedIn: 'root'
 })
 export class IconService {
-  iconsPictureCache: { [discriminator: string] : string} = {};
   iconsCache: { [key: string]: L.Icon } = {};
+  iconsPromises: { [key: string]: Promise<string> } = {};
+  fileExistsBooleans: { [key: string]: boolean} = {};
+
   constructor( private bugapointService: BugapointService) {
-    fetch("././assets/MapIcons/icons.json")
-      .then(response => {
-        return response.json();
+    this.bugapointService.getDiscriminators().subscribe(discriminators => {
+      discriminators.forEach((discriminator) => {
+        this.getIconFromDiscriminator(discriminator);
       })
-      .then(jsondata => {
-        jsondata.forEach((obj: IconPicture) => {
-          this.iconsPictureCache[obj.discriminator] = obj.src;
-        })
-        this.bugapointService.findAll().subscribe(bugapoints => {
-
-          let alreadyIn = new Set;
-          bugapoints.forEach((bugapoint) => {
-            if (!alreadyIn.has(bugapoint.discriminator)){
-              alreadyIn.add(bugapoint.discriminator);
-              this.getIconFromDiscriminator(bugapoint.discriminator);
-            }
-          })
-        });
-      });
-
+    })
   }
 
   /**
    * Method to return an L.Icon for a given discriminator.
    * @param discriminator Discriminator
    */
-  getIconFromDiscriminator(discriminator: string): L.Icon {
+  async getIconFromDiscriminator(discriminator: string): Promise<L.Icon> {
 
     const iconUrl = `././assets/MapIcons/${discriminator.trim()}.png`;
     const defaultIconUrl = `././assets/MapIcons/Default.png`;
@@ -62,9 +48,9 @@ export class IconService {
       return this.iconsCache[iconUrl];
     }
     //Return the icon if there is a matching file
-    if (this.fileExists(iconUrl) && this.iconsPictureCache[discriminator.trim()]) {
+    if (this.fileExists(iconUrl)) {
       this.iconsCache[iconUrl] = L.icon({
-        iconUrl: this.iconsPictureCache[discriminator.trim()],
+        iconUrl: await this.merge(iconUrl),
         iconSize: [48 , 48],
       });
     }
@@ -77,14 +63,20 @@ export class IconService {
    * @param url
    */
   fileExists(url: string): boolean {
-    let http = new XMLHttpRequest();
-    http.open('GET', url, false);
-    http.send();
-    return http.status != 404 && !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
+    if (!this.fileExistsBooleans[url]) {
+      let http = new XMLHttpRequest();
+      http.open('GET', url, false);
+      http.send();
+      this.fileExistsBooleans[url] = http.status != 404 && !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
+    }
+    return this.fileExistsBooleans[url];
   }
 
-  merge(url: string, dei: string): Promise<string> {
-    return new Promise((resolve, reject) => {
+  merge(url: string): Promise<string> {
+    if (this.iconsPromises[url] !== undefined) {
+      return this.iconsPromises[url];
+    }
+    return this.iconsPromises[url] = new Promise((resolve, reject) => {
       const backgroundImage = new Image();
       backgroundImage.src = '././assets/MapIcons/Background.png';
       backgroundImage.onload = () => {
@@ -98,7 +90,6 @@ export class IconService {
           image1.src = url;
           image1.onload = () => {
             ctx.drawImage(image1, backgroundImage.width/2 - backgroundImage.width/4, backgroundImage.height/6, canvas.width/2, canvas.height/2);
-            console.log("{ 'discriminator' : " + dei + ", 'src' : '" + canvas.toDataURL("image/png") + "'},")
             resolve(canvas.toDataURL("image/png"));
           };
           image1.onerror = (e) => {

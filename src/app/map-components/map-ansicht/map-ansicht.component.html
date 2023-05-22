@@ -1,0 +1,17 @@
+<div class="map-ansicht">
+  <button class="ansicht-button" (click)="showPopup()">{{ selectedAnsichtOption }}</button>
+  <div class="ansicht-popup" *ngIf="showPopupFlag">
+    <div class="radio-row">
+      <input type="radio" id="Freie Bewegung" name="ansicht-option" value="Freie Bewegung" [(ngModel)]="selectedAnsichtOption" (change)="onAnsichtOptionSelected('Freie Bewegung')">
+      <label for="Freie Bewegung">Freie Bewegung</label>
+    </div>
+    <div class="radio-row">
+      <input type="radio" id="Luisenpark" name="ansicht-option" value="Luisenpark" [(ngModel)]="selectedAnsichtOption" (change)="onAnsichtOptionSelected('Luisenpark')">
+      <label for="Luisenpark">Luisenpark</label>
+    </div>
+    <div class="radio-row">
+      <input type="radio" id="Spinellipark" name="ansicht-option" value="Spinellipark" [(ngModel)]="selectedAnsichtOption" (change)="onAnsichtOptionSelected('Spinellipark')">
+      <label for="Spinellipark">Spinellipark</label>
+    </div>
+  </div>
+</div>
