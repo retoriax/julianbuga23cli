@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, ElementRef } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-map-ansicht',
@@ -10,19 +11,18 @@ export class MapAnsichtComponent {
   @Output() ansichtOptionSelected = new EventEmitter<string>();
 
   // Default selected option
-  selectedAnsichtOption = 'free-movement';
+  selectedAnsichtOption = 'Freie Bewegung';
 
   // Flag to show/hide popup
   showPopupFlag = false;
 
   // Inject the element reference of this component
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef, private snackBar: MatSnackBar) { }
 
   // Show/hide popup when button is clicked
   showPopup() {
     // Toggle popup flag
     this.showPopupFlag = !this.showPopupFlag;
-
     if (this.showPopupFlag) {
       // Add click event listener to document to close popup if clicked outside of it
       document.addEventListener('click', this.closePopup.bind(this));
@@ -47,21 +47,43 @@ export class MapAnsichtComponent {
   onAnsichtOptionSelected(selectedOption: string) {
     this.selectedAnsichtOption = selectedOption;
     this.ansichtOptionSelected.emit(selectedOption);
+
+    // Show a notification based on the selected option
+    switch (selectedOption) {
+      case 'Freie Bewegung':
+        this.showNotification('Jetzt kannst du dich frei auf der Karte bewegen.');
+        break;
+      case 'Luisenpark':
+        this.showNotification('Jetzt bist du auf dem Luisenpark festgelegt.');
+        break;
+      case 'Spinellipark':
+        this.showNotification('Jetzt bist du auf dem Spinellipark festgelegt.');
+        break;
+      default:
+        break;
+    }
+  }
+
+  showNotification(message: string) {
+    this.snackBar.open(message, 'Schließen', {
+      duration: 3000, // Duration in milliseconds
+      verticalPosition: 'top'
+    });
   }
 
   // Add event listeners for radio buttons on component initialization
   ngOnInit() {
-    const luisenparkRadioBtn = document.getElementById('luisenpark') as HTMLInputElement;
+    const luisenparkRadioBtn = document.getElementById('Luisenpark') as HTMLInputElement;
     if (luisenparkRadioBtn) {
       luisenparkRadioBtn.addEventListener('change', () => {
-        this.onAnsichtOptionSelected('luisenpark');
+        this.onAnsichtOptionSelected('Luisenpark');
       });
     }
 
-    const spinelliparkRadioBtn = document.getElementById('spinellipark') as HTMLInputElement;
+    const spinelliparkRadioBtn = document.getElementById('Spinellipark') as HTMLInputElement;
     if (spinelliparkRadioBtn) {
       spinelliparkRadioBtn.addEventListener('change', () => {
-        this.onAnsichtOptionSelected('spinellipark');
+        this.onAnsichtOptionSelected('Spinellipark');
       });
     }
   }
