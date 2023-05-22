@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as L from "leaflet";
 import {BugapointService} from "./bugapoint.service";
-import {icon} from "leaflet";
 
 
 
@@ -16,18 +15,14 @@ interface IconPicture {
 export class IconService {
   iconsCache: { [key: string]: L.Icon } = {};
   iconsPromises: { [key: string]: Promise<string> } = {};
+  fileExistsBooleans: { [key: string]: boolean} = {};
 
   constructor( private bugapointService: BugapointService) {
-    this.bugapointService.findAll().subscribe(bugapoints => {
-
-      let alreadyIn = new Set;
-      bugapoints.forEach((bugapoint) => {
-        if (!alreadyIn.has(bugapoint.discriminator)){
-          alreadyIn.add(bugapoint.discriminator);
-          this.getIconFromDiscriminator(bugapoint.discriminator);
-        }
+    this.bugapointService.getDiscriminators().subscribe(discriminators => {
+      discriminators.forEach((discriminator) => {
+        this.getIconFromDiscriminator(discriminator);
       })
-    });
+    })
   }
 
   /**
@@ -68,10 +63,13 @@ export class IconService {
    * @param url
    */
   fileExists(url: string): boolean {
-    let http = new XMLHttpRequest();
-    http.open('GET', url, false);
-    http.send();
-    return http.status != 404 && !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
+    if (!this.fileExistsBooleans[url]) {
+      let http = new XMLHttpRequest();
+      http.open('GET', url, false);
+      http.send();
+      this.fileExistsBooleans[url] = http.status != 404 && !(http.response.toString().charAt(1) == "!" && http.response.toString().charAt(2) == "D" && http.response.toString().charAt(3) == "O");
+    }
+    return this.fileExistsBooleans[url];
   }
 
   merge(url: string): Promise<string> {
