@@ -18,9 +18,9 @@ export class RegisterFormComponent {
   @Output() userCreated = new EventEmitter<void>();
 
   email = new FormControl('', [Validators.required, Validators.email]);
-  vorname = new FormControl('', Validators.required);
-  nachname = new FormControl('', Validators.required);
-  password = new FormControl('', Validators.required);
+  vorname = new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]);
+  nachname = new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)] );
+  password = new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]);
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -47,8 +47,8 @@ export class RegisterFormComponent {
 
   createUser() {
     let request = new RegisterRequest();
-    request.firstname = this.vorname.value!;
-    request.lastname = this.nachname.value!;
+    request.firstname = this.vorname.value!.trim();
+    request.lastname = this.nachname.value!.trim();
     request.email = this.email.value!;
     request.password = this.password.value!;
     console.log(request);
@@ -57,6 +57,6 @@ export class RegisterFormComponent {
   }
 
   isFormValid(): boolean {
-    return this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid;
+    return this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid && this.fourthFormGroup.valid;
   }
 }
