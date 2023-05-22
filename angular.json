@@ -30,7 +30,6 @@
               }
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/custom-theme.scss",
               "src/styles.css",
               "node_modules/leaflet/dist/leaflet.css",
@@ -142,12 +141,14 @@
 
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.css",
               "../node_modules/leaflet/dist/leaflet.css",
               "../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/mapbox-gl/dist/mapbox-gl.js"
+            ]
           }
         },
         "ionic-cordova-serve": {
