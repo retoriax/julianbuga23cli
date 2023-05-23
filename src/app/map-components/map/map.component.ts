@@ -38,7 +38,6 @@ export class MapComponent implements OnInit {
     this.onAnsichtOptionSelected('Freie Bewegung');
     this.map.attributionControl.remove();
 
-
     /**
      * Saves the current map view.
      */
@@ -183,6 +182,7 @@ export class MapComponent implements OnInit {
    */
   showRoute(points:Bugapoint[]) {
     const waypoints = points.map(point => {
+
       return {
         latLng: L.latLng(point.latitude, point.longitude)
       };
