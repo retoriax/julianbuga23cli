@@ -71,7 +71,7 @@ export class BugapointBoxComponent {
     this.unableToAddHighlight = true;
     this.snackBar.open(this.point.title + 'ist schon vorhanden!', '', {
       duration:3000,
-      verticalPosition:'bottom'
+      verticalPosition:'top'
     });
 
     // reset highlight after 1 second
@@ -88,7 +88,7 @@ export class BugapointBoxComponent {
     this.mergeHighlight = true;
     this.snackBar.open(this.point.title + 'wurde mit dem selben Routenpunkt vereint!', '', {
       duration:3000,
-      verticalPosition:'bottom'
+      verticalPosition:'top'
     });
 
     // reset highlight after 1 second
