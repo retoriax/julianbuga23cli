@@ -38,7 +38,6 @@ export class MapComponent implements OnInit {
     this.onAnsichtOptionSelected('Freie Bewegung');
     this.map.attributionControl.remove();
 
-
     /**
      * Saves the current map view.
      */
