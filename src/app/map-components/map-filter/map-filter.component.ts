@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, ViewChild } from '@angular/cor
 import { Bugapoint } from '../../model/bugapoint';
 import {BugapointService} from "../../services/bugapoint.service";
 import {CookieService} from "ngx-cookie-service";
+import {MapInteractionService} from "../../services/map-interaction.service";
 
 @Component({
   selector: 'app-map-filter',
@@ -19,7 +20,7 @@ export class MapFilterComponent implements OnInit {
 
   bugapoints: Bugapoint[];
 
-  constructor(private bugapointservice: BugapointService, private cookieService: CookieService) {}
+  constructor(private bugapointservice: BugapointService, private cookieService: CookieService, private mapInteraction: MapInteractionService) {}
 
   ngOnInit() {
     /**
@@ -70,6 +71,11 @@ export class MapFilterComponent implements OnInit {
       else this.selectedDiscriminators = new Set<string>(data);
       this.filterBugapoints();
     });
+
+    this.mapInteraction.routeEvent.subscribe(bugapoints => {
+      console.log(bugapoints);
+      bugapoints.forEach((point)=> this.showDiscriminator(point.discriminator));
+    })
   }
 
   /**
@@ -82,12 +88,7 @@ export class MapFilterComponent implements OnInit {
     } else {
       this.selectedDiscriminators.add(discriminator);
     }
-
-    // Überprüfung ob alle Chips ausgewählt sind
-    this.alleSelected = this.selectedDiscriminators.size == this.discriminatorSet.size;
-
-    // Ausführen des Filters
-    this.filterBugapoints();
+    this.checkAllAndFilter();
   }
 
   /**
@@ -128,7 +129,61 @@ export class MapFilterComponent implements OnInit {
   updateBugapoints() {
     this.bugapointservice.findAll().subscribe((bugapoints: Bugapoint[]) => {
       this.bugapoints = bugapoints;
-      this.filterBugapoints();
+      this.checkAllAndFilter();
     });
+  }
+
+  /**
+   * Method to select all bugapoints in the filter.
+   */
+  selectAll() {
+    this.selectedDiscriminators = new Set(this.discriminatorSet);
+    this.checkAllAndFilter();
+  }
+
+  /**
+   * Method to select one or multiple chips in the filter.
+   * @param discriminators Discriminators
+   */
+  selectDiscriminators(discriminators: string[]) {
+    for (const discriminator in discriminators) {
+      if (!this.discriminatorSet.has(discriminator)) {
+        console.warn(this.discriminatorSet + " does not have discriminator " + discriminator);
+        return;
+      }
+    }
+    this.selectedDiscriminators = new Set<string>;
+    discriminators.forEach((discriminator) => this.selectedDiscriminators.add(discriminator));
+    this.checkAllAndFilter();
+  }
+
+  /**
+   * Method to select no chip in the filter.
+   */
+  selectNone() {
+    this.selectedDiscriminators = new Set(null);
+    this.checkAllAndFilter();
+  }
+
+  /**
+   * Enables the selected discriminator in the filter.
+   * @param discriminator
+   */
+  showDiscriminator(discriminator: string) {
+    if (!this.discriminatorSet.has(discriminator)) {
+      console.warn(this.discriminatorSet + " does not have discriminator " + discriminator);
+      return;
+    }
+    this.selectedDiscriminators.add(discriminator);
+    this.checkAllAndFilter();
+
+  }
+
+  checkAllAndFilter() {
+    // Überprüfung ob alle Chips ausgewählt sind
+    this.alleSelected = this.selectedDiscriminators.size == this.discriminatorSet.size;
+
+    // Ausführen des Filters
+    this.filterBugapoints();
   }
 }
