@@ -18,7 +18,6 @@ export class BugapointService {
     this.reload$ = new Subject<any>();
     this.findAll();
     this.getDiscriminators();
-    setInterval(this.forceReload, 30000)
   }
 
   /**
@@ -34,26 +33,14 @@ export class BugapointService {
    * returns all bugapoints
    */
   findAll(query?: string): Observable<Bugapoint[]> {
-    if (!this.bugapointCache$) {
-      this.bugapointCache$ = this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list?` + query).pipe(
-        takeUntil(this.reload$),
-        shareReplay(1)
-      );
-    }
-    return this.bugapointCache$;
+    return this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list?` + query);
   }
 
   /**
    * Returns all discriminators.
    */
   getDiscriminators(): Observable<string[]> {
-    if (!this.discriminatorCache$) {
-      this.discriminatorCache$ = this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`).pipe(
-        takeUntil(this.reload$),
-        shareReplay(1)
-      );
-    }
-    return this.discriminatorCache$;
+    return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
   }
 
 }
