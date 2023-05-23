@@ -69,7 +69,7 @@ export class BugapointBoxComponent {
   unableToAddHighlightRouteBugapoint() {
     // set highlight to true
     this.unableToAddHighlight = true;
-    this.snackBar.open(this.point.title + 'ist schon vorhanden!', '', {
+    this.snackBar.open(this.point.title + ' ist schon vorhanden!', '', {
       duration:3000,
       verticalPosition:'top'
     });
@@ -86,7 +86,7 @@ export class BugapointBoxComponent {
   mergeHighlightRouteBugapoint() {
     // set highlight to true
     this.mergeHighlight = true;
-    this.snackBar.open(this.point.title + 'wurde mit dem selben Routenpunkt vereint!', '', {
+    this.snackBar.open(this.point.title + ' wurde mit dem selben Routenpunkt vereint!', '', {
       duration:3000,
       verticalPosition:'top'
     });
