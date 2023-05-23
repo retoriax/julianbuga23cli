@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, shareReplay, Subject, takeUntil} from 'rxjs';
+import {Observable, shareReplay, Subject, take, takeUntil} from 'rxjs';
 import {Bugapoint} from "../model/bugapoint";
 import {environment} from "../../environments/environment.development";
 
@@ -16,8 +16,9 @@ export class BugapointService {
 
   constructor(private http: HttpClient) {
     this.reload$ = new Subject<any>();
-    this.findAll();
+    this.findAllWithCache();
     this.getDiscriminators();
+    setInterval(this.forceReload, 30000);
   }
 
   /**
@@ -25,8 +26,8 @@ export class BugapointService {
    */
   forceReload() {
     this.reload$?.next(null);
-    this.discriminatorCache$ = null;
     this.bugapointCache$ = null;
+    this.discriminatorCache$ = null;
   }
 
   /**
@@ -40,7 +41,21 @@ export class BugapointService {
    * Returns all discriminators.
    */
   getDiscriminators(): Observable<string[]> {
-    return this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`);
+    if (!this.discriminatorCache$) {
+      this.discriminatorCache$ = this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/discriminators`).pipe(
+        takeUntil(this.reload$),
+        shareReplay(1)
+      );
+    }
+    return this.discriminatorCache$;
   }
 
+  findAllWithCache(): Observable<Bugapoint[]> {
+    if (!this.bugapointCache$) {
+      this.bugapointCache$ = this.http.get<Bugapoint[]>(environment.backEndUrl + `${this.subPath}/list?`).pipe(
+        takeUntil(this.reload$),
+        shareReplay(1))
+    }
+    return this.bugapointCache$;
+  }
 }

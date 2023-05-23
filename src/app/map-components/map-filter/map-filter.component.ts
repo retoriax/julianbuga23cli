@@ -127,7 +127,7 @@ export class MapFilterComponent implements OnInit {
    * Method to get the bugapoints from the database.
    */
   updateBugapoints() {
-    this.bugapointservice.findAll().subscribe((bugapoints: Bugapoint[]) => {
+    this.bugapointservice.findAllWithCache().subscribe((bugapoints: Bugapoint[]) => {
       this.bugapoints = bugapoints;
       this.checkAllAndFilter();
     });
