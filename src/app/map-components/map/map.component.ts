@@ -159,8 +159,8 @@ export class MapComponent implements OnInit {
           [49.492965547797894, 8.506547916954819]
         );
         this.map.setMaxBounds(luisenparkBounds);
-        this.map.setMinZoom(16);
-        this.map.setView([49.48371930307348, 8.496315119052708], 16, {animate: true});
+        this.map.setMinZoom(15);
+        this.map.setView([49.483698361001274, 8.494909619970286], 15, {animate: true});
         break;
       case 'Spinellipark':
         const spinelliparkBounds = L.latLngBounds(
@@ -168,8 +168,8 @@ export class MapComponent implements OnInit {
           [49.4904377789783, 8.539246483439282]
         );
         this.map.setMaxBounds(spinelliparkBounds);
-        this.map.setMinZoom(16);
-        this.map.setView([49.49932789444491, 8.521721254426689], 16, {animate: true});
+        this.map.setMinZoom(14);
+        this.map.setView([49.49929999974953, 8.522955113590827], 15, {animate: true});
         break;
       default:
         break;
