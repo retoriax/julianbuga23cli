@@ -50,8 +50,6 @@ export class MapInteractionService {
   }
 
   addPointToRoute(bugapoint: Bugapoint) {
-    console.log(bugapoint);
-    console.log(this.lastAdded);
     if (this.lastAdded?.id == bugapoint.id) {
       this.snackBar.open("Der Punkt\n "+ bugapoint.title + ' \nwurde bereits hinzugefügt!', '', {
         duration:3000,
