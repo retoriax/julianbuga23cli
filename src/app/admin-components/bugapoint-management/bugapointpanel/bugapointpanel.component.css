@@ -1,5 +1,4 @@
 #bugapointpanel {
-
 }
 
 #bugapointpanel-content {
@@ -27,6 +26,7 @@ mat-form-field {
   flex-direction: row;
   justify-content: center;
   margin-right: 15px;
+  padding-bottom: 30vh;
 }
 
 button {
