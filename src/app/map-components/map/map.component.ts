@@ -131,7 +131,7 @@ export class MapComponent implements OnInit {
     });
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
-      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.description, bugapoint.discriminator, bugapoint.discriminator);
+      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.description, bugapoint.discriminator, bugapoint.iconname);
     }
   }
 
