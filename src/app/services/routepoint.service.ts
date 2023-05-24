@@ -40,6 +40,13 @@ export class RoutepointService {
     }
   }
 
+  getLastRoutePoint() : Bugapoint|null{
+    if (this.routepoints.length > 0) {
+      return this.routepoints[this.routepoints.length-1];
+    }
+    return null;
+  }
+
   /**
    * Deletes one point from routepoints.
    * Also calls deleteDoublePoints() to ensure no neighbouring Bugapoint that are the same occur
