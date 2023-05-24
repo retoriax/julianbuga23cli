@@ -38,7 +38,6 @@ export class MapComponent implements OnInit {
     this.onAnsichtOptionSelected('Freie Bewegung');
     this.map.attributionControl.remove();
 
-
     /**
      * Saves the current map view.
      */
@@ -132,7 +131,7 @@ export class MapComponent implements OnInit {
     });
     // Add new markers to the map based on the bugapoints data
     for (const bugapoint of this.bugapoints) {
-      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.description, bugapoint.discriminator, bugapoint.discriminator);
+      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.description, bugapoint.discriminator, bugapoint.iconname);
     }
   }
 
@@ -183,6 +182,7 @@ export class MapComponent implements OnInit {
    */
   showRoute(points:Bugapoint[]) {
     const waypoints = points.map(point => {
+
       return {
         latLng: L.latLng(point.latitude, point.longitude)
       };

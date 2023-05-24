@@ -30,10 +30,9 @@ export class IconService {
    * @param discriminator Discriminator
    */
   async getIconFromDiscriminator(discriminator: string): Promise<L.Icon> {
-
-    const iconUrl = `././assets/MapIcons/${discriminator.trim()}.png`;
     const defaultIconUrl = `././assets/MapIcons/Default.png`;
-
+    const iconUrl = `././assets/MapIcons/Default.png`;
+    if (discriminator != null) {const iconUrl = `././assets/MapIcons/${discriminator.trim()}.png`};
 
     //Adds the default Icon to the cache
     if(!this.iconsCache[defaultIconUrl]) {

@@ -208,6 +208,7 @@ export class BugapointpanelComponent implements OnInit {
       }
 
     }
+    this.bugapointService.forceReload();
   }
 
 
@@ -224,6 +225,7 @@ export class BugapointpanelComponent implements OnInit {
 
     await this.adminBugapointService.deleteBugapointById(this.point.id);
     await this.router.navigate(['admin/bugapoints'])
+    this.bugapointService.forceReload();
 
     this.snackBar.open(this.point.title + " wurde gelöscht.", "", sbConfig)
   }

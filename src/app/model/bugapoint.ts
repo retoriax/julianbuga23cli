@@ -13,4 +13,5 @@ export class Bugapoint {
   latitude : number;
   discriminator: string;
   description: string | null;
+  iconname: string;
 }

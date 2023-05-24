@@ -31,7 +31,7 @@
   right: -100%;
   max-width: 50%;
   width: 50vh;
-  height: 100vh;
+  height: calc(100% - 70px);
   background: rgba(227, 227, 227, 1);
   transition: 0.5s;
   text-align: center;
@@ -41,7 +41,9 @@
 .filter-list mat-chip-list {
   position: relative;
   top: 110px;
+  max-width: fit-content;
   left: 5px;
+  padding-bottom: 100px;
 }
 
 .y-scrollable {
@@ -49,8 +51,9 @@
   padding-right: 17px;
   box-sizing: content-box;
   overflow-y: scroll;
+  height: calc(100vh - 200px);
   overflow-x: hidden;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 70px);
   margin-bottom: 100px;
 }
 
@@ -63,6 +66,7 @@
 }
 
 mat-chip-option {
+  width: calc(98%);
   width: 95%;
   height: 4vh;
   margin-bottom: 1vh;
@@ -72,5 +76,15 @@ mat-chip-option {
 #alleSelectedChip {
   height: 6vh;
   font-size: 130%;
+}
+
+.filter-list mat-chip-list{
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.filter-list mat-chip-list::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
