@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Bugapoint} from "../../model/bugapoint";
-import {DatabaseSaveResponse} from "../DatabaseSaveResponse";
+import {DatabaseSaveResponse} from "../Responses/DatabaseSaveResponse";
 import {environment} from "../../../environments/environment.development";
 import {AuthenticationService} from "../authentication.service";
 import {LoginStatusrequest} from "../../model/login-statusrequest";
