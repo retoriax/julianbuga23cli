@@ -5,3 +5,33 @@
 .mat-mdc-form-field {
   margin-top: 16px;
 }
+
+.scroller {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.scroller::-webkit-scrollbar{
+  display: none; /* Safari and Chrome */
+}
+
+.scrollable {
+  height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.scrollable {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.placeholder {
+  height: 50vh;
+  width: 100%;
+}
