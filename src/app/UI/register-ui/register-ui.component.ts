@@ -6,12 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./register-ui.component.css']
 })
 export class RegisterUiComponent {
-  isTokenValid = false;
   isUserCreated = false;
-
-  onTokenValid() {
-    this.isTokenValid = true;
-  }
 
   onUserCreated() {
     this.isUserCreated = true;

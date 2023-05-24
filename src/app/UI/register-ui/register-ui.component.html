@@ -1,6 +1,5 @@
 <div class="center">
   <h1>Registriere dich</h1>
-  <app-token-checker *ngIf="!isTokenValid" (valid)="onTokenValid()"></app-token-checker>
-  <app-register-form *ngIf="isTokenValid && !isUserCreated" (userCreated)="onUserCreated()"></app-register-form>
+  <app-register-form (userCreated)="onUserCreated()"></app-register-form>
   <div *ngIf="isUserCreated">Ihr Benutzer wurde erstellt.</div>
 </div>
