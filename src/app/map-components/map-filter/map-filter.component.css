@@ -31,7 +31,7 @@
   right: -100%;
   max-width: 50%;
   width: 50vh;
-  height: calc(100% - 70px);
+  height: calc(100% - 60px);
   background: rgba(227, 227, 227, 1);
   transition: 0.5s;
   text-align: center;
@@ -51,9 +51,8 @@
   padding-right: 17px;
   box-sizing: content-box;
   overflow-y: scroll;
-  height: calc(100vh - 200px);
   overflow-x: hidden;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 60px);
   margin-bottom: 100px;
 }
 
