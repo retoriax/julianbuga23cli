@@ -17,13 +17,7 @@ export class IconService {
   iconsPromises: { [key: string]: Promise<string> } = {};
   fileExistsBooleans: { [key: string]: boolean} = {};
 
-  constructor( private bugapointService: BugapointService) {
-    this.bugapointService.getDiscriminators().subscribe(discriminators => {
-      discriminators.forEach((discriminator) => {
-        this.getIconFromDiscriminator(discriminator);
-      })
-    })
-  }
+  constructor( private bugapointService: BugapointService) {}
 
   /**
    * Method to return an L.Icon for a given discriminator.
@@ -31,8 +25,7 @@ export class IconService {
    */
   async getIconFromDiscriminator(discriminator: string): Promise<L.Icon> {
     const defaultIconUrl = `././assets/MapIcons/Default.png`;
-    const iconUrl = `././assets/MapIcons/Default.png`;
-    if (discriminator != null) {const iconUrl = `././assets/MapIcons/${discriminator.trim()}.png`};
+    const iconUrl = `././assets/MapIcons/${discriminator.trim()}.png`;
 
     //Adds the default Icon to the cache
     if(!this.iconsCache[defaultIconUrl]) {
