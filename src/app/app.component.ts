@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { inject } from '@vercel/analytics';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,6 @@ export class AppComponent {
 
   constructor() {
     this.title = 'Buga23 App';
+    inject();
   }
 }
