@@ -51,7 +51,6 @@ export class RegisterFormComponent {
     request.lastname = this.nachname.value!.trim();
     request.email = this.email.value!;
     request.password = this.password.value!;
-    console.log(request);
     this.authService.register(request);
     this.userCreated.emit();
   }

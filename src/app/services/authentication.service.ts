@@ -48,7 +48,6 @@ export class AuthenticationService {
         // @TODO visual response in frontend
       },
       complete: () => {
-        console.log('Register request completed');
       }
     });
   }
@@ -56,13 +55,11 @@ export class AuthenticationService {
   public login(request: loginrequest, callback: (role: string) => void) {
     const respone = this.http.post<AuthenticationResponse>(this.loginUrl, request).subscribe({
       next: (data) => {
-        console.log("hier is token zum speichern"+ data)
         this.setCookie(data)
         callback(data.role)
       },
       error: (error: any) => {
         if (error.status === 403) {
-          console.error('Unauthorized access');
           callback("no")
           // @TODO visual response in frontend
         } else {
@@ -72,7 +69,6 @@ export class AuthenticationService {
         }
       },
       complete: () => {
-        console.log('Login request completed');
       }
     });
   }
@@ -81,14 +77,11 @@ export class AuthenticationService {
   public checkIfLoggedIn(callback: (success: boolean) => void) {
     const statusrequest: LoginStatusrequest = new LoginStatusrequest();
     statusrequest.token = this.cookieService.get('token');
-    console.log('Authorization header:' + statusrequest);
     this.http.post<boolean>(this.loginStatusUrl, statusrequest).subscribe({
       next: (data) => {
         if (data) {
-          console.log("eingeloggt service")
           callback(true);
         } else {
-          console.log("nicht eingeloggt service ")
           callback(false);
         }
       },
@@ -97,7 +90,6 @@ export class AuthenticationService {
         callback(false);
       },
       complete: () => {
-        console.log('Login status check completed');
       }
     });
   }
