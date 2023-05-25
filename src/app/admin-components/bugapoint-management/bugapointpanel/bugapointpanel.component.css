@@ -4,7 +4,8 @@
 }
 
 #bugapointpanel-content {
-
+  overflow: auto;
+  height: calc(100vh - 280px);
 }
 
 mat-expansion-panel {
