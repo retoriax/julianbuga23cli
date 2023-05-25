@@ -68,8 +68,7 @@ export class MapFilterComponent implements OnInit {
             this.alleSelected = false;
           }
       }
-      else this.selectedDiscriminators = new Set<string>(data);
-      this.filterBugapoints();
+      this.selectDiscriminators(["Eingang & Ausgang"]);
     });
 
     this.mapInteraction.routeEvent.subscribe(bugapoints => {
@@ -146,14 +145,15 @@ export class MapFilterComponent implements OnInit {
    * @param discriminators Discriminators
    */
   selectDiscriminators(discriminators: string[]) {
-    for (const discriminator in discriminators) {
+    discriminators.forEach((discriminator) => {
       if (!this.discriminatorSet.has(discriminator)) {
         console.warn(this.discriminatorSet + " does not have discriminator " + discriminator);
         return;
       }
-    }
+    })
     this.selectedDiscriminators = new Set<string>;
     discriminators.forEach((discriminator) => this.selectedDiscriminators.add(discriminator));
+    console.log(this.selectedDiscriminators);
     this.checkAllAndFilter();
   }
 
