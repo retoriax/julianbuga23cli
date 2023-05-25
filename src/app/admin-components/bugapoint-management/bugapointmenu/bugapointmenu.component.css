@@ -13,5 +13,6 @@ button {
 }
 
 #bugapointmenu {
-
+  overflow: auto;
+  height: calc(100vh - 280px);
 }
