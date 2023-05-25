@@ -195,6 +195,9 @@ export class BugapointpanelComponent implements OnInit {
           saveBugapoint.description = trim(this.descriptionForm.value);
         }
         saveBugapoint.discriminator = trim(this.discriminatorForm.value);
+        saveBugapoint.iconname = saveBugapoint.discriminator;
+
+        console.log(saveBugapoint)
 
         const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.saveBugapoint(saveBugapoint);
 
