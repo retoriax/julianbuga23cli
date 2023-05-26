@@ -68,7 +68,7 @@ export class MapFilterComponent implements OnInit {
             this.alleSelected = false;
           }
       }
-      this.selectDiscriminators(["Eingang & Ausgang"]);
+      else this.selectDiscriminators(["Eingang & Ausgang"]);
     });
 
     this.mapInteraction.routeEvent.subscribe(bugapoints => {
