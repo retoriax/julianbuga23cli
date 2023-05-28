@@ -25,3 +25,32 @@ input.example-right-align::-webkit-inner-spin-button {
   margin-top: 10px;
 }
 
+
+
+.backButton {
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100px;
+  background: rgba(227, 227, 227, 0.86);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-right-radius: 15px;
+}
+
+.backButtonLink {
+  text-decoration: none;
+  color: #000;
+}
+
+.backButton p {
+  font-size: 17px;
+}
+
+.backButton ion-icon {
+  font-size: 50px;
+}
+
+
+

@@ -62,24 +62,9 @@ export class NavbarComponent implements OnInit{
           case Navigation.Blank: setActive(list.item(1) as HTMLElement); break;
           case Navigation.Map: setActive(list.item(2) as HTMLElement); break;
           case Navigation.Blank: setActive(list.item(3) as HTMLElement); break;
-          case Navigation.Login || Navigation.Register: setActive(list.item(4) as HTMLElement); break;
+          case Navigation.Login || Navigation.Register || Navigation.Help: setActive(list.item(4) as HTMLElement); break;
         }
       });
 
-  }
-
-  /**
-   * Test method to check if admin is logged in.
-   */
-  routeHelp() {
-    this.authservice.checkIfLoggedIn((success: boolean) => {
-      if (success) {
-        console.log("Du bist eingeloggt!");
-        this.router.navigate(['/admin/menu'])
-      } else {
-        console.log("Du bist nicht eingeloggt.");
-        this.router.navigate(['/login'])
-      }
-    });
   }
 }

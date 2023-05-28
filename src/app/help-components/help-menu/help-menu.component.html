@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="header">
+    <h1>Help</h1>
+  </div>
+  <div class="help-categorie">
+    <a href="">Impressum</a>
+  </div>
+  <div class="help-categorie">
+    <ion-icon name="person-circle-outline"></ion-icon>
+    <a *ngIf="adminName !== null; else loginLink" (click)="routeHelp()">Hallo {{adminName}}</a>
+    <ng-template #loginLink>
+      <a (click)="routeHelp()">Login</a>
+    </ng-template>
+  </div>
+</div>

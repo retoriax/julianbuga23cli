@@ -48,6 +48,7 @@ import {BugapointmenuComponent} from "./admin-components/bugapoint-management/bu
 import {BugapointlistComponent} from "./admin-components/bugapoint-management/bugapointlist/bugapointlist.component";
 import {BugapointpanelComponent} from "./admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component";
 import {MapAnsichtComponent} from "./map-components/map-ansicht/map-ansicht.component";
+import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component";
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import {MapAnsichtComponent} from "./map-components/map-ansicht/map-ansicht.comp
     MapAnsichtComponent,
     FilterComponent,
     BugapointDragAndDropComponent,
+    HelpMenuComponent,
   ],
   imports: [
     BrowserModule,
