@@ -9,6 +9,7 @@ import {RegisterUiComponent} from "./UI/register-ui/register-ui.component";
 import {LoginFormComponent} from "./login-form/login-form.component";
 import {BugapointpanelComponent} from "./admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component";
 import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component";
+import {ImpressumComponent} from "./help-components/impressum/impressum.component";
 
 
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'map', component: MapComponent},
   { path: 'register', component: RegisterUiComponent},
   { path: 'help', component: HelpMenuComponent},
+  { path: 'impressum', component: ImpressumComponent},
   { path: 'login', component: LoginFormComponent},
   { path: 'admin/menu', component: AdminpanelMenuComponent},
   { path: 'admin/bugapoints', component: BugapointmenuComponent},

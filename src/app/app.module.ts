@@ -49,6 +49,7 @@ import {BugapointlistComponent} from "./admin-components/bugapoint-management/bu
 import {BugapointpanelComponent} from "./admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component";
 import {MapAnsichtComponent} from "./map-components/map-ansicht/map-ansicht.component";
 import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component";
+import {ImpressumComponent} from "./help-components/impressum/impressum.component";
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component
     FilterComponent,
     BugapointDragAndDropComponent,
     HelpMenuComponent,
+    ImpressumComponent,
   ],
   imports: [
     BrowserModule,
