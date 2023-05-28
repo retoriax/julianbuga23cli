@@ -37,9 +37,6 @@ input.example-right-align::-webkit-inner-spin-button {
   align-items: center;
   justify-content: center;
   border-bottom-right-radius: 15px;
-}
-
-.backButtonLink {
   text-decoration: none;
   color: #000;
 }
