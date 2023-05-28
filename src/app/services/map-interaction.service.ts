@@ -6,6 +6,7 @@ import {Navigation} from "./navigation";
 import {MapFilterComponent} from "../map-components/map-filter/map-filter.component";
 import {RoutepointService} from "./routepoint.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,16 @@ export class MapInteractionService {
 
   lastAdded: Bugapoint|undefined;
 
-  constructor(private navigationService: NavigationService, private routePoint: RoutepointService, private snackBar: MatSnackBar) {
+  constructor(private navigationService: NavigationService, private routePoint: RoutepointService, private snackBar: MatSnackBar, private cookieService: CookieService) {
     routePoint.routepointsObservable.subscribe((points) => {
       this.lastAdded = points.at(points.length-1);
     });
+    if (this.cookieService.check("currentRoute") && this.cookieService.get("currentRoute").length>6) {
+      const bugapointsCookie: Bugapoint[] = JSON.parse(this.cookieService.get("currentRoute"));
+      this.routePoint.loadRoute(bugapointsCookie);
+      bugapointsCookie.forEach((point) => this.routeEvent.emit([point]));
+      this.routeSubject.next(bugapointsCookie);
+    }
   }
 
   showBugapoint(bugapoint: Bugapoint|null) {
@@ -63,6 +70,5 @@ export class MapInteractionService {
       verticalPosition:'top'
     });
   }
-
 
 }

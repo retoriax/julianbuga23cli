@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Bugapoint} from "../model/bugapoint";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
 import {BehaviorSubject} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 /**
  * Service to share a Route consisting of Routepoints.
@@ -111,4 +112,7 @@ export class RoutepointService {
     this.unableToAddRoutepointIndexSubject.next(-1);
   }
 
+  loadRoute(route: Bugapoint[]) {
+    this.routepointsSubject.next(route);
+  }
 }

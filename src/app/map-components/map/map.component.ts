@@ -5,6 +5,7 @@ import {Bugapoint} from "../../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
 import {MapInteractionService} from "../../services/map-interaction.service";
 import {IconService} from "../../services/icon.service";
+import {bug} from "ionicons/icons";
 
 
 @Component({
@@ -15,6 +16,7 @@ import {IconService} from "../../services/icon.service";
 export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
+  routepoints: Bugapoint[] | null;
 
   constructor(private cookieService: CookieService,
               private mapInteractionService: MapInteractionService,
@@ -63,10 +65,11 @@ export class MapComponent implements OnInit {
      * Shows the Route if there are any changes to the displayedBugapointObservable in the mapInteractionService
      */
     this.mapInteractionService.routeObservable.subscribe(bugapoints => {
+      if (bugapoints.length == 0) return;
+      this.cookieService.set("currentRoute", JSON.stringify(bugapoints));
       this.displayPointCentered(bugapoints[0], 18);
       this.showRoute(bugapoints);
     });
-    this.mapInteractionService.clearRoute();
   }
 
   /**
@@ -86,24 +89,24 @@ export class MapComponent implements OnInit {
    * @param title Title
    * @param discriminator Discriminator
    */
-  async showMarker(latitude: number, longitude: number, title: string, description: string | null, discriminator: string, icon: string, bugapoint: Bugapoint) {
+  async showMarker(bugapoint: Bugapoint) {
     // Define the HTML content for the popup
-    const hasDescription = !!description; // Check if description is truthy (not empty or null)
-    const additionalInfoButton = hasDescription ? `<button id="toggle-info-${latitude}-${longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button>` : '';
+    const hasDescription = !!bugapoint.description; // Check if description is truthy (not empty or null)
+    const additionalInfoButton = hasDescription ? `<button id="toggle-info-${bugapoint.latitude}-${bugapoint.longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button>` : '';
     const popupContent = `
-    <div style="font-size: 16px;"><b>${title}</b></div> <!-- Title of the popup -->
-    <div id="additional-info-${latitude}-${longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${description}</div> <!-- Additional information that can be toggled to display or hide -->
+    <div style="font-size: 16px;"><b>${bugapoint.title}</b></div> <!-- Title of the popup -->
+    <div id="additional-info-${bugapoint.latitude}-${bugapoint.longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${bugapoint.description}</div> <!-- Additional information that can be toggled to display or hide -->
     <div style="margin-top: 10px;">
       <button id="button-${bugapoint.id}" class="popup-add-to-route-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: #007bff; color: white;"><i class="fa fa-plus"></i> Zur Route hinzufügen</button> <!-- Button to add the location to a route -->
       ${additionalInfoButton}
     </div>
   `;
     // Create a new marker on the map, set its popup content, and set its icon based on the discriminator
-    const marker = L.marker([latitude, longitude]).addTo(this.map).bindPopup(popupContent).setIcon(await this.iconService.getIconFromDiscriminator(icon));
+    const marker = L.marker([bugapoint.latitude, bugapoint.longitude]).addTo(this.map).bindPopup(popupContent).setIcon(await this.iconService.getIconFromDiscriminator(bugapoint.iconname));
     // When the popup is opened, add an event listener to the toggle button to show/hide the additional information
     marker.on('popupopen', (a) => {
-      const toggleButton = document.getElementById(`toggle-info-${latitude}-${longitude}`);
-      const additionalInfoContainer = document.getElementById(`additional-info-${latitude}-${longitude}`);
+      const toggleButton = document.getElementById(`toggle-info-${bugapoint.latitude}-${bugapoint.longitude}`);
+      const additionalInfoContainer = document.getElementById(`additional-info-${bugapoint.latitude}-${bugapoint.longitude}`);
       a.target.getPopup().getElement().querySelector("#button-"+bugapoint.id).addEventListener("click", () => {this.mapInteractionService.addPointToRoute(bugapoint)})
       if (toggleButton && additionalInfoContainer) {
         toggleButton.onclick = (event) => {
@@ -131,9 +134,12 @@ export class MapComponent implements OnInit {
       }
     });
     // Add new markers to the map based on the bugapoints data
-    for (const bugapoint of this.bugapoints) {
-      this.showMarker(bugapoint.latitude, bugapoint.longitude, bugapoint.title, bugapoint.description, bugapoint.discriminator, bugapoint.iconname, bugapoint);
-    }
+    this.bugapoints.forEach((point) => {
+      this.showMarker(point);
+    });
+    this.routepoints?.forEach((point) => {
+      this.showMarker(point);
+    });
   }
 
   /**
@@ -188,6 +194,11 @@ export class MapComponent implements OnInit {
         latLng: L.latLng(point.latitude, point.longitude)
       };
     });
+    this.routepoints = points;
+    points.forEach((point) => {
+      this.showMarker(point);
+    })
+
 
     L.Routing.control({
       addWaypoints: false,

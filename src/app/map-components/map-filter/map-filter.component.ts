@@ -70,11 +70,6 @@ export class MapFilterComponent implements OnInit {
       }
       else this.selectDiscriminators(["Eingang & Ausgang"]);
     });
-
-    this.mapInteraction.routeEvent.subscribe(bugapoints => {
-      console.log(bugapoints);
-      bugapoints.forEach((point)=> this.showDiscriminator(point.discriminator));
-    })
   }
 
   /**
@@ -96,9 +91,7 @@ export class MapFilterComponent implements OnInit {
   filterBugapoints(): void {
     if (this.bugapoints != null && this.discriminatorSet != null) {
       const selectedDiscriminatorsString = Array.from(this.selectedDiscriminators).join(",");
-      if (selectedDiscriminatorsString) {
-        this.cookieService.set("selectedDiscriminators", selectedDiscriminatorsString);
-      }
+      this.cookieService.set("selectedDiscriminators", selectedDiscriminatorsString);
       // Apply the selected filters to the bugapoints list and emit to parent
       this.filteredBugapointsChange.emit(this.bugapoints
         .filter((bugapoint: Bugapoint) => {
@@ -114,11 +107,10 @@ export class MapFilterComponent implements OnInit {
     if (this.alleSelected) {
       this.alleSelected = false;
       this.selectedDiscriminators = new Set<string>();
-      this.filteredBugapointsChange.emit([]);
-      return;
+    } else {
+      this.alleSelected = true;
+      this.selectedDiscriminators = new Set(this.discriminatorSet);
     }
-    this.alleSelected = true;
-    this.selectedDiscriminators = new Set(this.discriminatorSet);
     this.filterBugapoints();
   }
 
