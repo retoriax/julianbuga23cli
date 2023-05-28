@@ -13,14 +13,18 @@ export class RegisterFormComponent {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
+  fifthFormGroup: FormGroup;
   isLinear = false;
   hide = true;
+  hideWdh = true;
+  notMatch = false;
   @Output() userCreated = new EventEmitter<void>();
 
   email = new FormControl('', [Validators.required, Validators.email]);
   vorname = new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]);
   nachname = new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)] );
   password = new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]);
+  passwordWdh = new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]);
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -43,9 +47,16 @@ export class RegisterFormComponent {
     this.thirdFormGroup = this._formBuilder.group({
       password: this.password
     });
+    this.fifthFormGroup = this._formBuilder.group({
+      passwordWdh: this.passwordWdh
+    })
   }
 
   createUser() {
+    if (this.password.value != this.passwordWdh.value) {
+      this.notMatch = true;
+      return;
+    } else this.notMatch = false;
     let request = new RegisterRequest();
     request.firstname = this.vorname.value!.trim();
     request.lastname = this.nachname.value!.trim();
@@ -56,6 +67,6 @@ export class RegisterFormComponent {
   }
 
   isFormValid(): boolean {
-    return this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid && this.fourthFormGroup.valid;
+    return this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid && this.fourthFormGroup.valid && this.fifthFormGroup.valid;
   }
 }

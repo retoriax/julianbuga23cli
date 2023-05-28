@@ -5,7 +5,7 @@
       <ng-template matStepLabel>Dein Vorname</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Vorname</mat-label>
-        <input matInput placeholder="First name" [formControl]="vorname" required>
+        <input matInput placeholder="Vorname" [formControl]="vorname" required>
       </mat-form-field>
       <div>
         <button mat-raised-button matStepperNext>Weiter</button>
@@ -17,7 +17,7 @@
       <ng-template matStepLabel>Dein Nachname</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Nachname</mat-label>
-        <input matInput placeholder="Last name" [formControl]="nachname" required>
+        <input matInput placeholder="Nachname" [formControl]="nachname" required>
       </mat-form-field>
       <div>
         <button mat-raised-button matStepperPrevious>Zurück</button>
@@ -49,6 +49,25 @@
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
+      <div>
+        <button mat-raised-button matStepperPrevious>Zurück</button>
+        <button mat-raised-button matStepperNext>Weiter</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="fifthFormGroup">
+    <form [formGroup]="fifthFormGroup">
+      <ng-template matStepLabel>Passwort wiederholen</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Passwort wiederholen</mat-label>
+        <input matInput [formControl]="passwordWdh" [type]="hideWdh ? 'password' : 'text'" required>
+        <button mat-icon-button matSuffix (click)="hideWdh = !hideWdh" [attr.aria-label]="'Verstecke Passwort'" [attr.aria-pressed]="hideWdh">
+          <mat-icon>{{hideWdh ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-error *ngIf="notMatch">
+        Passwörter sind nicht gleich!
+      </mat-error>
       <div>
         <button mat-raised-button matStepperPrevious>Zurück</button>
         <button mat-raised-button matStepperNext [disabled]="!isFormValid()" (click)="createUser()">Benutzer erstellen</button>
