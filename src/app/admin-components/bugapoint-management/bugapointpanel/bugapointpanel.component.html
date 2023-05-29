@@ -8,13 +8,13 @@
 
     <mat-form-field *ngIf="mode == 'new'">
       <mat-label>Titel</mat-label>
-      <input matInput [formControl]="titleForm">
+      <input matInput [formControl]="titleForm" (input)="changeNewPositionMarker()">
     </mat-form-field>
 
     <mat-form-field class="inputfield">
       <mat-label>Typ</mat-label>
       <input matInput placeholder="Wähle Typ aus" [matAutocomplete]="typeAuto" [formControl]="discriminatorForm">
-      <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
+      <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete" (optionSelected)="changeNewPositionMarker()">
         <mat-option *ngFor="let type of this.discriminators" [value]="type">
           {{type}}
         </mat-option>
@@ -24,7 +24,7 @@
     <mat-form-field class="inputfield">
       <mat-label>Icon</mat-label>
       <input matInput placeholder="Wähle Icon aus" [matAutocomplete]="adminIcon" [formControl]="iconnameForm">
-      <mat-autocomplete autoActiveFirstOption #adminIcon="matAutocomplete">
+      <mat-autocomplete autoActiveFirstOption #adminIcon="matAutocomplete" (optionSelected)="changeNewPositionMarker()">
         <mat-option *ngFor="let type of this.iconnames" [value]="type">
           {{type}}
         </mat-option>
