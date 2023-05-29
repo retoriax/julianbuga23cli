@@ -33,6 +33,7 @@ export class BugapointpanelComponent implements OnInit {
   //Variables
   point: Bugapoint
   admins: Admin[]
+  iconnames: string[]
   discriminators = new Set<string>;
 
   //Map stuff
@@ -51,6 +52,7 @@ export class BugapointpanelComponent implements OnInit {
   lngForm = new FormControl
   descriptionForm = new FormControl('')
   discriminatorForm = new FormControl;
+  iconnameForm = new FormControl;
 
   async ngOnInit(): Promise<void> {
     //Set mode by url
@@ -100,6 +102,8 @@ export class BugapointpanelComponent implements OnInit {
     await this.adminService.findAll().subscribe((data: Admin[]) => {
       this.admins = data;
     })
+
+    this.iconnames = await this.adminBugapointService.getIconnames()
 
     switch (this.mode) {
       case "update": { //Update setup

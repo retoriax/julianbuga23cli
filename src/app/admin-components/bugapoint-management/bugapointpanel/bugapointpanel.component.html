@@ -21,6 +21,16 @@
       </mat-autocomplete>
     </mat-form-field>
 
+    <mat-form-field class="inputfield">
+      <mat-label>Icon</mat-label>
+      <input matInput placeholder="Wähle Icon aus" [matAutocomplete]="adminIcon" [formControl]="iconnameForm">
+      <mat-autocomplete autoActiveFirstOption #adminIcon="matAutocomplete">
+        <mat-option *ngFor="let type of this.iconnames" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
 
     <mat-form-field class="inputfield">
       <mat-label>Beschreibung</mat-label>
