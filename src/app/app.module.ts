@@ -50,6 +50,7 @@ import {BugapointpanelComponent} from "./admin-components/bugapoint-management/b
 import {MapAnsichtComponent} from "./map-components/map-ansicht/map-ansicht.component";
 import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component";
 import {ImpressumComponent} from "./help-components/impressum/impressum.component";
+import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import {ImpressumComponent} from "./help-components/impressum/impressum.componen
     BugapointDragAndDropComponent,
     HelpMenuComponent,
     ImpressumComponent,
+    CookieBannerComponent,
   ],
   imports: [
     BrowserModule,
