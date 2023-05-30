@@ -1,0 +1,9 @@
+<div mat-dialog-title>Achtung</div>
+
+<div mat-dialog-content>
+  <p>Bist du dir sicher, dass du {{data.bugapoint.title}} löschen möchtest?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onSure()">Ja</button>
+  <button mat-raised-button (click)="onNotSure()">Nein</button>
+</div>
