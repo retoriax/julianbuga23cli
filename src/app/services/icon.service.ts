@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as L from "leaflet";
 import {BugapointService} from "./bugapoint.service";
-
 
 
 interface IconPicture {
@@ -29,11 +28,12 @@ export class IconService {
 
     //Adds the default Icon to the cache
     if(!this.iconsCache[defaultIconUrl]) {
-      const defaultIcon = L.icon({
+      this.iconsCache[defaultIconUrl] = L.icon({
         iconUrl: defaultIconUrl,
         iconSize: [48, 48],
+        iconAnchor: [20, 48],
+        popupAnchor: [0, -48]
       });
-      this.iconsCache[defaultIconUrl] = defaultIcon;
     }
     //Return the icon if it is already in cache.
     if (this.iconsCache[iconUrl]) {
@@ -44,6 +44,8 @@ export class IconService {
       this.iconsCache[iconUrl] = L.icon({
         iconUrl: await this.merge(iconUrl),
         iconSize: [48 , 48],
+        iconAnchor: [20, 48],
+        popupAnchor: [0, -48]
       });
     }
     else this.iconsCache[iconUrl] = this.iconsCache[defaultIconUrl];
