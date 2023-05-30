@@ -5,7 +5,6 @@ import {Bugapoint} from "../../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
 import {MapInteractionService} from "../../services/map-interaction.service";
 import {IconService} from "../../services/icon.service";
-import {bug} from "ionicons/icons";
 
 
 @Component({
@@ -84,10 +83,7 @@ export class MapComponent implements OnInit {
   /**
    * Method to add a simple marker to the map.
    *
-   * @param latitude Latitude
-   * @param longitude Longitude
-   * @param title Title
-   * @param discriminator Discriminator
+   * @param bugapoint Bugapoint
    */
   async showMarker(bugapoint: Bugapoint) {
     const marker = L.marker([bugapoint.latitude, bugapoint.longitude]).addTo(this.map).bindPopup(this.getPopup(bugapoint)).setIcon(await this.iconService.getIconFromDiscriminator(bugapoint.iconname));
