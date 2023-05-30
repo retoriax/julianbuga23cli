@@ -48,12 +48,12 @@ export class BugapointpanelComponent implements OnInit {
   title: string
 
   //Form controls
-  titleForm = new FormControl
-  adminForm = new FormControl
+  titleForm = new FormControl('')
+  adminForm = new FormControl('')
   latForm = new FormControl
   lngForm = new FormControl
   descriptionForm = new FormControl('')
-  discriminatorForm = new FormControl;
+  discriminatorForm = new FormControl('');
   iconnameForm = new FormControl('');
 
   async ngOnInit(): Promise<void> {
@@ -118,7 +118,7 @@ export class BugapointpanelComponent implements OnInit {
 
           await this.adminService.findAll().subscribe((data: Admin[]) => {
             this.admins = data;
-            this.adminForm.setValue(this.admins.find(a => a.id == this.point.adminID)?.emailadress);
+            this.adminForm.setValue(this.admins.find(a => a.id == this.point.adminID)?.emailadress + '');
           })
           this.discriminatorForm.setValue(this.point.discriminator)
           this.descriptionForm.setValue(this.point.description)
@@ -163,7 +163,7 @@ export class BugapointpanelComponent implements OnInit {
         try {
           let updatedPoint = new Bugapoint(this.latForm.value, this.lngForm.value)
           updatedPoint.description = this.descriptionForm.value;
-          updatedPoint.discriminator = this.discriminatorForm.value;
+          updatedPoint.discriminator = this.discriminatorForm.value + '';
           const admin$ = this.admins.find(a => a.emailadress == this.adminForm.value);
 
           if (admin$ != null) {
@@ -176,6 +176,8 @@ export class BugapointpanelComponent implements OnInit {
             this.point,
             updatedPoint
           );
+
+          console.log(bugaPointResponse)
 
           if (bugaPointResponse.success) {
             if (bugaPointResponse.failed?.length == 0) {
@@ -197,12 +199,12 @@ export class BugapointpanelComponent implements OnInit {
       }
       case "new": {
         let saveBugapoint: Bugapoint = new Bugapoint(this.latForm.value, this.lngForm.value);
-        saveBugapoint.title = trim(this.titleForm.value);
+        saveBugapoint.title = trim(this.titleForm.value + '');
         saveBugapoint.adminID = this.admins.find(a => a.emailadress == this.adminForm.value)?.id;
         if (this.descriptionForm.value != null) {
           saveBugapoint.description = trim(this.descriptionForm.value);
         }
-        saveBugapoint.discriminator = trim(this.discriminatorForm.value);
+        saveBugapoint.discriminator = trim(this.discriminatorForm.value + '');
         saveBugapoint.iconname = saveBugapoint.discriminator;
 
         const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.saveBugapoint(saveBugapoint);
@@ -258,7 +260,7 @@ export class BugapointpanelComponent implements OnInit {
         break;
       }
       case "new": {
-        this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup(this.titleForm.value)
+        this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup(this.titleForm.value + '')
           .setIcon(await this.iconService.getIconFromDiscriminator(this.iconnameForm.value + ''));
         break;
       }
