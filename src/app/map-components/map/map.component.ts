@@ -5,6 +5,7 @@ import {Bugapoint} from "../../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
 import {MapInteractionService} from "../../services/map-interaction.service";
 import {IconService} from "../../services/icon.service";
+import {LatLng} from "leaflet";
 
 
 @Component({
@@ -16,6 +17,8 @@ export class MapComponent implements OnInit {
   map:any
   bugapoints: Bugapoint[];
   routepoints: Bugapoint[] | null;
+
+  userPosMarker: L.Marker;
 
   markerBackground : string = "Blue";
   markerActiveBackground: string = "Green";
@@ -82,6 +85,10 @@ export class MapComponent implements OnInit {
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
     this.bugapoints = filteredBugapoints;
     this.updateMarkers();
+
+    if (this.userPosMarker != null) {
+      this.userPosMarker.addTo(this.map)
+    }
   }
 
   /**
@@ -241,7 +248,7 @@ export class MapComponent implements OnInit {
       await Promise.all(
         (this.routepoints ?? [])
           .filter(point => point === bugapoint)
-          .map(async (point) => {
+          .map(async () => {
             set = true;
             await marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerRouteBackground));
           })
@@ -249,5 +256,21 @@ export class MapComponent implements OnInit {
         if (!set) marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerBackground));
       });
     });
+  }
+
+  async onMyLocation(userPos: LatLng) {
+    if (this.userPosMarker != null) {
+      this.userPosMarker.remove()
+    }
+
+    let userMarker = new Bugapoint(userPos.lat, userPos.lng)
+
+    userMarker.title = 'Deine Position'
+    userMarker.discriminator = 'Du befindest dich gerade ca. hier!'
+    userMarker.id = 0
+    userMarker.iconname = 'Standort'
+
+    this.userPosMarker = L.marker(userPos).addTo(this.map).bindPopup(this.getPopup(userMarker)).setIcon(await this.iconService.getIcon('Standort', 'Orange'))
+    this.addPopupEvent(this.userPosMarker, userMarker)
   }
 }
