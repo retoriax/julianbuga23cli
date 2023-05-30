@@ -88,5 +88,14 @@ export class AdminBugapointService {
   }
 
 
+  /**
+   * Gets all the different icon names from the backend.
+   */
+  async getIconnames(): Promise<string[]> {
+    return await lastValueFrom(this.http.get<string[]>(environment.backEndUrl + `${this.subPath}/iconnames`,
+      this.authService.getAuthheader()))
+  }
+
+
 
 }

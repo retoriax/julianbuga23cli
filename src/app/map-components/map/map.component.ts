@@ -5,7 +5,6 @@ import {Bugapoint} from "../../model/bugapoint";
 import {CookieService} from "ngx-cookie-service";
 import {MapInteractionService} from "../../services/map-interaction.service";
 import {IconService} from "../../services/icon.service";
-import {bug} from "ionicons/icons";
 
 
 @Component({
@@ -19,6 +18,10 @@ export class MapComponent implements OnInit {
   routepoints: Bugapoint[] | null;
   selectedAnsichtOption: string;
 
+
+  markerBackground : string = "Blue";
+  markerActiveBackground: string = "Green";
+  markerRouteBackground: string = "Red";
 
   constructor(private cookieService: CookieService,
               private mapInteractionService: MapInteractionService,
@@ -86,43 +89,12 @@ export class MapComponent implements OnInit {
   /**
    * Method to add a simple marker to the map.
    *
-   * @param latitude Latitude
-   * @param longitude Longitude
-   * @param title Title
-   * @param discriminator Discriminator
+   * @param bugapoint Bugapoint
+   * @param background
    */
-  async showMarker(bugapoint: Bugapoint) {
-    // Define the HTML content for the popup
-    const hasDescription = !!bugapoint.description; // Check if description is truthy (not empty or null)
-    const additionalInfoButton = hasDescription ? `<button id="toggle-info-${bugapoint.latitude}-${bugapoint.longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button>` : '';
-    const popupContent = `
-    <div style="font-size: 16px;"><b>${bugapoint.title}</b></div> <!-- Title of the popup -->
-    <div id="additional-info-${bugapoint.latitude}-${bugapoint.longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${bugapoint.description}</div> <!-- Additional information that can be toggled to display or hide -->
-    <div style="margin-top: 10px;">
-      <button id="button-${bugapoint.id}" class="popup-add-to-route-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: #007bff; color: white;"><i class="fa fa-plus"></i> Zur Route hinzufügen</button> <!-- Button to add the location to a route -->
-      ${additionalInfoButton}
-    </div>
-  `;
-    // Create a new marker on the map, set its popup content, and set its icon based on the discriminator
-    const marker = L.marker([bugapoint.latitude, bugapoint.longitude]).addTo(this.map).bindPopup(popupContent).setIcon(await this.iconService.getIconFromDiscriminator(bugapoint.iconname));
-    // When the popup is opened, add an event listener to the toggle button to show/hide the additional information
-    marker.on('popupopen', (a) => {
-      const toggleButton = document.getElementById(`toggle-info-${bugapoint.latitude}-${bugapoint.longitude}`);
-      const additionalInfoContainer = document.getElementById(`additional-info-${bugapoint.latitude}-${bugapoint.longitude}`);
-      a.target.getPopup().getElement().querySelector("#button-"+bugapoint.id).addEventListener("click", () => {this.mapInteractionService.addPointToRoute(bugapoint)})
-      if (toggleButton && additionalInfoContainer) {
-        toggleButton.onclick = (event) => {
-          event.preventDefault(); // prevent default behavior of anchor tag
-          if (additionalInfoContainer.style.display === 'none') {
-            additionalInfoContainer.style.display = 'block'; // show additional information
-            toggleButton.innerHTML = '<i class="fa fa-minus" style="color: #007bff;"></i> Details ausblenden'; // change the label of the toggle button to indicate that the information can be hidden
-          } else {
-            additionalInfoContainer.style.display = 'none'; // hide additional information
-            toggleButton.innerHTML = '<i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen'; // change the label of the toggle button to indicate that the information can be displayed
-          }
-        };
-      }
-    });
+  async showMarker(bugapoint: Bugapoint, background: string) {
+    const marker = L.marker([bugapoint.latitude, bugapoint.longitude]).addTo(this.map).bindPopup(this.getPopup(bugapoint)).setIcon(await this.iconService.getIcon(bugapoint.iconname, background));
+    this.addPopupEvent(marker, bugapoint);
   }
 
   /**
@@ -149,11 +121,14 @@ export class MapComponent implements OnInit {
     // Add new markers to the map based on the filtered bugapoints
     filteredBugapoints.forEach((point) => {
       this.showMarker(point);
+    // Add new markers to the map based on the bugapoints data
+    this.bugapoints.forEach((point) => {
+      this.showMarker(point, this.markerBackground).then(() => {});
     });
 
     // Show the route markers
     this.routepoints?.forEach((point) => {
-      this.showMarker(point);
+      this.showMarker(point, this.markerRouteBackground).then(() => {});
     });
   }
 
@@ -219,7 +194,7 @@ export class MapComponent implements OnInit {
     });
     this.routepoints = points;
     points.forEach((point) => {
-      this.showMarker(point);
+      this.showMarker(point, this.markerRouteBackground).then(() => {});
     })
 
 
@@ -251,5 +226,54 @@ export class MapComponent implements OnInit {
     const center = this.map.getCenter();
     const zoom = this.map.getZoom();
     this.cookieService.set('mapView', JSON.stringify({ center, zoom }));
+  }
+
+  getPopup(bugapoint: Bugapoint) : string {
+    // Define the HTML content for the popup
+    const hasDescription = !!bugapoint.description; // Check if description is truthy (not empty or null)
+    const additionalInfoButton = hasDescription ? `<button id="toggle-info-${bugapoint.latitude}-${bugapoint.longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button>` : '';
+    return `
+    <div style="font-size: 16px;"><b>${bugapoint.title}</b></div> <!-- Title of the popup -->
+    <div id="additional-info-${bugapoint.latitude}-${bugapoint.longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${bugapoint.description}</div> <!-- Additional information that can be toggled to display or hide -->
+    <div style="margin-top: 10px;">
+      <button id="button-${bugapoint.id}" class="popup-add-to-route-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: #007bff; color: white;"><i class="fa fa-plus"></i> Zur Route hinzufügen</button> <!-- Button to add the location to a route -->
+      ${additionalInfoButton}
+    </div>
+  `;
+  }
+
+  addPopupEvent(marker: L.Marker, bugapoint: Bugapoint) {
+    // When the popup is opened, add an event listener to the toggle button to show/hide the additional information
+    marker.on('popupopen', async (a) => {
+      marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerActiveBackground));
+      const toggleButton = document.getElementById(`toggle-info-${bugapoint.latitude}-${bugapoint.longitude}`);
+      const additionalInfoContainer = document.getElementById(`additional-info-${bugapoint.latitude}-${bugapoint.longitude}`);
+      a.target.getPopup().getElement().querySelector("#button-"+bugapoint.id).addEventListener("click", () => {this.mapInteractionService.addPointToRoute(bugapoint)})
+      if (toggleButton && additionalInfoContainer) {
+        toggleButton.onclick = (event) => {
+          event.preventDefault(); // prevent default behavior of anchor tag
+          if (additionalInfoContainer.style.display === 'none') {
+            additionalInfoContainer.style.display = 'block'; // show additional information
+            toggleButton.innerHTML = '<i class="fa fa-minus" style="color: #007bff;"></i> Details ausblenden'; // change the label of the toggle button to indicate that the information can be hidden
+          } else {
+            additionalInfoContainer.style.display = 'none'; // hide additional information
+            toggleButton.innerHTML = '<i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen'; // change the label of the toggle button to indicate that the information can be displayed
+          }
+        };
+      }
+    });
+    marker.on('popupclose',   async () => {
+      let set = false;
+      await Promise.all(
+        (this.routepoints ?? [])
+          .filter(point => point === bugapoint)
+          .map(async (point) => {
+            set = true;
+            await marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerRouteBackground));
+          })
+      ).then(async () => {
+        if (!set) marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerBackground));
+      });
+    });
   }
 }

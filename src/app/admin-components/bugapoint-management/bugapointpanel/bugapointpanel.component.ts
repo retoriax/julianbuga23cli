@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {Bugapoint} from "../../../model/bugapoint";
-import {FormControl} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/Responses/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
@@ -12,6 +12,9 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {LatLng, Util} from "leaflet";
 import trim = Util.trim;
 import {AdminAdminService} from "../../../services/admin-services/admin-admin.service";
+import {IconService} from "../../../services/icon.service";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 
 //TODO: env vars
 @Component({
@@ -23,7 +26,8 @@ export class BugapointpanelComponent implements OnInit {
 
   constructor(private adminService: AdminAdminService, private bugapointService: BugapointService, private router: Router,
               private elementRef: ElementRef, private renderer: Renderer2, private route: ActivatedRoute,
-              private adminBugapointService: AdminBugapointService, private snackBar: MatSnackBar) {
+              private adminBugapointService: AdminBugapointService, private snackBar: MatSnackBar,
+              private iconService: IconService, private dialog: MatDialog) {
   }
 
   //Update - new diffs
@@ -33,6 +37,7 @@ export class BugapointpanelComponent implements OnInit {
   //Variables
   point: Bugapoint
   admins: Admin[]
+  iconnames: string[]
   discriminators = new Set<string>;
 
   //Map stuff
@@ -45,12 +50,13 @@ export class BugapointpanelComponent implements OnInit {
   title: string
 
   //Form controls
-  titleForm = new FormControl
-  adminForm = new FormControl
+  titleForm = new FormControl('', [Validators.required])
+  adminForm = new FormControl('', [Validators.required])
   latForm = new FormControl
   lngForm = new FormControl
   descriptionForm = new FormControl('')
-  discriminatorForm = new FormControl;
+  discriminatorForm = new FormControl('', [Validators.required]);
+  iconnameForm = new FormControl('', [Validators.required]);
 
   async ngOnInit(): Promise<void> {
     //Set mode by url
@@ -101,6 +107,8 @@ export class BugapointpanelComponent implements OnInit {
       this.admins = data;
     })
 
+    this.iconnames = await this.adminBugapointService.getIconnames()
+
     switch (this.mode) {
       case "update": { //Update setup
         this.route.queryParams.subscribe(async (params) => {
@@ -112,15 +120,16 @@ export class BugapointpanelComponent implements OnInit {
 
           await this.adminService.findAll().subscribe((data: Admin[]) => {
             this.admins = data;
-            this.adminForm.setValue(this.admins.find(a => a.id == this.point.adminID)?.emailadress);
+            this.adminForm.setValue(this.admins.find(a => a.id == this.point.adminID)?.emailadress + '');
           })
           this.discriminatorForm.setValue(this.point.discriminator)
           this.descriptionForm.setValue(this.point.description)
           this.latForm.setValue(this.point.latitude + '')
           this.lngForm.setValue(this.point.longitude + '')
+          this.iconnameForm.setValue(this.point.iconname)
 
           L.marker([this.point.latitude, this.point.longitude]).addTo(this.map).bindPopup('Alte Position von '
-            + this.point.title)
+            + this.point.title).setIcon(await this.iconService.getIcon(this.iconnameForm.value + "", "Blue"));
           this.map.setView([this.point.latitude, this.point.longitude], 16);
         })
         break;
@@ -128,7 +137,8 @@ export class BugapointpanelComponent implements OnInit {
 
       case "new": { //New point setup
         this.oldLatLng = this.newPointLatLng;
-        this.flexMarker = L.marker(this.newPointLatLng).addTo(this.map).bindPopup("")
+        this.flexMarker = L.marker(this.newPointLatLng).addTo(this.map).bindPopup("").setIcon(await this.iconService.getIcon('', "Blue"))
+
         this.map.setView(this.newPointLatLng, 16);
 
 
@@ -155,7 +165,7 @@ export class BugapointpanelComponent implements OnInit {
         try {
           let updatedPoint = new Bugapoint(this.latForm.value, this.lngForm.value)
           updatedPoint.description = this.descriptionForm.value;
-          updatedPoint.discriminator = this.discriminatorForm.value;
+          updatedPoint.discriminator = this.discriminatorForm.value + '';
           const admin$ = this.admins.find(a => a.emailadress == this.adminForm.value);
 
           if (admin$ != null) {
@@ -189,15 +199,13 @@ export class BugapointpanelComponent implements OnInit {
       }
       case "new": {
         let saveBugapoint: Bugapoint = new Bugapoint(this.latForm.value, this.lngForm.value);
-        saveBugapoint.title = trim(this.titleForm.value);
+        saveBugapoint.title = trim(this.titleForm.value + '');
         saveBugapoint.adminID = this.admins.find(a => a.emailadress == this.adminForm.value)?.id;
         if (this.descriptionForm.value != null) {
           saveBugapoint.description = trim(this.descriptionForm.value);
         }
-        saveBugapoint.discriminator = trim(this.discriminatorForm.value);
+        saveBugapoint.discriminator = trim(this.discriminatorForm.value + '');
         saveBugapoint.iconname = saveBugapoint.discriminator;
-
-        console.log(saveBugapoint)
 
         const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.saveBugapoint(saveBugapoint);
 
@@ -206,6 +214,10 @@ export class BugapointpanelComponent implements OnInit {
           await this.router.navigate(['admin/bugapoints'])
         } else {
           this.snackBar.open("Nicht gespeichert", "", sbConfig)
+
+          if (bugaPointResponse.message == 'Sent values are faulty.') {
+
+          }
         }
         break;
       }
@@ -219,18 +231,32 @@ export class BugapointpanelComponent implements OnInit {
    * Deletes this bugapoint.
    */
   async delete() {
-
     let sbConfig = new MatSnackBarConfig();
     sbConfig.duration = 1000;
     sbConfig.verticalPosition = "top";
     sbConfig.horizontalPosition = "center"
 
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: {bugapoint: this.point},
+    })
 
-    await this.adminBugapointService.deleteBugapointById(this.point.id);
-    await this.router.navigate(['admin/bugapoints'])
-    this.bugapointService.forceReload();
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        await this.adminBugapointService.deleteBugapointById(this.point.id);
+        await this.router.navigate(['admin/bugapoints'])
+        this.bugapointService.forceReload();
 
-    this.snackBar.open(this.point.title + " wurde gelöscht.", "", sbConfig)
+        this.snackBar.open(this.point.title + " wurde gelöscht.", "", sbConfig)
+      } else {
+        this.snackBar.open(this.point.title + " wurde nicht gelöscht.", "", sbConfig)
+      }
+    })
+
+
+
+
+
+
   }
 
 
@@ -240,7 +266,7 @@ export class BugapointpanelComponent implements OnInit {
    * @param lat Latitude
    * @param lng Longitude
    */
-  changeNewPositionMarker(lat: number = this.latForm.value, lng: number = this.lngForm.value) {
+  async changeNewPositionMarker(lat: number = this.latForm.value, lng: number = this.lngForm.value) {
     if (this.flexMarker != null) {
       this.map.removeLayer(this.flexMarker)
     }
@@ -248,11 +274,12 @@ export class BugapointpanelComponent implements OnInit {
     switch (this.mode) {
       case "update": {
         this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Neue Position von '
-          + this.point.title);
+          + this.point.title).setIcon(await this.iconService.getIcon(this.iconnameForm.value + '', "Yellow"));
         break;
       }
       case "new": {
-        this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup(this.titleForm.value);
+        this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup(this.titleForm.value + '')
+          .setIcon(await this.iconService.getIcon(this.iconnameForm.value + '', "Yellow"));
         break;
       }
     }
@@ -269,7 +296,7 @@ export class BugapointpanelComponent implements OnInit {
         this.latForm.setValue(position.coords.latitude);
         this.lngForm.setValue(position.coords.longitude);
 
-        this.changeNewPositionMarker(position.coords.latitude, position.coords.longitude)
+        this.changeNewPositionMarker(position.coords.latitude, position.coords.longitude).then()
       })
     }
   }
@@ -287,7 +314,7 @@ export class BugapointpanelComponent implements OnInit {
     this.lngForm.setValue(this.oldLatLng.lng);
 
     if (this.mode == 'new') {
-      this.changeNewPositionMarker()
+      this.changeNewPositionMarker().then()
     }
   }
 }
