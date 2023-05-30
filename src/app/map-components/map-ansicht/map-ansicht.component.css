@@ -1,7 +1,7 @@
 .map-ansicht {
   position: absolute;
   bottom: 65px;
-  right: 10px;
+  right: 15px;
 }
 
 .ansicht-button {
@@ -30,7 +30,8 @@
 .selected-option-label {
   position: absolute;
   top: -25px;
-  left: -5px;
+  left: 50%;
+  transform: translateX(-50%);
   max-width: 150px;
   white-space: nowrap;
   overflow: hidden;
@@ -38,6 +39,7 @@
   color: black;
   padding: 2px 5px;
   font-size: 15px;
+  text-align: center;
 }
 
 .radio-row {

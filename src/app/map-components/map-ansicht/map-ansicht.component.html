@@ -3,7 +3,7 @@
     <input type="radio" id="selectedOption" [value]="selectedAnsichtOption" [(ngModel)]="selectedAnsichtOption" disabled>
     <label for="selectedOption">{{ selectedAnsichtOption }}</label>
   </div>
-  <button class="ansicht-button" (click)="showPopup()">Park auswählen</button>
+  <button class="ansicht-button" (click)="showPopup()">Parkansicht</button>
   <div class="ansicht-popup" *ngIf="showPopupFlag">
     <div class="radio-row">
       <input type="radio" id="Luisenpark" name="ansicht-option" value="Luisenpark" [(ngModel)]="selectedAnsichtOption" (change)="onAnsichtOptionSelected('Luisenpark')">
