@@ -250,4 +250,8 @@ export class MapComponent implements OnInit {
       });
     });
   }
+
+  onMyLocation($event: any) {
+
+  }
 }
