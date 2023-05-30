@@ -248,7 +248,7 @@ export class MapComponent implements OnInit {
       await Promise.all(
         (this.routepoints ?? [])
           .filter(point => point === bugapoint)
-          .map(async (point) => {
+          .map(async () => {
             set = true;
             await marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerRouteBackground));
           })
@@ -262,16 +262,15 @@ export class MapComponent implements OnInit {
     if (this.userPosMarker != null) {
       this.userPosMarker.remove()
     }
-    console.log(userPos)
 
     let userMarker = new Bugapoint(userPos.lat, userPos.lng)
 
     userMarker.title = 'Deine Position'
     userMarker.discriminator = 'Du befindest dich gerade ca. hier!'
     userMarker.id = 0
-    userMarker.iconname = 'Mensch & Tier'
+    userMarker.iconname = 'Standort'
 
-    this.userPosMarker = L.marker(userPos).addTo(this.map).bindPopup(this.getPopup(userMarker)).setIcon(await this.iconService.getIcon('Mensch & Tier', 'Yellow'))
+    this.userPosMarker = L.marker(userPos).addTo(this.map).bindPopup(this.getPopup(userMarker)).setIcon(await this.iconService.getIcon('Standort', 'Orange'))
     this.addPopupEvent(this.userPosMarker, userMarker)
   }
 }
