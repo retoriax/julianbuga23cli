@@ -1,0 +1,27 @@
+<app-admin-components-submenubar [title]="'Meldung erstellen'"
+                                 [backUrl]="'/admin/report'"></app-admin-components-submenubar>
+<br>
+
+<div class="create-div">
+  <mat-form-field class="inputfield">
+    <mat-label>Typ</mat-label>
+    <input matInput placeholder="Wähle Typ aus" [matAutocomplete]="typeAuto" [formControl]="discriminatorForm">
+    <mat-autocomplete autoActiveFirstOption #typeAuto="matAutocomplete">
+      <mat-option *ngFor="let type of this.discriminators" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Titel</mat-label>
+    <input matInput [formControl]="titleForm">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Nachricht</mat-label>
+    <textarea matInput placeholder="..." [formControl]="messageForm"></textarea>
+  </mat-form-field>
+
+
+</div>
