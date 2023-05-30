@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {Bugapoint} from "../../../model/bugapoint";
-import {FormControl} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {BugapointService} from "../../../services/bugapoint.service";
 import {DatabaseSaveResponse} from "../../../services/Responses/DatabaseSaveResponse";
 import {AdminBugapointService} from "../../../services/admin-services/admin-bugapoint.service";
@@ -48,13 +48,13 @@ export class BugapointpanelComponent implements OnInit {
   title: string
 
   //Form controls
-  titleForm = new FormControl('')
-  adminForm = new FormControl('')
+  titleForm = new FormControl('', [Validators.required])
+  adminForm = new FormControl('', [Validators.required])
   latForm = new FormControl
   lngForm = new FormControl
   descriptionForm = new FormControl('')
-  discriminatorForm = new FormControl('');
-  iconnameForm = new FormControl('');
+  discriminatorForm = new FormControl('', [Validators.required]);
+  iconnameForm = new FormControl('', [Validators.required]);
 
   async ngOnInit(): Promise<void> {
     //Set mode by url
@@ -177,8 +177,6 @@ export class BugapointpanelComponent implements OnInit {
             updatedPoint
           );
 
-          console.log(bugaPointResponse)
-
           if (bugaPointResponse.success) {
             if (bugaPointResponse.failed?.length == 0) {
               this.snackBar.open("Gespeichert", "", sbConfig)
@@ -214,6 +212,10 @@ export class BugapointpanelComponent implements OnInit {
           await this.router.navigate(['admin/bugapoints'])
         } else {
           this.snackBar.open("Nicht gespeichert", "", sbConfig)
+
+          if (bugaPointResponse.message == 'Sent values are faulty.') {
+
+          }
         }
         break;
       }
@@ -278,7 +280,7 @@ export class BugapointpanelComponent implements OnInit {
         this.latForm.setValue(position.coords.latitude);
         this.lngForm.setValue(position.coords.longitude);
 
-        this.changeNewPositionMarker(position.coords.latitude, position.coords.longitude)
+        this.changeNewPositionMarker(position.coords.latitude, position.coords.longitude).then()
       })
     }
   }
@@ -296,7 +298,7 @@ export class BugapointpanelComponent implements OnInit {
     this.lngForm.setValue(this.oldLatLng.lng);
 
     if (this.mode == 'new') {
-      this.changeNewPositionMarker()
+      this.changeNewPositionMarker().then()
     }
   }
 }
