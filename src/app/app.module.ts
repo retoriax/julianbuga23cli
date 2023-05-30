@@ -54,6 +54,7 @@ import { DeleteDialogComponent } from './admin-components/bugapoint-management/d
 import {ReportCreateComponent} from "./admin-components/report-create/report-create.component";
 import {ReportShowComponent} from "./admin-components/report-show/report-show.component";
 import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.component";
+import { VisitorsReportMenuComponent } from './help-components/visitors-report-menu/visitors-report-menu.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.co
     DeleteDialogComponent,
     ReportMenuComponent,
     ReportShowComponent,
-    ReportCreateComponent
+    ReportCreateComponent,
+    VisitorsReportMenuComponent
   ],
   imports: [
     BrowserModule,

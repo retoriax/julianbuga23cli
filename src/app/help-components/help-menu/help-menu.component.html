@@ -3,6 +3,9 @@
   <a class="help-categorie" routerLink="/impressum" >
     Impressum
   </a>
+  <a class="help-categorie" routerLink="/melden" >
+    Problem melden
+  </a>
   <a (click)="routeHelp()" class="help-categorie">
     <ion-icon name="person-circle-outline"></ion-icon>
     <ng-container *ngIf="adminName !== null; else loginLink">

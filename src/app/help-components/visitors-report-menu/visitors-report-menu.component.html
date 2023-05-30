@@ -1,0 +1,19 @@
+<app-admin-components-submenubar [title]="'Meldung erstellen'" [backUrl]="'/help'"></app-admin-components-submenubar>
+<br>
+
+<div class="create-div">
+  <mat-form-field>
+    <mat-label>Titel der Meldung</mat-label>
+    <input matInput [formControl]="titleForm">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nachricht</mat-label>
+    <textarea matInput placeholder="..." [formControl]="messageForm"></textarea>
+  </mat-form-field>
+
+  <div class="buttonBar">
+    <button mat-raised-button color="primary" (click)="save()">Senden</button>
+  </div>
+</div>
+

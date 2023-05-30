@@ -13,6 +13,7 @@ import {ImpressumComponent} from "./help-components/impressum/impressum.componen
 import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.component";
 import {ReportCreateComponent} from "./admin-components/report-create/report-create.component";
 import {ReportShowComponent} from "./admin-components/report-show/report-show.component";
+import {VisitorsReportMenuComponent} from "./help-components/visitors-report-menu/visitors-report-menu.component";
 
 
 
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'login', component: LoginFormComponent},
   { path: 'admin/menu', component: AdminpanelMenuComponent},
   { path: 'admin/bugapoints', component: BugapointmenuComponent},
+  { path: 'melden', component: VisitorsReportMenuComponent},
   { path: 'blank', component: BlankComponent},
   { path: 'admin/bugapoints/edit', component: BugapointpanelComponent},
   { path: 'admin/bugapoints/new', component: BugapointpanelComponent},
