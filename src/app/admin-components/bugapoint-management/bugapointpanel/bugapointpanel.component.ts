@@ -205,8 +205,6 @@ export class BugapointpanelComponent implements OnInit {
         saveBugapoint.discriminator = trim(this.discriminatorForm.value);
         saveBugapoint.iconname = saveBugapoint.discriminator;
 
-        console.log(saveBugapoint)
-
         const bugaPointResponse: DatabaseSaveResponse = await this.adminBugapointService.saveBugapoint(saveBugapoint);
 
         if (bugaPointResponse.success) {
@@ -249,7 +247,6 @@ export class BugapointpanelComponent implements OnInit {
    * @param lng Longitude
    */
   async changeNewPositionMarker(lat: number = this.latForm.value, lng: number = this.lngForm.value) {
-    console.log("CHANGE")
     if (this.flexMarker != null) {
       this.map.removeLayer(this.flexMarker)
     }
