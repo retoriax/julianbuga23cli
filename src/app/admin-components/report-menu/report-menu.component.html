@@ -1,7 +1,8 @@
-<app-admin-components-submenubar [title]="'Meldung'" [backUrl]="'/admin/menu'"></app-admin-components-submenubar>
-<a class="help-categorie" routerLink='/admin/report/create' >
-  Meldung erstellen
-</a>
-<a class="help-categorie" routerLink='/admin/report/show' >
-  Meine Meldungen ansehen
-</a>
+<div class="background">
+  <app-admin-components-submenubar [title]="'Meldung'" [backUrl]="'/admin/menu'"></app-admin-components-submenubar>
+
+  <div class="menu-button-list">
+    <button class="menu-button" routerLink="/admin/report/create">Meldung erstellen</button>
+    <button class="menu-button" routerLink="/admin/report/show">Meine Meldungen verwalten</button>
+  </div>
+</div>

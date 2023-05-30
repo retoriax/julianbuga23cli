@@ -51,6 +51,9 @@ import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component
 import {ImpressumComponent} from "./help-components/impressum/impressum.component";
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 import { DeleteDialogComponent } from './admin-components/bugapoint-management/delete-dialog/delete-dialog.component';
+import {ReportCreateComponent} from "./admin-components/report-create/report-create.component";
+import {ReportShowComponent} from "./admin-components/report-show/report-show.component";
+import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.component";
 
 
 @NgModule({
@@ -80,6 +83,9 @@ import { DeleteDialogComponent } from './admin-components/bugapoint-management/d
     ImpressumComponent,
     CookieBannerComponent,
     DeleteDialogComponent,
+    ReportMenuComponent,
+    ReportShowComponent,
+    ReportCreateComponent
   ],
   imports: [
     BrowserModule,

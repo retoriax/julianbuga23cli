@@ -10,6 +10,9 @@ import {LoginFormComponent} from "./login-form/login-form.component";
 import {BugapointpanelComponent} from "./admin-components/bugapoint-management/bugapointpanel/bugapointpanel.component";
 import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component";
 import {ImpressumComponent} from "./help-components/impressum/impressum.component";
+import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.component";
+import {ReportCreateComponent} from "./admin-components/report-create/report-create.component";
+import {ReportShowComponent} from "./admin-components/report-show/report-show.component";
 
 
 
@@ -26,6 +29,9 @@ const routes: Routes = [
   { path: 'blank', component: BlankComponent},
   { path: 'admin/bugapoints/edit', component: BugapointpanelComponent},
   { path: 'admin/bugapoints/new', component: BugapointpanelComponent},
+  { path: 'admin/report', component: ReportMenuComponent},
+  { path: 'admin/report/create', component: ReportCreateComponent},
+  { path: 'admin/report/show', component: ReportShowComponent},
   { path: '**', redirectTo: '/map'},
 ];
 

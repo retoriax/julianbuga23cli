@@ -1,8 +1,9 @@
-<div class="submenu">
+<div class="submenu" [ngClass]="{'centered': !backEnabled}">
   <h1 class="title">
     {{this.title}}
   </h1>
-  <button mat-icon-button class="backButton" [routerLink]="backUrl">
+  <button *ngIf="backEnabled" mat-icon-button class="backButton" [routerLink]="backUrl">
     <ion-icon name="return-down-back-outline"></ion-icon>
   </button>
 </div>
+<mat-divider class="separator"></mat-divider>

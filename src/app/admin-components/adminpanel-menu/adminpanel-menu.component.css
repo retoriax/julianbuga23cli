@@ -1,40 +1,36 @@
 .background {
   top: 0;
   right: 0;
-  background-color: blue;
   margin: 0;
-}
-
-.welcome-text-field {
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 10px;
-  margin: 0;
-  background-color: white;
-  z-index: 9999;
-  box-shadow: 3px 6px 0 1px rgb(69, 69, 69, 0.2);
-}
-
-.welcome-text {
-  font-family: Verdana, serif;
-  font-size: 3em;
-  line-height: 1;
 }
 
 .menu-button-list {
   position: relative;
-  background-color: #e6c83c;
+  background-color: white;
   display: flex;
   flex-direction: column;
-
-  height: calc(100vh - 50px);
+  align-items: center;
   padding: 20px;
   box-sizing: border-box;
 }
 
 .menu-button {
-  height: 40px;
-  margin-bottom: 1.2em;
+  background: rgba(227, 227, 227, 0.86);
+  height: 10svh;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 15px;
+  text-decoration: none;
+  color: black;
+}
+
+.red {
+  background: rgba(255, 43, 43, 0.86);
+  border: 1px solid rgba(0, 0, 0, 0.4);;
+  color: white;
 }
