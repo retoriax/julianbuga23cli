@@ -70,9 +70,8 @@ export class MapComponent implements OnInit {
      * Shows the Route if there are any changes to the displayedBugapointObservable in the mapInteractionService
      */
     this.mapInteractionService.routeObservable.subscribe(bugapoints => {
-      if (bugapoints.length == 0) return;
+      if (bugapoints.length == 0) {this.cookieService.set("currentRoute", ""); return};
       this.cookieService.set("currentRoute", JSON.stringify(bugapoints));
-      this.displayPointCentered(bugapoints[0], 18);
       this.showRoute(bugapoints);
     });
   }
