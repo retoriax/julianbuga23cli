@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Output, ElementRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MapComponent } from '../map/map.component';
+import {MapInteractionService} from "../../services/map-interaction.service";
+
 
 @Component({
   selector: 'app-map-ansicht',
@@ -17,7 +20,7 @@ export class MapAnsichtComponent {
   showPopupFlag = false;
 
   // Inject the element reference of this component
-  constructor(private elementRef: ElementRef, private snackBar: MatSnackBar) { }
+  constructor(private elementRef: ElementRef, private snackBar: MatSnackBar, private mapComponent: MapComponent, private mapInteractionService: MapInteractionService) { }
 
   // Show/hide popup when button is clicked
   showPopup() {
@@ -47,6 +50,10 @@ export class MapAnsichtComponent {
   onAnsichtOptionSelected(selectedOption: string) {
     this.selectedAnsichtOption = selectedOption;
     this.ansichtOptionSelected.emit(selectedOption);
+
+    // Update the markers based on the selected park option
+    this.mapComponent.onAnsichtOptionSelected(selectedOption); // Call the method in MapComponent
+    this.mapInteractionService.hideBugapoint(); // Clear the displayed bugapoint
 
     // Show a notification based on the selected option
     switch (selectedOption) {

@@ -15,8 +15,10 @@ import {bug} from "ionicons/icons";
 })
 export class MapComponent implements OnInit {
   map:any
-  bugapoints: Bugapoint[];
+  bugapoints: Bugapoint[] = [];
   routepoints: Bugapoint[] | null;
+  selectedAnsichtOption: string;
+
 
   constructor(private cookieService: CookieService,
               private mapInteractionService: MapInteractionService,
@@ -133,14 +135,28 @@ export class MapComponent implements OnInit {
         this.map.removeLayer(layer);
       }
     });
-    // Add new markers to the map based on the bugapoints data
-    this.bugapoints.forEach((point) => {
+
+    // Filter bugapoints based on the selected park option
+    let filteredBugapoints: Bugapoint[];
+    if (this.selectedAnsichtOption === 'Luisenpark') {
+      filteredBugapoints = this.bugapoints.filter((bugapoint) => bugapoint.parkID === 1);
+    } else if (this.selectedAnsichtOption === 'Spinellipark') {
+      filteredBugapoints = this.bugapoints.filter((bugapoint) => bugapoint.parkID === 2);
+    } else {
+      filteredBugapoints = this.bugapoints;
+    }
+
+    // Add new markers to the map based on the filtered bugapoints
+    filteredBugapoints.forEach((point) => {
       this.showMarker(point);
     });
+
+    // Show the route markers
     this.routepoints?.forEach((point) => {
       this.showMarker(point);
     });
   }
+
 
   /**
    * This method is called when a new option is selected from the view options.
@@ -150,6 +166,13 @@ export class MapComponent implements OnInit {
    * @param selectedOption a string representing the selected option from the view options
    */
   onAnsichtOptionSelected(selectedOption: string) {
+    this.selectedAnsichtOption = selectedOption;
+
+    // Update the markers based on the selected park option
+    this.updateMarkers();
+
+    // Hide the current bugapoint
+    this.mapInteractionService.hideBugapoint();
     switch (selectedOption) {
       case 'Freie Bewegung':
         const freemovementBounds = L.latLngBounds(
