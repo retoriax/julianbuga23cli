@@ -127,7 +127,7 @@ export class BugapointpanelComponent implements OnInit {
           this.iconnameForm.setValue(this.point.iconname)
 
           L.marker([this.point.latitude, this.point.longitude]).addTo(this.map).bindPopup('Alte Position von '
-            + this.point.title).setIcon(await this.iconService.getIconFromDiscriminator(this.iconnameForm.value + ''));
+            + this.point.title).setIcon(await this.iconService.getIcon(this.iconnameForm.value + "", "Blue"));
           this.map.setView([this.point.latitude, this.point.longitude], 16);
         })
         break;
@@ -135,7 +135,7 @@ export class BugapointpanelComponent implements OnInit {
 
       case "new": { //New point setup
         this.oldLatLng = this.newPointLatLng;
-        this.flexMarker = L.marker(this.newPointLatLng).addTo(this.map).bindPopup("").setIcon(await this.iconService.getIconFromDiscriminator(''))
+        this.flexMarker = L.marker(this.newPointLatLng).addTo(this.map).bindPopup("").setIcon(await this.iconService.getIcon('', "Blue"))
 
         this.map.setView(this.newPointLatLng, 16);
 
@@ -258,12 +258,12 @@ export class BugapointpanelComponent implements OnInit {
     switch (this.mode) {
       case "update": {
         this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Neue Position von '
-          + this.point.title).setIcon(await this.iconService.getIconFromDiscriminator(this.iconnameForm.value + ''));
+          + this.point.title).setIcon(await this.iconService.getIcon(this.iconnameForm.value + '', "Yellow"));
         break;
       }
       case "new": {
         this.flexMarker = L.marker([lat, lng]).addTo(this.map).bindPopup(this.titleForm.value + '')
-          .setIcon(await this.iconService.getIconFromDiscriminator(this.iconnameForm.value + ''));
+          .setIcon(await this.iconService.getIcon(this.iconnameForm.value + '', "Yellow"));
         break;
       }
     }

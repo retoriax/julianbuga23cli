@@ -85,8 +85,8 @@ export class MapComponent implements OnInit {
    *
    * @param bugapoint Bugapoint
    */
-  async showMarker(bugapoint: Bugapoint) {
-    const marker = L.marker([bugapoint.latitude, bugapoint.longitude]).addTo(this.map).bindPopup(this.getPopup(bugapoint)).setIcon(await this.iconService.getIconFromDiscriminator(bugapoint.iconname));
+  async showMarker(bugapoint: Bugapoint, background: string) {
+    const marker = L.marker([bugapoint.latitude, bugapoint.longitude]).addTo(this.map).bindPopup(this.getPopup(bugapoint)).setIcon(await this.iconService.getIcon(bugapoint.iconname, background));
     this.addPopupEvent(marker, bugapoint);
   }
 
@@ -102,10 +102,10 @@ export class MapComponent implements OnInit {
     });
     // Add new markers to the map based on the bugapoints data
     this.bugapoints.forEach((point) => {
-      this.showMarker(point);
+      this.showMarker(point, "Blue");
     });
     this.routepoints?.forEach((point) => {
-      this.showMarker(point);
+      this.showMarker(point, "Red");
     });
   }
 
@@ -163,7 +163,7 @@ export class MapComponent implements OnInit {
     });
     this.routepoints = points;
     points.forEach((point) => {
-      this.showMarker(point);
+      this.showMarker(point, "Red");
     })
 
 
