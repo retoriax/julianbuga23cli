@@ -85,6 +85,10 @@ export class MapComponent implements OnInit {
   onFilteredBugapointsChange(filteredBugapoints: Bugapoint[]) {
     this.bugapoints = filteredBugapoints;
     this.updateMarkers();
+
+    if (this.userPosMarker != null) {
+      this.userPosMarker.addTo(this.map)
+    }
   }
 
   /**
