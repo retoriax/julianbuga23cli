@@ -17,6 +17,10 @@ export class MapComponent implements OnInit {
   bugapoints: Bugapoint[];
   routepoints: Bugapoint[] | null;
 
+  markerBackground : string = "Blue";
+  markerActiveBackground: string = "Green";
+  markerRouteBackground: string = "Red";
+
   constructor(private cookieService: CookieService,
               private mapInteractionService: MapInteractionService,
               private iconService: IconService) {}
@@ -84,6 +88,7 @@ export class MapComponent implements OnInit {
    * Method to add a simple marker to the map.
    *
    * @param bugapoint Bugapoint
+   * @param background
    */
   async showMarker(bugapoint: Bugapoint, background: string) {
     const marker = L.marker([bugapoint.latitude, bugapoint.longitude]).addTo(this.map).bindPopup(this.getPopup(bugapoint)).setIcon(await this.iconService.getIcon(bugapoint.iconname, background));
@@ -102,10 +107,10 @@ export class MapComponent implements OnInit {
     });
     // Add new markers to the map based on the bugapoints data
     this.bugapoints.forEach((point) => {
-      this.showMarker(point, "Blue");
+      this.showMarker(point, this.markerBackground).then(() => {});
     });
     this.routepoints?.forEach((point) => {
-      this.showMarker(point, "Red");
+      this.showMarker(point, this.markerRouteBackground).then(() => {});
     });
   }
 
@@ -163,7 +168,7 @@ export class MapComponent implements OnInit {
     });
     this.routepoints = points;
     points.forEach((point) => {
-      this.showMarker(point, "Red");
+      this.showMarker(point, this.markerRouteBackground).then(() => {});
     })
 
 
@@ -201,7 +206,7 @@ export class MapComponent implements OnInit {
     // Define the HTML content for the popup
     const hasDescription = !!bugapoint.description; // Check if description is truthy (not empty or null)
     const additionalInfoButton = hasDescription ? `<button id="toggle-info-${bugapoint.latitude}-${bugapoint.longitude}" class="popup-toggle-btn btn btn-primary btn-sm" style="font-size: 12px; border-radius: 20px; background-color: white; color: #007bff; border-color: #007bff; margin-left: 10px;"><i class="fa fa-plus" style="color: #007bff;"></i> Mehr Details anzeigen</button>` : '';
-    const popupContent = `
+    return `
     <div style="font-size: 16px;"><b>${bugapoint.title}</b></div> <!-- Title of the popup -->
     <div id="additional-info-${bugapoint.latitude}-${bugapoint.longitude}" style="display:none; margin-top: 10px; font-size: 14px;">${bugapoint.description}</div> <!-- Additional information that can be toggled to display or hide -->
     <div style="margin-top: 10px;">
@@ -209,13 +214,12 @@ export class MapComponent implements OnInit {
       ${additionalInfoButton}
     </div>
   `;
-
-    return popupContent;
   }
 
   addPopupEvent(marker: L.Marker, bugapoint: Bugapoint) {
     // When the popup is opened, add an event listener to the toggle button to show/hide the additional information
-    marker.on('popupopen', (a) => {
+    marker.on('popupopen', async (a) => {
+      marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerActiveBackground));
       const toggleButton = document.getElementById(`toggle-info-${bugapoint.latitude}-${bugapoint.longitude}`);
       const additionalInfoContainer = document.getElementById(`additional-info-${bugapoint.latitude}-${bugapoint.longitude}`);
       a.target.getPopup().getElement().querySelector("#button-"+bugapoint.id).addEventListener("click", () => {this.mapInteractionService.addPointToRoute(bugapoint)})
@@ -231,6 +235,19 @@ export class MapComponent implements OnInit {
           }
         };
       }
+    });
+    marker.on('popupclose',   async () => {
+      let set = false;
+      await Promise.all(
+        (this.routepoints ?? [])
+          .filter(point => point === bugapoint)
+          .map(async (point) => {
+            set = true;
+            await marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerRouteBackground));
+          })
+      ).then(async () => {
+        if (!set) marker.setIcon(await this.iconService.getIcon(bugapoint.iconname, this.markerBackground));
+      });
     });
   }
 }
