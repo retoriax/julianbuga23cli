@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-map-userlocation',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./map-userlocation.component.css']
 })
 export class MapUserlocationComponent {
+
+  @Output()
+  onClickUserLocation = new EventEmitter
 
 }
