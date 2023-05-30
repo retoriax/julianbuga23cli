@@ -13,6 +13,8 @@ import {LatLng, Util} from "leaflet";
 import trim = Util.trim;
 import {AdminAdminService} from "../../../services/admin-services/admin-admin.service";
 import {IconService} from "../../../services/icon.service";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 
 //TODO: env vars
 @Component({
@@ -25,7 +27,7 @@ export class BugapointpanelComponent implements OnInit {
   constructor(private adminService: AdminAdminService, private bugapointService: BugapointService, private router: Router,
               private elementRef: ElementRef, private renderer: Renderer2, private route: ActivatedRoute,
               private adminBugapointService: AdminBugapointService, private snackBar: MatSnackBar,
-              private iconService: IconService) {
+              private iconService: IconService, private dialog: MatDialog) {
   }
 
   //Update - new diffs
@@ -229,18 +231,32 @@ export class BugapointpanelComponent implements OnInit {
    * Deletes this bugapoint.
    */
   async delete() {
-
     let sbConfig = new MatSnackBarConfig();
     sbConfig.duration = 1000;
     sbConfig.verticalPosition = "top";
     sbConfig.horizontalPosition = "center"
 
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: {bugapoint: this.point},
+    })
 
-    await this.adminBugapointService.deleteBugapointById(this.point.id);
-    await this.router.navigate(['admin/bugapoints'])
-    this.bugapointService.forceReload();
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        await this.adminBugapointService.deleteBugapointById(this.point.id);
+        await this.router.navigate(['admin/bugapoints'])
+        this.bugapointService.forceReload();
 
-    this.snackBar.open(this.point.title + " wurde gelöscht.", "", sbConfig)
+        this.snackBar.open(this.point.title + " wurde gelöscht.", "", sbConfig)
+      } else {
+        this.snackBar.open(this.point.title + " wurde nicht gelöscht.", "", sbConfig)
+      }
+    })
+
+
+
+
+
+
   }
 
 

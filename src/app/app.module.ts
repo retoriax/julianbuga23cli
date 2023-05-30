@@ -40,7 +40,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FilterComponent} from "./admin-components/bugapoint-management/filter/filter.component";
-import {SavedialogComponent} from "./admin-components/bugapoint-management/savedialog/savedialog.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MapComponent} from "./map-components/map/map.component";
 import {MapFilterComponent} from "./map-components/map-filter/map-filter.component";
@@ -51,6 +50,7 @@ import {MapAnsichtComponent} from "./map-components/map-ansicht/map-ansicht.comp
 import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component";
 import {ImpressumComponent} from "./help-components/impressum/impressum.component";
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
+import { DeleteDialogComponent } from './admin-components/bugapoint-management/delete-dialog/delete-dialog.component';
 
 
 @NgModule({
@@ -72,7 +72,6 @@ import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
     RegisterFormComponent,
     RegisterUiComponent,
     TokenCheckerComponent,
-    SavedialogComponent,
     BugapointBoxComponent,
     MapAnsichtComponent,
     FilterComponent,
@@ -80,6 +79,7 @@ import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
     HelpMenuComponent,
     ImpressumComponent,
     CookieBannerComponent,
+    DeleteDialogComponent,
   ],
   imports: [
     BrowserModule,
