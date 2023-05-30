@@ -37,7 +37,7 @@ export class MapComponent implements OnInit {
       minZoom:10,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
-    this.onAnsichtOptionSelected('Freie Bewegung');
+    this.onAnsichtOptionSelected('Luisenpark');
     this.map.attributionControl.remove();
 
     /**

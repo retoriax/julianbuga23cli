@@ -6,7 +6,7 @@
 
 .ansicht-button {
   background: rgba(227, 227, 227, 0.86);
-  border: 1px solid #ccc;
+  border: 1px solid black; /* Change the border color to black */
   color: #333;
   padding: 7px;
   font-size: 16px;
@@ -25,6 +25,19 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   border-radius: 5px;
+}
+
+.selected-option-label {
+  position: absolute;
+  top: -25px;
+  left: -5px;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: black;
+  padding: 2px 5px;
+  font-size: 15px;
 }
 
 .radio-row {

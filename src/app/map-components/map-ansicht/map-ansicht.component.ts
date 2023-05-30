@@ -11,7 +11,7 @@ export class MapAnsichtComponent {
   @Output() ansichtOptionSelected = new EventEmitter<string>();
 
   // Default selected option
-  selectedAnsichtOption = 'Freie Bewegung';
+  selectedAnsichtOption = 'Luisenpark';
 
   // Flag to show/hide popup
   showPopupFlag = false;
