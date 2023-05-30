@@ -120,11 +120,13 @@ export class MapComponent implements OnInit {
 
     // Add new markers to the map based on the filtered bugapoints
     filteredBugapoints.forEach((point) => {
-      this.showMarker(point);
-    // Add new markers to the map based on the bugapoints data
-    this.bugapoints.forEach((point) => {
       this.showMarker(point, this.markerBackground).then(() => {});
     });
+
+    // Add new markers to the map based on the bugapoints data
+    /*this.bugapoints.forEach((point) => {
+      this.showMarker(point, this.markerBackground).then(() => {});
+    });*/
 
     // Show the route markers
     this.routepoints?.forEach((point) => {
