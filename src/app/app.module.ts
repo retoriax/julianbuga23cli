@@ -51,6 +51,7 @@ import {HelpMenuComponent} from "./help-components/help-menu/help-menu.component
 import {ImpressumComponent} from "./help-components/impressum/impressum.component";
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 import { DeleteDialogComponent } from './admin-components/bugapoint-management/delete-dialog/delete-dialog.component';
+import { MapUserlocationComponent } from './map-components/map-userlocation/map-userlocation.component';
 import {ReportCreateComponent} from "./admin-components/report-create/report-create.component";
 import {ReportShowComponent} from "./admin-components/report-show/report-show.component";
 import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.component";
@@ -85,6 +86,7 @@ import {RecaptchaModule} from "ng-recaptcha";
     ImpressumComponent,
     CookieBannerComponent,
     DeleteDialogComponent,
+    MapUserlocationComponent,
     ReportMenuComponent,
     ReportShowComponent,
     ReportCreateComponent,
