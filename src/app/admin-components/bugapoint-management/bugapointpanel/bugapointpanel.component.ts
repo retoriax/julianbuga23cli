@@ -184,11 +184,12 @@ export class BugapointpanelComponent implements OnInit {
               this.snackBar.open("Gespeichert", "", sbConfig)
               await this.router.navigate(['admin/bugapoints'])
             } else {
-              this.snackBar.open(bugaPointResponse.failed + " nicht gespeichert", "", sbConfig);
+              sbConfig.duration = -1;
+              this.snackBar.open(bugaPointResponse.failed?.join(', ') + " nicht gespeichert", "Ok", sbConfig);
               await this.router.navigate(['admin/bugapoints'])
             }
           } else {
-            this.snackBar.open("Nicht gespeichert", "", sbConfig)
+            this.snackBar.open("Fehler: " + bugaPointResponse.message, "", sbConfig)
             await this.router.navigate(['admin/bugapoints'])
           }
 
@@ -213,7 +214,8 @@ export class BugapointpanelComponent implements OnInit {
           this.snackBar.open("Gespeichert", "", sbConfig)
           await this.router.navigate(['admin/bugapoints'])
         } else {
-          this.snackBar.open("Nicht gespeichert", "", sbConfig)
+          sbConfig.duration = -1;
+          this.snackBar.open("Fehler: " + bugaPointResponse.message, "Ok", sbConfig)
 
           if (bugaPointResponse.message == 'Sent values are faulty.') {
 
