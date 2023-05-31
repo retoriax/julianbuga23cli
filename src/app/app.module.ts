@@ -52,6 +52,11 @@ import {ImpressumComponent} from "./help-components/impressum/impressum.componen
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 import { DeleteDialogComponent } from './admin-components/bugapoint-management/delete-dialog/delete-dialog.component';
 import { MapUserlocationComponent } from './map-components/map-userlocation/map-userlocation.component';
+import {ReportCreateComponent} from "./admin-components/report-create/report-create.component";
+import {ReportShowComponent} from "./admin-components/report-show/report-show.component";
+import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.component";
+import { VisitorsReportMenuComponent } from './help-components/visitors-report-menu/visitors-report-menu.component';
+import {RecaptchaModule} from "ng-recaptcha";
 
 
 @NgModule({
@@ -82,6 +87,10 @@ import { MapUserlocationComponent } from './map-components/map-userlocation/map-
     CookieBannerComponent,
     DeleteDialogComponent,
     MapUserlocationComponent,
+    ReportMenuComponent,
+    ReportShowComponent,
+    ReportCreateComponent,
+    VisitorsReportMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +127,8 @@ import { MapUserlocationComponent } from './map-components/map-userlocation/map-
     MatProgressBarModule,
     MatTabsModule,
     MatSnackBarModule,
-    MatListModule
+    MatListModule,
+    RecaptchaModule
   ],
   exports: [
     MapFilterComponent,

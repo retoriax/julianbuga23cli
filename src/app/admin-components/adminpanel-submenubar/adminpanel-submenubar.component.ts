@@ -11,4 +11,7 @@ export class AdminpanelSubmenubarComponent {
 
   @Input()
   backUrl: string;
+
+  @Input()
+  backEnabled: boolean = true;
 }

@@ -1,13 +1,7 @@
 
-<a class="backButton" href="/help">
-  <a>
-    <ion-icon name="return-down-back-outline"></ion-icon>
-    <p>Zurück</p>
-  </a>
-</a>
+<app-admin-components-submenubar [title]="'Login'" [backUrl]="'/help'"></app-admin-components-submenubar>
 
 <div class="login-container">
-  <h1 class="login-title">Login</h1>
   <form class="login-form">
     <mat-form-field class="login-field" appearance="fill">
       <mat-label>Email</mat-label>
@@ -23,11 +17,14 @@
     </mat-form-field>
 
     <button mat-raised-button class="login-button" color="primary" [disabled]="!email.valid || !loginPassword.value" (click)="login()">Login</button>
-    <div class="error-message" *ngIf="error">
-      Die Anmeldedaten sind ungültig.
-    </div>
+
     <div class="register-link">
       <a routerLink="/register">Registrierung</a>
     </div>
   </form>
+  <div class="captcha">
+    Diese Website ist durch reCAPTCHA geschützt und es gelten die
+    <a href="https://policies.google.com/privacy">Datenschutzbestimmungen</a> und
+    <a href="https://policies.google.com/terms">Nutzungsbedingungen</a> von Google.
+  </div>
 </div>
