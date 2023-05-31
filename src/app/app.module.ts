@@ -55,6 +55,7 @@ import {ReportCreateComponent} from "./admin-components/report-create/report-cre
 import {ReportShowComponent} from "./admin-components/report-show/report-show.component";
 import {ReportMenuComponent} from "./admin-components/report-menu/report-menu.component";
 import { VisitorsReportMenuComponent } from './help-components/visitors-report-menu/visitors-report-menu.component';
+import {RecaptchaModule} from "ng-recaptcha";
 
 
 @NgModule({
@@ -124,7 +125,8 @@ import { VisitorsReportMenuComponent } from './help-components/visitors-report-m
     MatProgressBarModule,
     MatTabsModule,
     MatSnackBarModule,
-    MatListModule
+    MatListModule,
+    RecaptchaModule
   ],
   exports: [
     MapFilterComponent,

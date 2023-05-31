@@ -17,8 +17,14 @@
     </mat-form-field>
 
     <button mat-raised-button class="login-button" color="primary" [disabled]="!email.valid || !loginPassword.value" (click)="login()">Login</button>
+
     <div class="register-link">
       <a routerLink="/register">Registrierung</a>
     </div>
   </form>
+  <div class="captcha">
+    Diese Website ist durch reCAPTCHA geschützt und es gelten die
+    <a href="https://policies.google.com/privacy">Datenschutzbestimmungen</a> und
+    <a href="https://policies.google.com/terms">Nutzungsbedingungen</a> von Google.
+  </div>
 </div>

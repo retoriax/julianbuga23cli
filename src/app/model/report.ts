@@ -6,9 +6,9 @@ export class Report {
 
   id: number;
   adminEmail: string | undefined;
-  parkID: number | undefined;
+  parkID: string | null;
   title: string;
   discriminator: string;
-  bugapoint: number;
+  bugapoint: number | undefined;
   message: string;
 }

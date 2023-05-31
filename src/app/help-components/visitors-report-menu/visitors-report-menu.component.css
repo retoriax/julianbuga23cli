@@ -7,3 +7,12 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+.fullsize {
+  width: 100%;
+}
+
+.captcha {
+  position: absolute;
+  bottom: 100px;
+}

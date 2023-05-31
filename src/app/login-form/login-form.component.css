@@ -13,6 +13,11 @@
   width: 75svw;
 }
 
+.captcha {
+  position: absolute;
+  bottom: 100px;
+}
+
 input.example-right-align::-webkit-outer-spin-button,
 input.example-right-align::-webkit-inner-spin-button {
   display: none;

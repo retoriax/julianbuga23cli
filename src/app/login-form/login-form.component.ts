@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
 import {loginrequest} from "../model/loginrequest";
@@ -24,52 +24,59 @@ export class LoginFormComponent {
   error = false;
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  constructor(private router: Router, private authService: AuthenticationService,private snackBar: MatSnackBar) {}
+  constructor(private router: Router, private authService: AuthenticationService, private snackBar: MatSnackBar) {
+  }
 
   //TODO COMMENT
-  login(){
-    const email = document.getElementById("loginEmail") as HTMLInputElement
-    const password = document.getElementById("loginPassword") as HTMLInputElement
-    const request : loginrequest = new loginrequest();
-    request.email = email.value
-    request.password = password.value
+  login() {
+    grecaptcha.enterprise.ready(() => {
+      grecaptcha.enterprise.execute('6LfSTFMmAAAAACzQrTDzhGpDdrUdy1MyI4XdM8av', {action: 'login'}).then((token) => {
+        console.log("ReCaptcha erfolgreich")
 
-    let sbConfig = new MatSnackBarConfig();
-    sbConfig.duration = 1000;
-    sbConfig.verticalPosition = "top";
-    sbConfig.horizontalPosition = "center"
+        const email = document.getElementById("loginEmail") as HTMLInputElement
+        const password = document.getElementById("loginPassword") as HTMLInputElement
+        const request: loginrequest = new loginrequest();
+        request.email = email.value
+        request.password = password.value
 
-    this.authService.login(request,(role: string) => {
+        let sbConfig = new MatSnackBarConfig();
+        sbConfig.duration = 1000;
+        sbConfig.verticalPosition = "top";
+        sbConfig.horizontalPosition = "center"
 
-      console.log("hier man " + role)
-      switch (role) {
-        case "no":{
-          // falsche einloggdaten
-          this.snackBar.open("Falsche Einlogdaten","",sbConfig)
-          break
-        }
-        case  "ADMIN":{
-          // navigate to admin panel
-          console.log("ich leite dich weiter admin")
-          this.router.navigate(['/admin/menu'])
-          break
-        }
-        case "MANAGER": {
-          // navigate to manager panel
-          console.log("ich leite dich weiter manager")
-          this.router.navigate(['/admin/menu'])
-          break
-        }
-        case "TOBEACCEPTED": {
-          // info tobeaccepted
-          this.snackBar.open("Dein Account wurde noch nicht akzeptiert","",sbConfig)
-          break
-        }
-        default: {
-          // display error
-          break
-        }
-      }
+        this.authService.login(request, (role: string) => {
+
+          console.log("hier man " + role)
+          switch (role) {
+            case "no": {
+              // falsche einloggdaten
+              this.snackBar.open("Falsche Einlogdaten", "", sbConfig)
+              break
+            }
+            case  "ADMIN": {
+              // navigate to admin panel
+              console.log("ich leite dich weiter admin")
+              this.router.navigate(['/admin/menu'])
+              break
+            }
+            case "MANAGER": {
+              // navigate to manager panel
+              console.log("ich leite dich weiter manager")
+              this.router.navigate(['/admin/menu'])
+              break
+            }
+            case "TOBEACCEPTED": {
+              // info tobeaccepted
+              this.snackBar.open("Dein Account wurde noch nicht akzeptiert", "", sbConfig)
+              break
+            }
+            default: {
+              // display error
+              break
+            }
+          }
+        });
+      });
     });
   }
 }

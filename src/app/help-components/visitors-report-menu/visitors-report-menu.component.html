@@ -2,18 +2,56 @@
 <br>
 
 <div class="create-div">
-  <mat-form-field>
+  <mat-form-field  class="fullsize">
     <mat-label>Titel der Meldung</mat-label>
     <input matInput [formControl]="titleForm">
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field class="fullsize">
     <mat-label>Nachricht</mat-label>
     <textarea matInput placeholder="..." [formControl]="messageForm"></textarea>
   </mat-form-field>
+  <div id="recaptchaContainer"></div>
 
-  <div class="buttonBar">
-    <button mat-raised-button color="primary" (click)="save()">Senden</button>
-  </div>
+  <mat-form-field class="fullsize" appearance="fill">
+    <mat-label>Buga-Punkt auswählen</mat-label>
+    <input #locationInput
+           type="text"
+           placeholder="Wähle einen Punkt"
+           aria-label="LocationField"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto"
+           [(ngModel)]="bugapoint">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let point of filteredBugapoints| async"
+                  [value]="point">
+        {{point.title}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field class="fullsize">
+    <mat-label>Park</mat-label>
+    <mat-select [formControl]="parkForm">
+      <mat-option *ngFor="let park of parks" [value]="park.value" >
+        {{park.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <button class="fullsize" mat-raised-button color="primary" [disabled]="!isFormValid()" (click)="save()">Senden</button>
 </div>
+
+
+<div class="captcha">
+  Diese Website ist durch reCAPTCHA geschützt und es gelten die
+  <a href="https://policies.google.com/privacy">Datenschutzbestimmungen</a> und
+  <a href="https://policies.google.com/terms">Nutzungsbedingungen</a> von Google.
+</div>
+
+
+
+
 
